@@ -16,21 +16,23 @@
     </div>
 </div>
 
-<div class="row gy-5 px-5 p-5">
-<div class="col-md-12">
-    <div class="text-muted"><a class="navbar-brand" href="/admin"><u>Administrateur</u></a></div>
-</div>
-</div>
-
 <form name="form_adpage" id="form_adpage" method="post" action="javascript:void(0)">
-@csrf
-    <div class="form-group">
-    <label for="inputadminpass">管理者パスワード</label>
-    <input type="text" id="input_pass" name="input_pass" class="form-control">
+<div class="row gy-5 px-5 p-5">
+    <div class="col-md-6">
+        <div class="text-muted"><a class="navbar-brand" href="/admin"><u>Administrateur</u></a></div>
+        @csrf
+        <div class="form-group">
+            <label for="inputadminpass">パスワード</label>
+            <input type="text" id="input_pass" name="input_pass" class="form-control">
+        </div>
+        <div class="p-3">
+            <div class="px-1 p-3">
+            <button class="btn btn-primary" type="button" name="validate_admin" id="validate_admin">認証</button>
+            </div>
+            <div class="px-1 p-3" name="view_ermsg" id="view_ermsg" data-ermsg="fumi error msg area"></div>
+        </div>
     </div>
-    <button name="validate_admin" id="validate_admin">ボタン</button>
+</div>
 </form>
-
-<div name="view_ermsg" id="view_ermsg" data-ermsg="fumi error msg area"></div>
 <script src="{{ mix('js/fumi0214.js') }}"></script> 
 @endsection

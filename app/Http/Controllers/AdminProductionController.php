@@ -70,6 +70,7 @@ class AdminProductionController extends Controller
             $auth_flg = true; 
             // TODO trueの場合はurl設定 javascriptでページ遷移
             $gourl = "xxxxxxxxxxxxx";
+            $ermsg = "OK TODO move page admin";
 
         }else {
             // TODO falseの場合はerrorメッセ設定/表示
