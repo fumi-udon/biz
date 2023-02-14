@@ -29,16 +29,14 @@
             <div class="px-1 p-3">
             <button class="btn btn-primary" type="button" name="validate_admin" id="validate_admin">認証</button>
             </div>
-            <div class="px-1 p-3" name="view_ermsg" id="view_ermsg" data-ermsg="fumi error msg area"></div>
+            <div class="px-1 p-1" name="view_ermsg" id="view_ermsg" data-ermsg="fumi error msg area"></div>
+           <hr/><div class="text-white">
+                <a href="/rado" class="btn btn-success btn-lg active" role="button" aria-pressed="true">ラドさん!よろしく</a>
+            </div>
         </div>
     </div>
 </div>
 </form>
 <script src="{{ mix('js/fumi0214.js') }}"></script> 
-<hr/>
-<div class="row px-1 p-1">
-    <div class="p-1 mb-3 text-white">
-        <a href="/rado" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">ラドさん!よろしく</a>
-    </div>
-</div>
+
 @endsection
