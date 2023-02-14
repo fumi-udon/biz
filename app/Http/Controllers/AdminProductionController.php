@@ -64,17 +64,14 @@ class AdminProductionController extends Controller
         $auth_flg = false;
         // エラーメッセージ表示変数初期化
         $ermsg = "";
-        $gourl = "xxxxxxxxxxxxx";
+        $gourl = "dummy url";
         if($adminpass === $inputs['input_pass']){
             //パスワード認証OK
             $auth_flg = true; 
-            // TODO trueの場合はurl設定 javascriptでページ遷移
-            $gourl = "xxxxxxxxxxxxx";
             $ermsg = "OK TODO move page admin";
 
         }else {
-            // TODO falseの場合はerrorメッセ設定/表示
-            $ermsg = "誰だよあんた ermsg";
+            $ermsg = "誰だよあんた!!";
         }
 
         return response()->json([

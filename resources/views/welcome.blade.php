@@ -19,18 +19,17 @@
 <form name="form_adpage" id="form_adpage" method="post" action="javascript:void(0)">
 <div class="row gy-5 px-5 p-5">
     <div class="col-md-6">
-        <div class="text-muted"><a class="navbar-brand" href="/admin"><u>Administrateur</u></a></div>
         @csrf
         <div class="form-group">
-            <label for="inputadminpass">パスワード</label>
+            <label for="inputadminpass">管理者ページ</label>
             <input type="text" id="input_pass" name="input_pass" class="form-control">
-        </div>
-        <div class="p-3">
             <div class="px-1 p-3">
             <button class="btn btn-primary" type="button" name="validate_admin" id="validate_admin">認証</button>
             </div>
+        </div>
+        <div class="p-3">
             <div class="px-1 p-1" name="view_ermsg" id="view_ermsg" data-ermsg="fumi error msg area"></div>
-           <hr/><div class="text-white">
+            <hr/><div class="text-white">
                 <a href="/rado" class="btn btn-success btn-lg active" role="button" aria-pressed="true">ラドさん!よろしく</a>
             </div>
         </div>
