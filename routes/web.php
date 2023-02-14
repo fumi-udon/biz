@@ -37,5 +37,7 @@ Route::post('/update/{btn}/{page_id?}',[AdminProductionController::class, 'updat
 Route::post('/store/{btn}/{page_id?}',[AdminProductionController::class, 'store'])->name('admin.store');
 Route::post('/prendre_stock/{btn}/{page_id?}',[AdminProductionController::class, 'prendre_stock'])->name('admin.prendre.stock');
 
-//
+//ラドさん JSONデータ取得サンプル RadoSimpleController
+use App\Http\Controllers\RadoSimpleController;
+Route::get('/rado', [RadoSimpleController::class, 'index'])->name('rado.index');
 

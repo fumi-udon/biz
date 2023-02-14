@@ -35,4 +35,10 @@
 </div>
 </form>
 <script src="{{ mix('js/fumi0214.js') }}"></script> 
+<hr/>
+<div class="row px-1 p-1">
+    <div class="p-1 mb-3 text-white">
+        <a href="/rado" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">ラドさん!よろしく</a>
+    </div>
+</div>
 @endsection
