@@ -129,7 +129,7 @@
 	</tbody>
 </table>
 </div><!--row end-->
-</div><!--container end-->
+</div><!--container end v2-->
 @endsection
 
 @section('footer')
