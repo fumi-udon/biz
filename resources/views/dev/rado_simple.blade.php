@@ -1,5 +1,6 @@
 
 @extends('layouts.app')
+@include('layouts.head',['bread_name' => 'Mr Rado simple'])
 @section('content')
 <div class="row gy-3 px-3">
     <div class="p-2 bg-warning text-dark col-md-12">
