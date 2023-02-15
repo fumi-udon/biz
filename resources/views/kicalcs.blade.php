@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@include('layouts.head')
+@include('layouts.head',['bread_name' => 'Curry Kitano 計算'])
 <!-- パンくずリスト -->
-@section('bread_name','Curry kitano')
+
 @section('content')
 <div class="row gx-3">
     <div class="col-md-2 center-block"><h3>Bouillons:</h3></div>

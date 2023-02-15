@@ -1,7 +1,6 @@
 @extends('layouts.app')
-@include('layouts.head')
+@include('layouts.head',['bread_name' => 'Soir 15h'])
 <!-- パンくずリスト stock_record sato_record -->
-@section('bread_name','15h matin')
 @section('content')
 <h4>Bonsoir Chantal ! 15H</h4>
 

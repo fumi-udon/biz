@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@include('layouts.head')
+@include('layouts.head',['bread_name' => '8h matin'])
 <!-- パンくずリスト -->
-@section('bread_name','8h matin')
+
 @section('content')
 <h4>Bonjour Chantal ! &#128536;</h4>
 <div class="row gx-3">
