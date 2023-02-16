@@ -30,7 +30,7 @@ class CreateIngredientConsomationsTable extends Migration
             $table->string('sup_name')->nullable();
             $table->integer('sup2_id')->nullable();
             $table->string('sup2_name')->nullable();
-            $table->double('consommation,6,2');
+            $table->double('consommation',6,2);
             $table->string('consommation_sub')->nullable();
             $table->string('unit_name');
             $table->string('unit_sub_name')->nullable();
