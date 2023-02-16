@@ -1,7 +1,6 @@
 @extends('layouts.app')
-@include('layouts.head')
 <!-- パンくずリスト -->
-@section('bread_name','Admin Page')
+@include('layouts.head',['bread_name' => 'admin'])
 @section('content')
 <h4>Admin Page</h4>
 
