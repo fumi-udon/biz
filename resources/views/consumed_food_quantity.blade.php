@@ -6,7 +6,7 @@
 <h4>ConsumedFoodQuantity page </h4>
 <div class="row gx-3">
     <div class="col-md-12 center-block">
-		{{ $temp_table_conso }}
+		{{ $temp_table_radojson }}
     </div>
 </div><!--インライングリッド row end -->
 
