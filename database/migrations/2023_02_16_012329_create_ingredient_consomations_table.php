@@ -37,8 +37,8 @@ class CreateIngredientConsomationsTable extends Migration
             $table->smallInteger('dispo_flg')->default(1);
             $table->smallInteger('display_flg')->default(1);
             $table->smallInteger('saison_id')->default(1);
-            $table->string('add_info')->default("add_info string simple");
-            $table->text('add_txt')->default("add_txt text simple");
+            $table->string('add_info')->nullable();
+            $table->text('add_txt')->nullable();
             $table->timestamps();
         });
     }
