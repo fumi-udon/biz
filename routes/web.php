@@ -41,3 +41,7 @@ Route::post('/prendre_stock/{btn}/{page_id?}',[AdminProductionController::class,
 use App\Http\Controllers\RadoSimpleController;
 Route::get('/rado', [RadoSimpleController::class, 'index'])->name('rado.index');
 
+//食材消費量 ConsumedFoodQuantityController
+use App\Http\Controllers\ConsumedFoodQuantityController;
+Route::get('/conso', [ConsumedFoodQuantityController::class, 'index'])->name('conso.index');
+
