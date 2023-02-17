@@ -7,6 +7,7 @@ use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
 use App\Models\AuthHanabishi;
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Log;
 
@@ -33,6 +34,11 @@ class AdminProductionController extends Controller
      */
     public function index($action_message = null)
     {
+        if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
+            //管理者認証エラー
+            $action_message = "[管理トップ]認証エラーがありました。";
+            return view('welcome', compact('action_message'));
+        }
         // PlanProduction テーブルラーメン設定値を取得 id 1 ->only(['id', 'name'])
         $plan_production=PlanProduction::where('id',1)->first()->toArray();
 
@@ -41,7 +47,6 @@ class AdminProductionController extends Controller
         
         // Stock データ取得
         $stock_ingredients = $this->prendre_stock();
-//dd($stock_ingredients);
         return view('admin/admin_production', compact('plan_production','plan_production_idtwo','action_message', 'stock_ingredients'));
     }
 
@@ -52,6 +57,11 @@ class AdminProductionController extends Controller
      */
     public function finance($btn = null, $page_id = null)
     {
+        if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
+            //管理者認証エラー
+            $action_message = "[財務ページ不正アクセス] 認証エラーがありました。";
+            return view('welcome', compact('action_message'));
+        }
         $simple = "test";
         return view('admin/admin_finance', compact('simple'));
     }
@@ -80,7 +90,8 @@ class AdminProductionController extends Controller
             //パスワード認証OK
             $auth_flg = true; 
             $ermsg = "OK TODO move page admin";
-
+            //セッションに認証OKフラグ立てる
+            $request->session()->put("auth_flg","true");
         }else {
             $ermsg = "誰だよあんた!!";
         }

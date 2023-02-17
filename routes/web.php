@@ -10,8 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
+    Log::debug('Route::get _ Topページが呼ばれてるよー sessionからキー削除');
+    Session::forget('auth_flg');
     return view('welcome');
 });
 

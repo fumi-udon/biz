@@ -1,6 +1,16 @@
-
 @extends('layouts.app')
 @section('content')
+@if(isset( $action_message ))
+<!-- アクションメッセージ表示 -->
+<div class="row gy-3 p-3">
+    <div class="" role="alert">    
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-danger">{{ $action_message }}</li>
+    </ul>
+    </div>
+</div>
+@endif
+
 <div class="row gy-3 px-3">
     <div class="col-md-3">
     <div class="p-3 border bg-primary text-white"><a class="navbar-brand" href="/matin8h">Chantal 8H</a></div>
