@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Log;
 
 use App\Mail\SendinBlueDemoEmail;
 use Illuminate\Support\Facades\Mail;
+use Swift_Message;
+
 use App\Models\IngredientConsomation;
 
 class ConsumedFoodQuantityController extends Controller
@@ -29,6 +31,21 @@ class ConsumedFoodQuantityController extends Controller
      */
     public function index()
     {
+        $subject = "例 BN メールのタイトルはこんな感じ"; 
+        $body = "本文っす。SendInBlueで送信できました。";
+
+        //Mail 送信プログラム練習用
+        Mail::to('admin@bistronippon.tn')
+        ->cc('fumi.0000000@gmail.com')
+        ->bcc('fumi.0000000@gmail.com')
+        ->send((new SendinBlueDemoEmail($subject, $body))
+            ->withSwiftMessage(function (Swift_Message $message) {
+                $message->getHeaders()
+                        ->addTextHeader('Content-Type', 'text/plain; charset=UTF-8');
+            })
+        );
+        //Mail 送信プログラム練習用 end
+
         DB::statement(
             'CREATE TEMPORARY TABLE temp_table_radojson (
                 id INT(11),
