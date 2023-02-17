@@ -28,7 +28,7 @@ class AdminProductionController extends Controller
 
     /**
      * Index. 管理者ページ表示
-     *
+     * finance
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index($action_message = null)
@@ -43,6 +43,17 @@ class AdminProductionController extends Controller
         $stock_ingredients = $this->prendre_stock();
 //dd($stock_ingredients);
         return view('admin/admin_production', compact('plan_production','plan_production_idtwo','action_message', 'stock_ingredients'));
+    }
+
+    /**
+     * finance. 財務ページ表示
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function finance($btn = null, $page_id = null)
+    {
+        $simple = "test";
+        return view('admin/admin_finance', compact('simple'));
     }
 
     /**

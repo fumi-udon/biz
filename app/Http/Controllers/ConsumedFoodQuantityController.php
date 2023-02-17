@@ -35,15 +35,15 @@ class ConsumedFoodQuantityController extends Controller
         $body = "本文っす。SendInBlueで送信できました。";
 
         //Mail 送信プログラム練習用
-        Mail::to('admin@bistronippon.tn')
-        ->cc('fumi.0000000@gmail.com')
-        ->bcc('fumi.0000000@gmail.com')
-        ->send((new SendinBlueDemoEmail($subject, $body))
-            ->withSwiftMessage(function (Swift_Message $message) {
-                $message->getHeaders()
-                        ->addTextHeader('Content-Type', 'text/plain; charset=UTF-8');
-            })
-        );
+        // Mail::to('admin@bistronippon.tn')
+        // ->cc('fumi.0000000@gmail.com')
+        // ->bcc('fumi.0000000@gmail.com')
+        // ->send((new SendinBlueDemoEmail($subject, $body))
+        //     ->withSwiftMessage(function (Swift_Message $message) {
+        //         $message->getHeaders()
+        //                 ->addTextHeader('Content-Type', 'text/plain; charset=UTF-8');
+        //     })
+        // );
         //Mail 送信プログラム練習用 end
 
         DB::statement(

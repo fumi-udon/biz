@@ -14,6 +14,16 @@
 </div>
 @endif
 
+@env('local')
+<div class="container px-4 p-3">
+	<div class="row gx-3">
+	<ul class="list-group list-group-flush">
+			<li class="list-group-item list-group-item-action list-group-item-info"><a href="/finance">finance page</a></li>
+    </ul>
+	</div><!--row end-->
+</div><!--container end-->
+@endenv
+
 <div class="row gx-3">
     <div class="col-md-12 center-block">
 		<form method='POST' action="{{ route('update',['btn' => 'ramen']) }}">
