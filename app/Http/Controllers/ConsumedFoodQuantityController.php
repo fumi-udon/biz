@@ -45,7 +45,6 @@ class ConsumedFoodQuantityController extends Controller
         //     })
         // );
         //Mail 送信プログラム練習用 end
-
         DB::statement(
             'CREATE TEMPORARY TABLE temp_table_radojson (
                 id INT(11),
