@@ -1,8 +1,10 @@
 <?php
-// On simule l'appel à `artisan schedule:run`
+// OVHのCronに設定されたファイルです。
+
+// php artisan radodataload:info が実行されます
 $_SERVER['argv'] = [
     'artisan',
-    'schedule:run',
+    'radodataload:info',
 ];
 
 // On lance artisan
