@@ -4,10 +4,17 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Models\AuthHanabishi;
+
+use Illuminate\Support\Facades\Log;
+use App\Console\Commands\BnRadoDataLoadCommand;
 
 class Kernel extends ConsoleKernel
 {
+
+    protected $commands = [
+        Commands\BnRadoDataLoadCommand::Class,
+    ];
+
     /**
      * Define the application's command schedule.
      *
@@ -16,26 +23,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // TODO FUMI
-        // Cron実行
-        // ラドさんデータ読み込んでデータ入れる
-        // 例
-        $schedule->call(function () {
-            // TODO windows環境でクーロン実行
-            // 本番環境でログ出す方法
-            Log::info("やぁ！Cron schedule呼ばれてる");
-            $authHanabishi = AuthHanabishi::updateOrCreate(
-                [
-                    'id' => "2",
-                    'user_name' => "kdfjl@gmail.com"
-                ],
-                [
-                    'user_name' => "cron test",
-                    'password' => "fjdalk8jbr",
-                    'sub_1' => "cron test"
-                ]
-        );
-        })->daily();
+        //Load Json datas from Rado server and insert to database
+        $schedule->command('radodataload:info --force')->daily();
+        // OVH独特のCron仕様（分がランダム取得されちゃう）をハックするコマンド
+        $this->scheduleRunsHourly($schedule);
     }
 
     /**
