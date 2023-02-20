@@ -1,0 +1,59 @@
+[
+    {
+      "ID": 1,
+      "table_number": 3,
+      "serial_ID": "GHI789",
+      "product_name": "ミートソーススパゲッティー",
+      "product_type": "food",
+      "product_toppings": {
+        "パルメザンチーズ": 1,
+        "ハム": 1,
+        "たまご": 1,
+        "ピーマン": 1
+      },
+      "product_price": 1000,
+      "order_quantity": 1,
+      "order_datetime": "2023-02-18T15:20:00+09:00",
+      "concurrent_connections": 2,
+      "active_flag": true,
+      "category_id": 3,
+      "category_name": "パスタ"
+    },
+    {
+      "ID": 2,
+      "table_number": 1,
+      "serial_ID": "JKL012",
+      "product_name": "コーヒー",
+      "product_type": "drink",
+      "product_toppings": {
+        "ミルク": 1,
+        "砂糖": 2
+      },
+      "product_price": 300,
+      "order_quantity": 2,
+      "order_datetime": "2023-02-18T17:35:00+09:00",
+      "concurrent_connections": 1,
+      "active_flag": true,
+      "category_id": 4,
+      "category_name": "ドリンク"
+    },
+    {
+      "ID": 3,
+      "table_number": 2,
+      "serial_ID": "MNO345",
+      "product_name": "サラダ",
+      "product_type": "food",
+      "product_toppings": {
+        "チキン": 1,
+        "トマト": 1,
+        "アボカド": 1
+      },
+      "product_price": 800,
+      "order_quantity": 1,
+      "order_datetime": "2023-02-18T18:10:00+09:00",
+      "concurrent_connections": 3,
+      "active_flag": false,
+      "category_id": 5,
+      "category_name": "サラダ"
+    }
+]

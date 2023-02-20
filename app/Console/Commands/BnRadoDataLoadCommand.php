@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\StockIngredient;
+
+use Illuminate\Support\Facades\Log;
 use Illuminate\Console\Command;
 
 class BnRadoDataLoadCommand extends Command
@@ -38,7 +41,15 @@ class BnRadoDataLoadCommand extends Command
      */
     public function handle()
     {
-        logger()->info('[FUMI_cron] 成功! This is Cron Command.');
+        logger()->info('[FUMI_cron] table clean up (一年前以前のデータを削除).');
+
+        // // table clean up (一年前以前のデータを削除)
+        $deleteDate = date("Y-m-d", strtotime("-1 year"));
+        $deleteRecords = StockIngredient::where('registre_date', '<=', $deleteDate)->get();
+        foreach($deleteRecords as $deleteRecord) {
+            $deleteRecord->delete();
+        }     
+
         return 0;
     }
 }

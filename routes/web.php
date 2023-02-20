@@ -43,6 +43,9 @@ Route::post('/prendre_stock/{btn}/{page_id?}',[AdminProductionController::class,
 //ラドさん JSONデータ取得サンプル RadoSimpleController
 use App\Http\Controllers\RadoSimpleController;
 Route::get('/rado', [RadoSimpleController::class, 'index'])->name('rado.index');
+//注文商品データ取得
+use App\Http\Controllers\SalesDataByProductController;
+Route::get('/salesproductcreate', [SalesDataByProductController::class, 'create'])->name('salesproduct.create');
 
 //食材消費量 ConsumedFoodQuantityController
 use App\Http\Controllers\ConsumedFoodQuantityController;

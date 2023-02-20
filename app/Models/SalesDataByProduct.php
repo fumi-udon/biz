@@ -14,24 +14,28 @@ class SalesDataByProduct extends Model
 
     protected $fillable = [
         'id',
+        'table_number',
+        'serial_id',
         'product_name',
         'product_id',
         'product_type',
-        'product_type_id',
-        'extra',
-        'extra_flg',
+        'product_toppings',
+        'product_price',
         'category_id',
         'category_name',
-        'sub_category_name',
         'order_quantity',
-        'unit_name',
-        'price',
-        'sub_price',
-        'dispo_flg',
-        'display_flg',
-        'saison_id',
-        'add_info',
-        'add_txt',
-        'order_datetime'    
-    ]; 
+        'order_datetime',
+        'concurrent_connections',
+        'active_flag',
+        'json_data'
+    ];
+    
+        /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'json_data' => 'json',
+    ];
 }

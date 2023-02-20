@@ -44,6 +44,7 @@
                  <li class="list-group-item list-group-item-action list-group-item-secondary"><a href="/rado">ラドさんよろしくページ</a> </li>
                  @env('local')
                  <li class="list-group-item list-group-item-action list-group-item-success"><a href="/conso">食材消費ページ</a> </li>
+                 <li class="list-group-item list-group-item-action list-group-item-success"><a href="/salesproductcreate">Json test</a> </li>
                  @endenv
             </ul>
             </div>

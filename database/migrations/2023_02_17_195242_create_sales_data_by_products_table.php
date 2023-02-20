@@ -15,25 +15,20 @@ class CreateSalesDataByProductsTable extends Migration
     {
         Schema::create('sales_data_by_products', function (Blueprint $table) {
             $table->id();
+            $table->integer('table_number');
+            $table->integer('serial_id');
             $table->string('product_name');
             $table->integer('product_id');
             $table->string('product_type');
-            $table->integer('product_type_id');
-            $table->string('extra');
-            $table->smallInteger('extra_flg');
+            $table->string('product_toppings');
+            $table->double('product_price');
             $table->integer('category_id');
             $table->string('category_name');
-            $table->string('sub_category_name');
             $table->integer('order_quantity');
-            $table->string('unit_name');
-            $table->double('price');
-            $table->double('sub_price');
-            $table->smallInteger('dispo_flg');
-            $table->smallInteger('display_flg');
-            $table->smallInteger('saison_id');
-            $table->string('add_info');
-            $table->text('add_txt');
             $table->datetime('order_datetime');
+            $table->integer('concurrent_connections');
+            $table->integer('active_flag');
+            $table->json('json_data');
             $table->timestamps();
         });
     }
