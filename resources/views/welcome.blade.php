@@ -33,12 +33,12 @@
         <div class="form-group">
             <label for="inputadminpass">管理者ページ</label>
             <input type="text" id="input_pass" name="input_pass" class="form-control">
-            <div class="px-1 p-3">
+            <div class="" name="view_ermsg" id="view_ermsg" data-ermsg="fumi error msg area"></div>
+            <div class="px-1 p-2">
             <button class="btn btn-primary" type="button" name="validate_admin" id="validate_admin">認証</button>
             </div>
         </div>
-        <div class="">
-            <div class="px-1 p-1" name="view_ermsg" id="view_ermsg" data-ermsg="fumi error msg area"></div>
+        <div class="px-1 p-4">            
             <div class="text-white">
             <ul class="list-group list-group-flush">
                  <li class="list-group-item list-group-item-action list-group-item-secondary"><a href="/rado">ラドさんよろしくページ</a> </li>
