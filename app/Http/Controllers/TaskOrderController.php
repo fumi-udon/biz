@@ -23,7 +23,23 @@ class TaskOrderController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function matin8h()    {
-        return view('matin8h');
+        /**
+         * Satoの手動指示がある場合は優先表示
+         */
+        $date_today = date_create()->format('Y-m-d');          
+        $sato_instruction = SatoInstruction::where([
+            //AMの指示を取得
+            ['flg_int', '=', '1'],
+            ['aply_date', '=', $date_today]
+        ])->first();
+
+        $yes_sato = false;
+        if(! is_null($sato_instruction)){
+            // サトの独自指示がある場合は viewをgetして処理終了
+            //dd('サト指示あり'.$sato_instruction);
+            $yes_sato = true;        
+        }
+        return view('matin8h',compact('sato_instruction','yes_sato'));
     }
 
     /**
@@ -222,7 +238,7 @@ class TaskOrderController extends Controller
             ['flg_int', '=', '1'],
             ['aply_date', '=', $date_today]
         ])->first();
-
+        $yes_sato = false;
         if(! is_null($sato_instruction)){
             // サトの独自指示がある場合は viewをgetして処理終了
             //dd('サト指示あり'.$sato_instruction);
