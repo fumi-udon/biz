@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+ 
 
 // use App\Models\SatoInstruction;
 // use App\Models\PlanProduction;
@@ -31,9 +33,15 @@ class RadoSimpleController extends Controller
      */
     public function index()
     {
-        Log::debug("はい！私がラドさんコントローラっす");
+        $date = now()->toDateString();
+        // SSL エラー回避
+        $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
+            'store' => 'currykitano',
+            'date' => $date,
+        ]);
 
-        // TODO jsonデータ取得 rado_simple.blade.php に表示
+        dd(collect($response->json()));
+
         $json_datas = [];
 
         return view('dev/rado_simple', compact("json_datas"));
