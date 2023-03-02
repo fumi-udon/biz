@@ -45,7 +45,7 @@ class AdminConcumedController extends Controller
         foreach($collections as $collection) {    
             $items = collect($collection['items']);
             // test
-            var_dump($items->pluck('product_name_for_staff'));
+            //var_dump($items->pluck('product_name_for_staff'));
             // test end
             foreach($items as $item) {
                 $item = collect($item);
