@@ -27,7 +27,7 @@ class AdminConcumedController extends Controller
         }
 
         // [食材消費量] Curl https通信＿SSL エラー回避
-        $aujourdhui = now()->modify('-5 day')->format("Y-m-d");
+        $aujourdhui = now()->format("Y-m-d");
         $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
             //'store' => 'currykitano',
             'store' => 'main',
