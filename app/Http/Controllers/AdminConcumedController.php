@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 
+//Fumi 独自クラス
+use App\FumiLib\FumiTools;
+
 class AdminConcumedController extends Controller
 {
     /**
@@ -24,43 +27,56 @@ class AdminConcumedController extends Controller
         }
 
         // [食材消費量] Curl https通信＿SSL エラー回避
-        $aujourdhui = now()->format("Y-m-d");
+        $aujourdhui = now()->modify('-5 day')->format("Y-m-d");
         $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
             //'store' => 'currykitano',
             'store' => 'main',
             'date' => $aujourdhui,
         ]);
 
-        // Ramen消費数カウント
         $collections = collect($response->json());
-        $total_qty = 0;
+        $total_qty_rmn = 0;
+        $total_qty_udn = 0; 
         $ramen_datas = [];
+        $udon_datas = [];
 
+        // fumi独自クラス
+        $fumi_tools =new FumiTools();
         foreach($collections as $collection) {    
             $items = collect($collection['items']);
+            // test
+            var_dump($items->pluck('product_name_for_staff'));
+            // test end
             foreach($items as $item) {
                 $item = collect($item);
                 $product_name_for_staff = data_get($item, 'product_name_for_staff');
                 // ramen を使う料理名検索
                 if ($product_name_for_staff === 'yksba' 
-                || strpos($product_name_for_staff, 'RMN') === 0
-                || strpos($product_name_for_staff, 'rmn') === 0
-                || strpos($product_name_for_staff, 'Rmn') === 0) {                    
-                    // id
-                    $order_id = data_get($item, 'order_id');
-                    $created_at = data_get($item, 'created_at');
-                    $formatted_date = \Carbon\Carbon::parse($created_at)->format('Y年m月d日 H時i分');
-                    $product_type_name_for_staff = data_get($item, 'product_type_name_for_staff');
-                    $qty = data_get($item, 'qty'); 
-                    $ex_order = compact('order_id', 'formatted_date', 'product_name_for_staff','product_type_name_for_staff','qty');
-                    $ramen_datas[] = $ex_order;
+                || mb_stripos($product_name_for_staff, 'rmn') === 0
+                || mb_stripos($product_name_for_staff, 'ramen') === 0
+                || mb_stripos($product_name_for_staff, 'ramen') != false) {  
+                    // 消費数合計計算して表示用配列作成
+                    $ramen_datas[] = $fumi_tools->fumi_get_cons_array($item, 'rmn');
                     // ramen消費数合計
-                    $total_qty += $qty;
+                    $qty = data_get($item, 'qty'); 
+                    $total_qty_rmn += $qty;
+                    // Ramen消費数カウント END 
+
+                }else if(mb_stripos($product_name_for_staff, 'udon') === 0
+                || mb_stripos($product_name_for_staff, 'udn') === 0
+                || mb_stripos($product_name_for_staff, 'udn') != false
+                || mb_stripos($product_name_for_staff, 'udon') != false){
+                    // UDON 用消費数合計計算して表示用配列作成
+                    $udon_datas[] = $fumi_tools->fumi_get_cons_array($item, 'udn');
+                    // UDON 用消費数合計
+                    $qty = data_get($item, 'qty'); 
+                    $total_qty_udn += $qty;
                 }
+                
             }       
 
         }
-        // Ramen消費数カウント END
-        return view('admin/admin_consumed', compact("ramen_datas","total_qty"));
+        
+        return view('admin/admin_consumed', compact("ramen_datas","total_qty_rmn","udon_datas","total_qty_udn"));
     }
 }

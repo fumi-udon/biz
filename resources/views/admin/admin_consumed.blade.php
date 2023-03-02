@@ -3,12 +3,12 @@
 @include('layouts.head',['bread_name' => '商品消費'])
 @section('content')
 <h4>商品消費データ</h4>
-
+<hr>
 <!--container データ表示-->
 <div class="container px-4 p-3">
 	<div class="row gy-3 px-3">
 		<div class="p-2 col-md-12">
-		<h4>Ramen消費数カウント: {{ $total_qty }}</h4>
+		<h4>Ramen消費数カウント: {{ $total_qty_rmn }}</h4>
 		<table class="table">
 			<thead>
 				<tr>
@@ -21,6 +21,34 @@
 			</thead>
 			<tbody>
 			@foreach ($ramen_datas as $datas)
+			<tr>
+				<td>{{ $datas['order_id'] }}</td>
+				<td>{{ $datas['formatted_date'] }}</td>
+				<td>{{ $datas['product_name_for_staff'] }}</td>
+				<td>{{ $datas['product_type_name_for_staff'] }}</td> 
+				<td>{{ $datas['qty'] }}</td>
+			</tr>
+			@endforeach
+			</tbody>
+		</table>
+		</div>
+	</div><!--row end-->
+	<hr>
+	<div class="row gy-3 px-3">
+		<div class="p-2 col-md-12">
+		<h4>Udon消費数カウント: {{ $total_qty_udn }}</h4>
+		<table class="table">
+			<thead>
+				<tr>
+				<th scope="col">注文番号</th>
+				<th scope="col">注文日</th>
+				<th scope="col">商品名</th>
+				<th scope="col">タイプ</th>
+				<th scope="col">数</th>
+				</tr>
+			</thead>
+			<tbody>
+			@foreach ($udon_datas as $datas)
 			<tr>
 				<td>{{ $datas['order_id'] }}</td>
 				<td>{{ $datas['formatted_date'] }}</td>
