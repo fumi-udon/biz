@@ -2,7 +2,7 @@
 <!-- パンくずリスト -->
 @include('layouts.head',['bread_name' => 'admin'])
 @section('content')
-@env('local')
+
 <div class="container p-1">
 	<div class="row">
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
@@ -24,7 +24,7 @@
 	</nav>
 	</div><!--row end-->
 </div><!--container end-->
-@endenv
+
 <div class="row gx-3">
     <div class="col-md-12 center-block">
 		<h3>Admin Page</h3>
