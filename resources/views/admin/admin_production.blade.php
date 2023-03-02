@@ -2,7 +2,34 @@
 <!-- パンくずリスト -->
 @include('layouts.head',['bread_name' => 'admin'])
 @section('content')
-<h4>Admin Page</h4>
+@env('local')
+<div class="container p-1">
+	<div class="row">
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+	<div class="container-fluid">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+			<a class="nav-link active" aria-current="page" href="/finance">finance</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link active" aria-current="page" href="/conso">conso</a>
+			</li>
+		</ul>
+		</div>
+	</div>
+	</nav>
+	</div><!--row end-->
+</div><!--container end-->
+@endenv
+<div class="row gx-3">
+    <div class="col-md-12 center-block">
+		<h3>Admin Page</h3>
+	</div>
+</div>
 
 @if($action_message)
 <!-- アクションメッセージ表示 -->
@@ -13,16 +40,6 @@
   <p> {{ session('sato_content') }}</p>
 </div>
 @endif
-
-@env('local')
-<div class="container px-4 p-3">
-	<div class="row gx-3">
-	<ul class="list-group list-group-flush">
-			<li class="list-group-item list-group-item-action list-group-item-info"><a href="/finance">finance page</a></li>
-    </ul>
-	</div><!--row end-->
-</div><!--container end-->
-@endenv
 
 <div class="row gx-3">
     <div class="col-md-12 center-block">

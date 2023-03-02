@@ -47,7 +47,7 @@ Route::get('/rado', [RadoSimpleController::class, 'index'])->name('rado.index');
 use App\Http\Controllers\SalesDataByProductController;
 Route::get('/salesproductcreate', [SalesDataByProductController::class, 'create'])->name('salesproduct.create');
 
-//食材消費量 ConsumedFoodQuantityController
-use App\Http\Controllers\ConsumedFoodQuantityController;
-Route::get('/conso', [ConsumedFoodQuantityController::class, 'index'])->name('conso.index');
+//食材消費量 AdminConcumedController
+use App\Http\Controllers\AdminConcumedController;
+Route::get('/conso', [AdminConcumedController::class, 'index'])->name('conso.index');
 
