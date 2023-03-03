@@ -13,26 +13,26 @@ use App\FumiLib\FumiTools;
 
 class AdminConcumedController extends Controller
 {
-
     /**
-     * conso. 食材消費
+     * conso. 検索
      * 
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index($btn = null, $page_id = null)
+    public function search(Request $request, $id=null, $params=null)
     {
-        if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
-            //管理者認証エラー
-            $action_message = "[食材消費ページ不正アクセス] 認証エラーがありました。";
-            return view('welcome', compact('action_message'));
-        }
+        $inputs = $request->all();
+        // リクエストデータ取得
+        $input_date = $inputs['input_date'];
+        //dd($input_date);
+        // session 格納
+        \Session::flash('input_date', $input_date);
 
         // [食材消費量] Curl https通信＿SSL エラー回避
-        $aujourdhui = now()->modify('-2 day')->format("Y-m-d");
+        // $aujourdhui = now()->format("Y-m-d");
         $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
             //'store' => 'currykitano',
             'store' => 'main',
-            'date' => $aujourdhui,
+            'date' => $input_date,
         ]);
 
         $collections = collect($response->json());
@@ -46,7 +46,7 @@ class AdminConcumedController extends Controller
         //お米データ取得 collectionクラスが格納される (RIZ用)
         $rice_collections_ary = [];
         //お米使う商品名 TODO conf ファイルから取得
-        $riz_plats_name = 'RMN,UDN,ENFANT RIZ,RIZ BLANC';
+        $riz_plats_name = 'DONBURI,ONIGIRI,ENFANT RIZ,RIZ BLANC';
 
         // fumi独自クラス
         $fumi_tools =new FumiTools();
@@ -137,8 +137,22 @@ class AdminConcumedController extends Controller
             }
         }
         $paikos_ary = array('Typeと子供メニュー'=> $type_total, 'パイコー（タパス）'=> $plat_total, 'かつ丼orうどんかつ'=> $katsu_total);
-    // paiko end
-
+        // paiko end
         return view('admin/admin_consumed', compact("ramen_datas","total_qty_rmn","udon_datas","total_qty_udn","paikos_ary","riz_resultats"));
+    }
+    /**
+     * conso. 食材消費 index トップページ開く
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index($btn = null, $page_id = null)
+    {
+        $action_message = null;
+        if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
+            //管理者認証エラー
+            $action_message = "[食材消費ページ不正アクセス] 認証エラーがありました。";
+            return view('welcome', compact('action_message'));
+        }
+        return view('admin/admin_consumed', compact('action_message'));
     }
 }

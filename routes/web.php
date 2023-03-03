@@ -47,7 +47,13 @@ Route::get('/rado', [RadoSimpleController::class, 'index'])->name('rado.index');
 use App\Http\Controllers\SalesDataByProductController;
 Route::get('/salesproductcreate', [SalesDataByProductController::class, 'create'])->name('salesproduct.create');
 
-//食材消費量 AdminConcumedController
+//食材消費量 AdminConcumedController 
 use App\Http\Controllers\AdminConcumedController;
 Route::get('/conso', [AdminConcumedController::class, 'index'])->name('conso.index');
+Route::post('/search', [AdminConcumedController::class, 'search'])->name('conso.search');
+
+//事務所食材 BureauItemsController 
+use App\Http\Controllers\BureauItemsController;
+Route::get('/bureau_index', [BureauItemsController::class, 'index'])->name('bureau.index');
+Route::post('/bureau_store', [BureauItemsController::class, 'bureau_store'])->name('bureau.store');
 

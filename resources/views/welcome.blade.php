@@ -25,6 +25,12 @@
     <div class="p-3 border bg-warning text-dark"><a class="navbar-brand" href="/calcs">Curry Kitano Calcs</a></div>
     </div>
 </div>
+<div class="row gy-3 px-3">
+    <div class="col-md-3">
+    <div class="p-3 border bg-primary text-white"><a class="navbar-brand" href="/bureau_index">Bureau items</a></div>
+    </div>
+
+</div>
 
 <form name="form_adpage" id="form_adpage" method="post" action="javascript:void(0)">
 <div class="row gy-5 px-5 p-5">

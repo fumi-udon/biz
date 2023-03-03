@@ -3,6 +3,27 @@
 @include('layouts.head',['bread_name' => '商品消費'])
 @section('content')
 <h4>商品消費データ</h4>
+{{-- 通常指示 --}}
+<!--日付入力エリア-->
+<div class="row gx-3">
+	<div class="col-md-12 center-block p-3">
+	{{-- 日付 対象商品入力 --}}
+	<form action="search" method="post">
+	@csrf		
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<button class="btn btn-outline-secondary" type="submit">教えてサト丸ちゃん!!</button>
+			</div>
+			<input type="date" id="input_date" name="input_date" 
+				value="{{ Session::get('input_date') }}" class="form-control" 
+				placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
+		</div>
+		<input type="hidden" name="actual_page_id" id="actual_page_id" value="search_post">
+	</form>
+	</div>
+</div>
+{{-- 検索結果表示 start--}}
+@if(Request::is('search'))
 <hr>
 <!--container データ表示-->
 <div class="container px-4 p-3">
@@ -68,6 +89,11 @@
 		@foreach ($paikos_ary as $key => $val)
 			<p>{{ $key }}:{{ $val }}</p>
 		@endforeach
+		</div>
+	</div><!--row end-->
+	<hr>
+	<div class="row gx-3 p-3">
+		<div class="col-md-4 center-block">
 		<h4>米消費</h4>
 		@foreach ($riz_resultats as $item)
 			@foreach ($item as $key => $val)
@@ -77,19 +103,10 @@
 		</div>
 	</div><!--row end-->
 </div><!--container end paikos_ary-->
-
-<div class="container px-4 p-3">
-	<div class="row gx-3 p-3">
-		<div class="col-md-4 center-block">
-		<ul class="list-group">
-		<li class="list-group-item">
-			<a href="/admin">Admin pageへ戻る</a>
-		</li>
-		</ul>
-		</div>
-	</div><!--row end-->
-</div><!--container end-->
+@endif
+{{-- 検索結果表示 END--}}
 @endsection
+
 
 @section('footer')
 @endsection
