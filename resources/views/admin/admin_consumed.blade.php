@@ -61,7 +61,22 @@
 		</table>
 		</div>
 	</div><!--row end-->
-</div><!--container end-->
+	<hr>
+	<div class="row gx-3 p-3">
+		<div class="col-md-4 center-block">
+		<h4>Paiko消費数カウント</h4>
+		@foreach ($paikos_ary as $key => $val)
+			<p>{{ $key }}:{{ $val }}</p>
+		@endforeach
+		<h4>米消費</h4>
+		@foreach ($riz_resultats as $item)
+			@foreach ($item as $key => $val)
+				<p>{{ $key }} : {{ $item[$key] }}</p>
+			@endforeach
+		@endforeach
+		</div>
+	</div><!--row end-->
+</div><!--container end paikos_ary-->
 
 <div class="container px-4 p-3">
 	<div class="row gx-3 p-3">
