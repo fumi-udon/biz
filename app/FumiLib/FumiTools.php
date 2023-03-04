@@ -114,22 +114,51 @@ class FumiTools
      *  引数はitemと文字列
      * 
      */
-    public function fumi_get_consom_pn_staff($item, $products_str) {
+    public function fumi_get_consom_pn_staff($item, $products_str, $types_str, $extras_str) {
         $products_ary = explode(",", $products_str);
+        $types_ary = explode(",", $types_str);
+        $extras_ary = explode(",", $extras_str);
+
         $order_products = $this->initAry($products_ary);
+        $order_types = $this->initAry($types_ary);
+        $order_extras = $this->initAry($extras_ary);
+
         $collection = collect();
-       // dd($order_products);
-       $flg=false;
+        $flg=false;
+        $flg_type=false;
+        $flg_extra=false;
         foreach ($order_products as $key => $i) {
-            if (strpos($item['product_name_for_staff'], $key) !== false) {
+            if (mb_stripos($item['product_name_for_staff'], $key) !== false) {
                 $order_products[$key] += $item['qty'];
                 $flg=true;
             }
         }
-        if($flg){
-            // ある
-            $collection->push($order_products);
+        foreach ($order_types as $key => $i) {
+            if (mb_stripos($item['product_type_name_for_staff'], $key) !== false) {
+                $order_types[$key] += $item['qty'];
+                $flg_type=true;
+            }
         }
+        foreach ($order_extras as $key => $i) {
+            $collection_ingredients = collect($item['ingredients']);
+            $order_extras[$key] += $collection_ingredients->where('name_for_staff',$key)->count();
+            if ($order_extras[$key] > 0) {
+                $flg_extra=true;
+            }
+        }
+        if($flg){
+            // ある product_name_for_staff
+            $collection->put('products',$order_products);
+        }
+        if($flg_type){
+            // ある product_type_name_for_staff
+            $collection->put('types',$order_types);
+        }
+        if($flg_extra){
+            // ある extra
+            $collection->put('extras',$order_extras);
+         }
+
         return $collection;
     }
 

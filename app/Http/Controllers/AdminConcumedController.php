@@ -37,7 +37,7 @@ class AdminConcumedController extends Controller
 
         $collections = collect($response->json());
         $total_qty_rmn = 0;
-        $total_qty_udn = 0; 
+        $total_qty_udn = 0;        
         $ramen_datas = [];
         $udon_datas = [];
         //collectionクラスが格納される
@@ -47,13 +47,46 @@ class AdminConcumedController extends Controller
         $rice_collections_ary = [];
         //お米使う商品名 TODO conf ファイルから取得
         $riz_plats_name = 'DONBURI,ONIGIRI,ENFANT RIZ,RIZ BLANC';
+        $riz_types_name = 'DONBURI,RIZ,RIZ BLANC';
+        $riz_extras_name = 'RIZ,RIZ BLANC';
+        //dd ($collections);
 
         // fumi独自クラス
         $fumi_tools =new FumiTools();
+
+        // TODO Start
+        // extra_seach_name に記載したextraのオーダー数を取得する        
+        $extra_collect = collect();        
+        $extra_seach_name=['fmg','wkm','oeuf','spicy','diable','katsuobushi','ail','nori','riz','soup','gari','salad'];
+        foreach($extra_seach_name as $key){
+            $total_qty_extra = 0;
+            foreach($collections as $collection) {
+                $items = collect($collection['items']);
+                $filtered = $items->filter(function ($order) {
+                    return count($order['ingredients']) > 0;
+                });
+                //dd($filtered);
+                $filtered_v2 = $filtered->map(function ($order) use ($key) {
+                    $ingredients = collect($order['ingredients'])->filter(function ($ingredient) use ($key) {
+                        return str_contains($ingredient['name_for_staff'], $key);
+                    })->all();
+                    return array_merge($order, ['ingredients' => $ingredients]);
+                })->filter(function ($order) {
+                    return count($order['ingredients']) > 0;
+                });
+                $total_qty_extra += collect($filtered_v2)->sum('qty');
+                
+            }
+            $extra_collect->push([$key => $total_qty_extra]);
+        }        
+        //dd($extra_collect);
+        // TODO end
+
         foreach($collections as $collection) {
             //dd($collection);
             $items = collect($collection['items']);
 
+           // dd($items->where('product_name_for_staff','namuru')->count());
             foreach($items as $item) {
                 $item = collect($item);
                 $product_name_for_staff = data_get($item, 'product_name_for_staff');
@@ -89,28 +122,35 @@ class AdminConcumedController extends Controller
                 }
                 
                 //rice お米データ取得
-                $riz_collection = $fumi_tools->fumi_get_consom_pn_staff($item, $riz_plats_name);
+                $riz_collection = $fumi_tools->fumi_get_consom_pn_staff($item, $riz_plats_name,$riz_types_name, $riz_extras_name);
                 if (! $riz_collection->isEmpty()) {
                     $rice_collections_ary[] = $riz_collection;
                 }
                 
             } // foreach インナー end
         }// foreach 親 end
-
+log::debug($total_qty_extra);
     // rice start
         // 配列をループして集計する
         $riz_collections = collect($rice_collections_ary);
         // カンマを区切り文字として、文字列を配列に変換する
         $riz_plats = explode(',', $riz_plats_name);
+        $riz_types = explode(',', $riz_types_name);
+        $riz_extras = explode(',', $riz_extras_name);
 
         // 配列の各要素にアクセスする
         $tatal_order = [];
         //集計結果
         $riz_resultats = collect();
         foreach ($riz_plats as $key) {
-            $tatal_order = $riz_collections->pluck('0.'.$key)->sum();
+            $tatal_order = $riz_collections->pluck('products.'.$key)->sum();
             $riz_resultats->push([$key => $tatal_order]);
         }
+        foreach ($riz_extras as $key) {
+            $tatal_order = $riz_collections->pluck('extras.'.$key)->sum();
+            $riz_resultats->push([$key => $tatal_order]);
+        }
+        //dd($riz_resultats);
     // rice end
 
     // paiko start
@@ -137,8 +177,9 @@ class AdminConcumedController extends Controller
             }
         }
         $paikos_ary = array('Typeと子供メニュー'=> $type_total, 'パイコー（タパス）'=> $plat_total, 'かつ丼orうどんかつ'=> $katsu_total);
+        
         // paiko end
-        return view('admin/admin_consumed', compact("ramen_datas","total_qty_rmn","udon_datas","total_qty_udn","paikos_ary","riz_resultats"));
+        return view('admin/admin_consumed', compact("extra_collect","ramen_datas","total_qty_rmn","udon_datas","total_qty_udn","paikos_ary","riz_resultats"));
     }
     /**
      * conso. 食材消費 index トップページ開く

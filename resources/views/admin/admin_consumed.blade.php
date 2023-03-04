@@ -102,6 +102,16 @@
 		@endforeach
 		</div>
 	</div><!--row end-->
+	<div class="row gx-3 p-3">
+		<div class="col-md-4 center-block">
+		<h4>エクストラ検索</h4>
+		@foreach ($extra_collect as $item)
+			@foreach ($item as $key => $val)
+				<p>{{ $key }} : {{ $item[$key] }}</p>
+			@endforeach
+		@endforeach
+		</div>
+	</div><!--row end-->
 </div><!--container end paikos_ary-->
 @endif
 {{-- 検索結果表示 END--}}
