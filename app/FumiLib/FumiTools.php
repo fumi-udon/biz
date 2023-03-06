@@ -59,11 +59,6 @@ class FumiTools
      * 
      */
     public function fumi_get_paiko_type($item) {
-        // var_dump('<br>商品名<br>');
-        // var_dump(data_get($item, 'product_name_for_staff'));
-        // var_dump('<br>タイプ名<br>');
-        // var_dump(data_get($item, 'product_type_name_for_staff'));
-        // var_dump('<br><br>');
         // type, enfantパイコー配列
         $type_is_paikos=[];
         $plat_is_paikos=[];

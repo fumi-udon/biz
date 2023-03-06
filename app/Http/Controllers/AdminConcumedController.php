@@ -22,6 +22,7 @@ class AdminConcumedController extends Controller
      */
     public function search(Request $request, $id=null, $params=null)
     {
+        ini_set('display_errors', 'Off');
         $inputs = $request->all();
         // リクエストデータ取得
         $input_date = $inputs['input_date'];
@@ -188,6 +189,7 @@ class AdminConcumedController extends Controller
      */
     public function index($btn = null, $page_id = null)
     {
+        ini_set('display_errors', 'Off');
         $action_message = null;
         if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
             //管理者認証エラー

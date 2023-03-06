@@ -17,7 +17,7 @@ class AdminConcumedTools
      * 商品名 => 消費数量 のcollectionクラスをreturnする.   
      */
     public static function get_extra_consodatas($collections, $extra_seach_name, $arg_flg = null ) {
-        echo $collections;
+       
         $collects_resultat = collect();
         foreach($extra_seach_name as $key){
             $total_qty_extra = 0;
@@ -111,7 +111,7 @@ class AdminConcumedTools
                 })
                 ->all();
                // $collect_by_key = collect($collect_by_key)->pluck('product_name_for_staff','qty');
-                //var_dump($collect_by_key);
+
                 $total_qty += collect($collect_by_key)->sum('qty');
             }            
             $collects_resultat->push([$key => $total_qty]);
