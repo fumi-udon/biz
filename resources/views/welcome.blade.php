@@ -49,7 +49,7 @@
             <ul class="list-group list-group-flush">
                  @env('local')
                  <li class="list-group-item list-group-item-action list-group-item-success"><a href="/conso">食材消費ページ</a> </li>
-                 <li class="list-group-item list-group-item-action list-group-item-success"><a href="/salesproductcreate">Json test</a> </li>
+                 <li class="list-group-item list-group-item-action list-group-item-success"><a href="/emporter_index">emporter_recnt</a> </li>
                  @endenv
             </ul>
             </div>

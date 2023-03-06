@@ -100,6 +100,14 @@
 				<p>{{ $key }} : {{ $item[$key] }}</p>
 			@endforeach
 		@endforeach
+		<p><u>[ Extra_米 ]</u></p>
+		@foreach ($extra_collect as $item)
+			@foreach ($item as $key => $val)
+			@if( $key == 'riz')
+			<p>{{ $key }} : {{ $item[$key] }}</p>
+			@endif				
+			@endforeach
+		@endforeach
 		</div>
 	</div><!--row end-->
 	<div class="row gx-3 p-3">
@@ -112,7 +120,27 @@
 		@endforeach
 		</div>
 	</div><!--row end-->
-</div><!--container end paikos_ary-->
+	<div class="row gx-3 p-3">
+		<div class="col-md-4 center-block">
+		<h4>商品消費量</h4>
+		@foreach ($product_collect as $item)
+			@foreach ($item as $key => $val)
+				<p>{{ $key }} : {{ $item[$key] }}</p>
+			@endforeach
+		@endforeach
+		</div>
+	</div>
+	<div class="row gx-3 p-3">
+		<div class="col-md-4 center-block">
+		<h4>餃子消費量</h4>
+		@foreach ($gyoza_collect as $item)
+			@foreach ($item as $key => $val)
+				<p>{{ $key }} : {{ $item[$key] }} 個</p>
+			@endforeach
+		@endforeach
+		</div>
+	</div><!--row end--><!--row end-->
+</div><!--container end paikos_ary -->
 @endif
 {{-- 検索結果表示 END--}}
 @endsection
