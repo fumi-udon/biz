@@ -77,9 +77,8 @@ class EmporterRecentController extends Controller
             Log::debug('xxx: all  search_________ '.$input_type);
             $filtered = collect($collections)->where('addition_finished',1)->sortByDesc('end_date')->values()->toArray();
         }else{
-            // emporter:2 直近3件のみ
-            Log::debug('xxx: 安保る search kakko');
-            $filtered = collect($collections)->where('takeout' ,'==', 1)->where('addition_finished',1)->sortByDesc('end_date')->slice(0, 3)->values()->toArray();
+            // emporter:2 
+            $filtered = collect($collections)->where('takeout' ,'==', 1)->where('addition_finished',1)->sortByDesc('end_date')->values()->toArray();
         }
        
         if(empty($filtered)){
