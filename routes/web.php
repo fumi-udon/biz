@@ -59,5 +59,6 @@ Route::post('/bureau_store', [BureauItemsController::class, 'bureau_store'])->na
 
 use App\Http\Controllers\EmporterRecentController;
 Route::get('/emporter_index', [EmporterRecentController::class, 'index'])->name('emporter.index');
-Route::post('/emporter_search', [EmporterRecentController::class, 'search'])->name('search.index');
+Route::match(['get', 'post'], '/emporter_search', [EmporterRecentController::class, 'search'])->name('search.index');
+Route::post('/all_search/{btn_id?}/{params?}', [EmporterRecentController::class, 'all_search'])->name('allsearch.index');
 

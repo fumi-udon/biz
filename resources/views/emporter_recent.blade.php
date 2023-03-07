@@ -15,18 +15,21 @@
 @endif
 	<div class="col-md-12 center-block p-3">
 	{{-- 日付 対象商品入力 --}}
-	<form action="emporter_search" method="post">
+	<form id='form_emp1' action="" method="post">
 	@csrf		
-		<div class="input-group mb-3">
-			<div class="input-group-prepend">
-				<button class="btn btn-outline-secondary" type="submit">今すぐ知りたい</button>
-			</div>
-			<input type="date" id="input_date" name="input_date" 
-				value="{{ Session::get('input_date') }}" class="form-control" 
-				placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
-		</div>
-		<input type="hidden" name="actual_page_id" id="actual_page_id" value="search_post">
-	</form>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="submit" id='btn_emp' name='btn_emp' formaction="emporter_search">今すぐ知りたい</button>
+        </div>
+        <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="submit" id='btn_all' name='btn_all' formaction="all_search">All mode</button>
+        </div>
+        <input type="date" id="input_date" name="input_date" 
+            value="{{ Session::get('input_date') }}" class="form-control" 
+            placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
+    </div>
+    <input type="hidden" name="actual_page_id" id="actual_page_id" value="search_post">
+</form>
 	</div>
 </div>
 {{-- 検索結果表示 start--}}
@@ -39,6 +42,7 @@
 		<table class="table">
 		<thead class="thead-dark">
 			<tr>
+			<th scope="col">TableNo</th>
 			<th scope="col">Name</th>
 			<th scope="col">Product</th>
 			<th scope="col">Ingredients</th>
@@ -48,6 +52,7 @@
 		@foreach($result as $array)
 		<tbody>
 			<tr>
+			<td>{{ $array['table_number'] }}</td>
 			<td>{{ $array['name'] }}</td>
 			<td>{{ $array['product_name_for_staff'] }} _ {{ $array['product_type_name_for_staff'] }}</td>
 			<td>{{ $array['ingredients'] }}</td>
@@ -62,7 +67,9 @@
 	</div>
 </div>
 @endif
+
 <!--テスト　デバック-->
+<script src="{{ mix('js/fumi0307.js') }}"></script> 
 
 @endsection
 
