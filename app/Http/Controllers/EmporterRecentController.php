@@ -41,6 +41,7 @@ class EmporterRecentController extends Controller
      */
     public function search(Request $request, $type=null, $shop=null)
     {
+        //dd($type,$shop);
         // select ボックス要素作成
         $shops = collect([
             ['id' => 'main', 'name' => 'bistro nippon'],
@@ -52,7 +53,7 @@ class EmporterRecentController extends Controller
         ]);
 
         $inputs = $request->all();
-        // dd($inputs);
+        //dd($inputs);
         // リクエストデータ取得
         $input_date = $inputs['input_date'];
         $input_type = $inputs['type_list'];

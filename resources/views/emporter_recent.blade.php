@@ -15,7 +15,7 @@
 @endif
 	<div class="col-md-12 center-block p-3">
 	{{-- 日付 対象商品入力 --}}
-	<form id='form_emp1' action="emporter_search" method="post">
+	<form id='form_emp1' action="{{ route('search.index') }}" method="post">
 	@csrf		
     <div class="input-group mb-3">
         <div class="input-group-prepend">
