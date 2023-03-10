@@ -53,6 +53,7 @@
 		<table class="table">
 		<thead class="thead-dark">
 			<tr>
+			<th scope="col">Printed datetime</th>
 			<th scope="col">TableNo</th>
 			<th scope="col">Name</th>
 			<th scope="col">Product</th>
@@ -63,6 +64,7 @@
 		@foreach($result as $array)
 		<tbody>
 			<tr>
+			<td>{{ $array['printed_datetime'] }}</td>
 			<td>{{ $array['table_number'] }}</td>
 			<td>{{ $array['name'] }}</td>
 			<td>{{ $array['product_name_for_staff'] }} _ {{ $array['product_type_name_for_staff'] }}</td>

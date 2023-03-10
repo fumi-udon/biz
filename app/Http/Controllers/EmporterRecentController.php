@@ -81,13 +81,13 @@ class EmporterRecentController extends Controller
             // emporter:2 
             $filtered = collect($collections)->where('takeout' ,'==', 1)->where('addition_finished',1)->sortByDesc('end_date')->values()->toArray();
         }
-       
         if(empty($filtered)){
             $action_message = 'データ無いよー。ものほんの営業日っすか？';
             return view('emporter_recent', compact('action_message','shops','types'));
         }
 
-        $collection = collect($filtered)->values()->toArray();        
+        $collection = collect($filtered)->values()->toArray();
+
         // 加工後のデータを格納する配列を初期化する
         $result = [];
         // Collectionの各要素に対して処理を行う
@@ -100,8 +100,9 @@ class EmporterRecentController extends Controller
                     // name_for_staffキーの値を取得し、カンマ区切りで結合する
                     $name_for_staff = collect($item['ingredients'])->pluck('name_for_staff')->implode(', ');
 
-                    // 必要なデータを配列に追加する
+                    // 必要なデータを配列に追加する 
                     $result[] = [
+                        'printed_datetime' => $item['printed_datetime'],
                         'table_number' => $table_number,
                         'name' => $name,
                         'product_name_for_staff' => $item['product_name_for_staff'],
@@ -112,6 +113,7 @@ class EmporterRecentController extends Controller
                 } else {
                     // ingredientsに値がない場合は、必要なデータを配列に追加する
                     $result[] = [
+                        'printed_datetime' => $item['printed_datetime'],
                         'table_number' => $table_number,
                         'name' => $name,
                         'product_name_for_staff' => $item['product_name_for_staff'],
