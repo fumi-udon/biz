@@ -101,7 +101,7 @@ class AdminConcumedTools
                     // 提供済のみフィルター
                     return $product['is_served'] == 1;
                 });
-                //LOG::debug($filtered);
+
                 // 注文単位でkey（商品名）に一致したデータ 例＞TABLE1のramen sojaの数 等
                 $collect_by_key = $filtered->filter(function ($unit) use ($key) {
                     return str_contains($unit['product_name_for_staff'], $key);
@@ -116,7 +116,7 @@ class AdminConcumedTools
             }            
             $collects_resultat->push([$key => $total_qty]);
         }
-        //dd($collects_resultat);
+
         return $collects_resultat;
     }
 

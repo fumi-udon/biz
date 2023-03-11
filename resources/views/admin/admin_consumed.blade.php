@@ -12,7 +12,7 @@
 	@csrf		
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
-				<button class="btn btn-outline-secondary" type="submit">教えてサト丸ちゃん!!</button>
+				<button class="btn btn-outline-secondary" type="submit">Submit</button>
 			</div>
 			<input type="date" id="input_date" name="input_date" 
 				value="{{ Session::get('input_date') }}" class="form-control" 

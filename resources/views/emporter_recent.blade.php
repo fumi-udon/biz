@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@include('layouts.head',['bread_name' => '直近アンポルテ'])
+@include('layouts.head',['bread_name' => '直近注文データ'])
 <!-- パンくずリスト -->
 
 @section('content')
-<h4>emporter_recent page </h4>
+<h4>直近オーダーデータ表示</h4>
 {{-- 通常指示 --}}
 <!--日付入力エリア-->
 <div class="row gx-3">

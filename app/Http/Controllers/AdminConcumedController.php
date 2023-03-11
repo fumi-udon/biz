@@ -191,11 +191,11 @@ class AdminConcumedController extends Controller
     {
         ini_set('display_errors', 'Off');
         $action_message = null;
-        if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
-            //管理者認証エラー
-            $action_message = "[食材消費ページ不正アクセス] 認証エラーがありました。";
-            return view('welcome', compact('action_message'));
-        }
+        // if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
+        //     //管理者認証エラー
+        //     $action_message = "[食材消費ページ不正アクセス] 認証エラーがありました。";
+        //     return view('welcome', compact('action_message'));
+        // }
         return view('admin/admin_consumed', compact('action_message'));
     }
 }

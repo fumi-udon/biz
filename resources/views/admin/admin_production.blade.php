@@ -13,7 +13,7 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav">
 			<li class="nav-item">
-			<a class="nav-link active" aria-current="page" href="/finance">finance</a>
+			<a class="nav-link active" aria-current="page" href="/index_finance">finance</a>
 			</li>
 			<li class="nav-item">
 			<a class="nav-link active" aria-current="page" href="/conso">conso</a>

@@ -33,7 +33,8 @@ Route::post('/bn_register_store/{id?}/{params?}', [TaskOrderController::class, '
 use App\Http\Controllers\AdminProductionController;
 Route::get('/admin/{action_message?}', [AdminProductionController::class, 'index'])->name('admin.index');
 // 財務ページ adminページのリンクより
-Route::get('/finance/{btn?}/{page_id?}', [AdminProductionController::class, 'finance'])->name('admin.finance');
+Route::get('/index_finance/{btn?}/{page_id?}', [AdminProductionController::class, 'index_finance'])->name('admin.index.finance');
+Route::post('/finance/{btn?}/{page_id?}', [AdminProductionController::class, 'finance'])->name('admin.finance');
 // Ajax welcome.blade.php 管理者ページ表示前検証
 Route::post('/admin_validate',[AdminProductionController::class, 'admin_validate']);
 Route::post('/update/{btn}/{page_id?}',[AdminProductionController::class, 'update'])->name('update');
