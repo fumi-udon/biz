@@ -76,10 +76,10 @@ class EmporterRecentController extends Controller
         if(isset($input_type) && $input_type == 1){
             //all
             Log::debug('xxx: all  search_________ '.$input_type);
-            $filtered = collect($collections)->where('addition_finished',1)->sortByDesc('end_date')->values()->toArray();
+            $filtered = collect($collections)->sortByDesc('end_date')->values()->toArray();
         }else{
             // emporter:2 
-            $filtered = collect($collections)->where('takeout' ,'==', 1)->where('addition_finished',1)->sortByDesc('end_date')->values()->toArray();
+            $filtered = collect($collections)->where('takeout' ,'==', 1)->sortByDesc('end_date')->values()->toArray();
         }
         if(empty($filtered)){
             $action_message = 'データ無いよー。ものほんの営業日っすか？';
