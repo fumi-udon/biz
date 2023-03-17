@@ -31,6 +31,9 @@ Route::get('/bn_register_top', [TaskOrderController::class, 'bn_register_top'])-
 Route::post('/bn_register_store/{id?}/{params?}', [TaskOrderController::class, 'bn_register_store'])->name('bn.register.store');
 
 use App\Http\Controllers\AdminProductionController;
+// debug nav サンプルテスト
+Route::get('/index_simple/{action_message?}', [AdminProductionController::class, 'index_simple'])->name('index.simple');
+
 Route::get('/admin/{action_message?}', [AdminProductionController::class, 'index'])->name('admin.index');
 // 財務ページ adminページのリンクより
 Route::get('/index_finance/{btn?}/{page_id?}', [AdminProductionController::class, 'index_finance'])->name('admin.index.finance');

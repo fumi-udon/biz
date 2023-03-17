@@ -1,6 +1,7 @@
 
 @extends('layouts.app')
-@include('layouts.head',['bread_name' => 'Mr Rado simple'])
+@extends('layouts.head')
+
 @section('content')
 <div class="row gy-3 px-3">
     <div class="p-2 col-md-12">
@@ -54,3 +55,4 @@
     </div>
 </div>
 @endsection
+@extends('layouts.footer')

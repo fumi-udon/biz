@@ -29,6 +29,18 @@ class AdminProductionController extends Controller
     }
 
     /**
+     * FUMI test Index. Nav barテスト
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index_simple($action_message = null)
+    {
+            //管理者認証エラー
+            $action_message = "[管理トップ]認証エラーがありました。";
+            return view('index_simple');
+    }
+
+    /**
      * Index. 管理者ページ表示
      * 
      * @return \Illuminate\Contracts\Support\Renderable

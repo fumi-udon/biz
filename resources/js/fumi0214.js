@@ -38,13 +38,13 @@ $(function(){
                 var auth_flg = obj["auth_flg"];
                 var ermsg = obj["ermsg"];
                 if (auth_flg == true) {                    
-                    $('#view_ermsg').css("background-color","blue").text(ermsg).fadeOut(20000);
+                    $('#view_ermsg').css("background-color","yellow").text(ermsg).fadeOut(20000);
                     window.location.href = "/admin";
                   } else {
                     console.log('false ですね');
                     // エラーメッセージ表示 view_ermsg
                     console.log(obj["ermsg"]);
-                     $('#view_ermsg').css("background-color","yellow").text(ermsg).fadeOut(50000);                    
+                     $('#view_ermsg').css("background-color","yellow").text(ermsg).fadeOut(50000);                
                   }
 
               })

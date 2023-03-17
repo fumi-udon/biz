@@ -1,23 +1,19 @@
 @extends('layouts.app')
-@include('layouts.head',['bread_name' => '8h matin'])
+@extends('layouts.head')
 <!-- パンくずリスト -->
 
 @section('content')
-<h4>Bonjour Chantal ! &#128536;</h4>
-<div class="row gx-3">
-    <div class="col-md-12 center-block">
+<!-- @Fumi old -->
+<!-- @Fumi old end-->
 
+<main class="container">
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+	<h6 class="border-bottom pb-2 mb-0">Bonjour Chantal ! &#128536;</h6>
+	<div class="d-flex text-muted pt-3">
+		<p class="pb-3 mb-0 small lh-sm border-bottom">
 	@if (@$yes_sato)
-	{{-- サト指示があった場合 --}}
-		<!--サト指示があった場合のみ表示-->
-		<div class="row gx-3">
-			<div class="col-md-12 center-block">
-				<p>
-					<b>&#x1f308;</b> <br>{!! $sato_instruction['override_tx_1'] !!}		
-				</p>
-			</div>
-		</div><!--インライングリッド row end-->
-		<!--サト指示があった場合のみ表示 end-->
+		{{-- サト指示があった場合 --}}
+		&#x1f308;{!! $sato_instruction['override_tx_1'] !!}
 	@else
 	{{-- 通常入力 --}}
 		<form action="task8h" method="post">
@@ -29,25 +25,22 @@
 			<input type="hidden" name="actual_page_id" id="actual_page_id" value="matin8h_page1">
 			</p>
 		</form>
-		@endif
-		</div>
-</div><!--インライングリッド row end -->
-
-@if(Request::is('task8h'))
-<!--task8hのページのみ表示  -->
+	@endif	
+		</p>
+	</div>
+	@if(Request::is('task8h'))
+	<!--task8hのページのみ表示  -->
 	{{-- 通常指示 --}}
-		<!--今日の指示 （Ramen / Udon）-->
-		<div class="row gx-3">
-			<div class="col-md-12 center-block">
-				<p><b>&#129508; ramen mélangé : </b> {{ $rmn_today }}</p>
-				<p><b>&#9889; udon coupe : </b>{{ $udon_today }}</p>
-			</div>
-		</div><!--今日の指示 （Ramen / Udon）end-->
-@endif
-
+	<div class="text-muted pt-3">
+		<p class="pb-3 mb-0 small lh-sm border-bottom">            
+			<p><b>&#129508; ramen mélangé : </b> {{ $rmn_today }}<br></p>
+			<p><b>&#9889; udon coupe : </b>{{ $udon_today }}</p>
+		</p>
+	</div>
+	@endif
 <!--テスト　デバック-->
-
+	</div>
+</div>
 @endsection
 
-@section('footer')
-@endsection
+@extends('layouts.footer')

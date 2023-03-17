@@ -1,35 +1,9 @@
 @extends('layouts.app')
 <!-- パンくずリスト -->
-@include('layouts.head',['bread_name' => 'admin'])
+@extends('layouts.head')
 @section('content')
 
-<div class="container p-1">
-	<div class="row">
-	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-	<div class="container-fluid">
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-		<ul class="navbar-nav">
-			<li class="nav-item">
-			<a class="nav-link active" aria-current="page" href="/index_finance">finance</a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link active" aria-current="page" href="/conso">conso</a>
-			</li>
-		</ul>
-		</div>
-	</div>
-	</nav>
-	</div><!--row end-->
-</div><!--container end-->
-
-<div class="row gx-3">
-    <div class="col-md-12 center-block">
-		<h3>Admin Page</h3>
-	</div>
-</div>
+<main class="container">
 
 @if($action_message)
 <!-- アクションメッセージ表示 -->
@@ -40,9 +14,15 @@
   <p> {{ session('sato_content') }}</p>
 </div>
 @endif
-
-<div class="row gx-3">
-    <div class="col-md-12 center-block">
+<div class="d-flex align-items-center p-3 my-3 text-white bg-fumi-1 rounded shadow-sm">
+	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
+	<div class="lh-1">
+		<h1 class="h6 mb-0 text-white lh-1">サト指示ページ</h1>
+		<small>sato data</small>
+	</div>
+</div>
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+	<div class=" text-muted pt-3 pb-3">
 		<form method='POST' action="{{ route('update',['btn' => 'ramen']) }}">
             @csrf
 			<p></h4>らーめん 切る数</h4></p>
@@ -62,8 +42,8 @@
 </div><!--インライングリッド row end -->
 <hr/>
 <!-- Udon エリア start -->
-<div class="row gx-3">
-    <div class="col-md-12 center-block">
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+	<div class=" text-muted pt-3 pb-3">
 		<form method='POST' action="{{ route('update',['btn' => 'udon']) }}">
             @csrf
 			<p>
@@ -92,13 +72,9 @@
 <!-- Udon エリア end -->
 <hr/>
 <!-- sato独自指示 エリア end -->
-<div class="row gx-3">
-    <div class="col-md-12 center-block">
-		<h4> サト手動指示 </h4>
-	</div>
-</div>
-<div class="row gx-3">
-    <div class="col-md-12 center-block">
+<div class="my-3 p-3 bg-body rounded shadow-sm">
+	<div class=" text-muted pt-3 pb-3">
+	<h4> サト手動指示 </h4>
 	<form method='POST' action="{{ route('admin.store',['btn' => 'sato']) }}">
         @csrf
 		<div class="row mb-3">
@@ -127,36 +103,34 @@
 <hr/>
 
 <!--container ストック残表示-->
-<div class="container px-4 p-3">
-<div class="row gx-3">
-    <div class="col-md-12 center-block">
-		<h5>StockIngredient テーブル </h5>
+	<div class="my-3 p-3 bg-body rounded shadow-sm">
+		<div class=" text-muted pt-3 pb-3">
+			<h5>StockIngredient テーブル </h5>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+				<th scope="col">日付</th>
+				<th scope="col">うどん</th>
+				<th scope="col">米</th>
+				<th scope="col">ブイヨン</th>
+				</tr>
+			</thead>
+			<tbody>
+			@foreach ($stock_ingredients as $stock_ingredient)
+				<tr>
+				<th>{{ $stock_ingredient->registre_date }}</th>
+				<td>{{ $stock_ingredient->udon }}</td>
+				<td>{{ $stock_ingredient->riz }}</td>
+				<td>{{ $stock_ingredient->bouillons }} L</td>
+				</tr>
+			@endforeach
+			</tbody>
+		</table>
 	</div>
-</div>
-<div class="row gx-1">
-<table class="table">
-	<thead>
-		<tr>
-		<th scope="col">日付</th>
-		<th scope="col">うどん</th>
-		<th scope="col">米</th>
-		<th scope="col">ブイヨン</th>
-		</tr>
-	</thead>
-	<tbody>
-	@foreach ($stock_ingredients as $stock_ingredient)
-		<tr>
-		<th>{{ $stock_ingredient->registre_date }}</th>
-		<td>{{ $stock_ingredient->udon }}</td>
-		<td>{{ $stock_ingredient->riz }}</td>
-		<td>{{ $stock_ingredient->bouillons }} L</td>
-		</tr>
-	@endforeach
-	</tbody>
-</table>
-</div><!--row end-->
-</div><!--container end-->
+	<!--row end-->
+
+</main>
 @endsection
 
-@section('footer')
-@endsection
+@extends('layouts.footer')
