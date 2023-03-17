@@ -4,11 +4,11 @@
 @section('content')
 <!--fumi new start-->
 <main class="container">
-<div class="d-flex align-items-center p-3 my-3 text-white bg-fumi-1 rounded shadow-sm">
+<div class="d-flex align-items-center p-3 my-3 text-white bg-pink rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">
 		<h1 class="h6 mb-0 text-white lh-1">食材消費履歴</h1>
-		<small>order data</small>
+		<small>consomation</small>
 	</div>
 </div>
 
@@ -16,26 +16,29 @@
 	<div class=" text-muted pt-3 pb-3">
 		{{-- 通常指示 --}}
 		<!--日付入力エリア-->
-		<div class="row gx-3">
-			<div class="col-md-12 center-block p-3">
 			{{-- 日付 対象商品入力 --}}
 			<form action="search" method="post">
 			@csrf		
 				<div class="input-group mb-3">
-					<div class="input-group-prepend p-3">
+					<div class="input-group-prepend">
 						<button class="btn btn-outline-secondary" type="submit">Submit</button>
 					</div>
-						<input type="date" id="input_date" name="input_date" 
-						value="{{ Session::get('input_date') }}" class="form-control" 
-						placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
+					<div class="input-group-prepend">
+						<select class="form-select" id="shop_list" name="shop_list" required>
+							@foreach ($shops as $shop)
+								<option value="{{ $shop['id'] }}" @if( Session::get('shop_now')  == $shop['id'] ) selected @endif> {{ $shop['name'] }} </option>
+							@endforeach
+						</select>
+					</div>
+					<input type="date" id="input_date" name="input_date" 
+					value="{{ Session::get('input_date') }}" class="form-control" 
+					placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
 				</div>
 				<input type="hidden" name="actual_page_id" id="actual_page_id" value="search_post">
 			</form>
-			</div>
-		</div>
 	</div>
-	{{-- 検索結果表示 start--}}
-	@if(Request::is('search'))
+	{{-- 検索結果表示 start BistroNippon --}}
+	@if(Request::is('search') && Session::get('shop_now')  == 'main' )
 	<div class="d-flex text-muted pt-3">
 		<!--container データ表示-->
 		<div class="container px-4 p-3">
@@ -154,9 +157,16 @@
 			</div><!--row end--><!--row end-->
 		</div><!--container end paikos_ary -->
 	@endif
-	{{-- 検索結果表示 END--}}
+	{{-- 検索結果表示 BistroNippon END--}}
 
+	{{-- 検索結果表示 CurryKitano start --}}
+	@if(Request::is('search') && Session::get('shop_now')  == 'currykitano' )
+	<div class="d-flex text-muted pt-3">
+		Curry Kitano　用エリア　開発中
 	</div>
+	@endif
+	{{-- 検索結果表示 CurryKitano end --}}
+	
 </div>
 
 </main>

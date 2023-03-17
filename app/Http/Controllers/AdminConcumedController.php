@@ -26,15 +26,15 @@ class AdminConcumedController extends Controller
         $inputs = $request->all();
         // リクエストデータ取得
         $input_date = $inputs['input_date'];
+        $shop = $inputs['shop_list'];
         //dd($input_date);
         // session 格納
         \Session::flash('input_date', $input_date);
+        \Session::flash('shop_now', $shop);
 
         // [食材消費量] Curl https通信＿SSL エラー回避
-        // $aujourdhui = now()->format("Y-m-d");
         $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
-            //'store' => 'currykitano',
-            'store' => 'main',
+            'store' => $shop,
             'date' => $input_date,
         ]);
 
@@ -48,11 +48,9 @@ class AdminConcumedController extends Controller
 
         //お米データ取得 collectionクラスが格納される (RIZ用)
         $rice_collections_ary = [];
-        //お米使う商品名 TODO conf ファイルから取得
-        $riz_plats_name = 'DONBURI,ONIGIRI,ENFANT RIZ,RIZ BLANC';
-        $riz_types_name = 'DONBURI,RIZ,RIZ BLANC';
-
-        //dd ($collections);
+        //お米使う商品名 
+        $riz_plats_name = Config::get('product_names.riz_plats_name');        
+        $riz_types_name = Config::get('product_names.riz_types_name');
 
         // fumi独自クラス
         $fumi_tools =new FumiTools();
@@ -170,6 +168,10 @@ class AdminConcumedController extends Controller
         }
         $paikos_ary = array('Type/Enfant'=> $type_total, 'Paiko (tapas)'=> $plat_total, 'Dunburi/Udon Katsu'=> $katsu_total);
 
+        // [画面表示用 設定] 
+        // SelectBox初期化 店リスト  
+        $shops = $this->get_shop_list();
+
         return view('admin/admin_consumed', compact(
                 "product_collect",
                 "extra_collect",
@@ -179,7 +181,9 @@ class AdminConcumedController extends Controller
                 "udon_datas",
                 "total_qty_udn",
                 "paikos_ary",
-                "riz_resultats"));
+                "riz_resultats",
+                "shops"
+        ));
     }
 
     /**
@@ -191,11 +195,27 @@ class AdminConcumedController extends Controller
     {
         ini_set('display_errors', 'Off');
         $action_message = null;
-        // if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
-        //     //管理者認証エラー
-        //     $action_message = "[食材消費ページ不正アクセス] 認証エラーがありました。";
-        //     return view('welcome', compact('action_message'));
-        // }
-        return view('admin/admin_consumed', compact('action_message'));
+
+        // select ボックス要素作成
+        $shops = $this->get_shop_list();
+
+        return view('admin/admin_consumed', compact('action_message','shops'));
+    }
+
+    /**
+     * select box 作成 shop. 
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function get_shop_list($arg = null)
+    {
+
+        // select ボックス要素作成
+        $shops = collect([
+            ['id' => 'main', 'name' => 'bistro nippon'],
+            ['id' => 'currykitano', 'name' => 'curry kitano'],
+        ]);
+
+        return $shops;
     }
 }
