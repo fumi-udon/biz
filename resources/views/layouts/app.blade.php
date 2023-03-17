@@ -30,10 +30,15 @@
     
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/offcanvas.css') }}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('css/fumi.css') }}" rel="stylesheet">
 
   </head>
     <body class="bg-light">
     @yield('head')
+    @env('local')
+      <div class="m-2"><h3>ローカル環境</h3></div>                
+    @endenv
     @yield('content')
     @yield('footer')
     </body>

@@ -1,0 +1,13 @@
+/* 横スクロールさせたい要素の親要素 */
+.box {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none; /* IE, Edge 対応 */
+  scrollbar-width: none; /* Firefox 対応 */
+}
+ 
+/*横スクロール要素*/
+.item {
+  display: inline-block;
+}

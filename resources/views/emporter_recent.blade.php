@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @extends('layouts.head')
-<!-- パンくずリスト -->
-
+<!-- test -->
 @section('content')
 <main class="container">
 <div class="d-flex align-items-center p-3 my-3 text-white bg-fumi-1 rounded shadow-sm">
@@ -28,7 +27,7 @@
 		<form id='form_emp1' action="{{ route('search.index') }}" method="post" class="mx-1">
 		@csrf		
 			<div class="form-group d-flex">
-				<div class="col-sm-2 m-1">
+				<div class="col-sm-4 m-1">
 					<select class="form-select" id="type_list" name="type_list" required>
 						@foreach ($types as $type)
 							<option value="{{ $type['id'] }}" @if( Session::get('type_now')  == $type['id'] ) selected @endif> {{ $type['name'] }} </option>
@@ -64,13 +63,13 @@
 
 	{{-- 検索結果表示 start--}}
 	@if(Request::is('emporter_search'))
-	<div class="my-3 p-3 bg-body rounded">
+	<div class="my-3 p-3 bg-body rounded box">
 		<div class="row gx-3">
-			<div class="col-md-12 center-block p-3">
+			<div class="col-md-12 center-block p-3" >
 				検索結果
 				<p>
 			@if(isset($result))
-				<table class="table">
+				<table class="table item">
 				<thead class="thead-dark">
 					<tr>
 					<th scope="col">Printed datetime</th>
