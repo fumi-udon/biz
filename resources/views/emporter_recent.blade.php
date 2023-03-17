@@ -27,29 +27,29 @@
 		{{-- 日付 対象商品入力 --}}
 		<form id='form_emp1' action="{{ route('search.index') }}" method="post">
 		@csrf		
-		<div class="input-group mb-3">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+						<select class="form-select" id="type_list" name="type_list" required>
+							@foreach ($types as $type)
+								<option value="{{ $type['id'] }}" @if( Session::get('type_now')  == $type['id'] ) selected @endif> {{ $type['name'] }} </option>
+							@endforeach
+						</select>
+				</div>
+				<div class="input-group-prepend">
+						<select class="form-select" id="shop_list" name="shop_list" required>
+							@foreach ($shops as $shop)
+								<option value="{{ $shop['id'] }}" @if( Session::get('shop_now')  == $shop['id'] ) selected @endif> {{ $shop['name'] }} </option>
+							@endforeach
+						</select>
+				</div>
+				<input type="date" id="input_date" name="input_date" 
+					value="{{ Session::get('input_date') }}" class="form-control" 
+					placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
+			</div>
+			<input type="hidden" name="actual_page_id" id="actual_page_id" value="search_post">
 			<div class="input-group-prepend">
 				<button class="btn btn-outline-secondary" type="submit" id='btn_emp' name='btn_emp' >submit</button>
 			</div>
-			<div class="input-group-prepend">
-					<select class="form-select" id="type_list" name="type_list" required>
-						@foreach ($types as $type)
-							<option value="{{ $type['id'] }}" @if( Session::get('type_now')  == $type['id'] ) selected @endif> {{ $type['name'] }} </option>
-						@endforeach
-					</select>
-			</div>
-			<div class="input-group-prepend">
-					<select class="form-select" id="shop_list" name="shop_list" required>
-						@foreach ($shops as $shop)
-							<option value="{{ $shop['id'] }}" @if( Session::get('shop_now')  == $shop['id'] ) selected @endif> {{ $shop['name'] }} </option>
-						@endforeach
-					</select>
-			</div>
-			<input type="date" id="input_date" name="input_date" 
-				value="{{ Session::get('input_date') }}" class="form-control" 
-				placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
-		</div>
-		<input type="hidden" name="actual_page_id" id="actual_page_id" value="search_post">
 		</form>
 		</div>
 	</div>
