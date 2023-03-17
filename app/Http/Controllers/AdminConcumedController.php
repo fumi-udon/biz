@@ -16,6 +16,25 @@ use App\FumiLib\AdminConcumedTools;
 class AdminConcumedController extends Controller
 {
     /**
+     * キタノ用. 検索
+     * 
+     * @return view
+     */
+    public function search_kitano($inputs, $collections)
+    {
+        $shops = $this->get_shop_list();
+
+        // [商品] Start
+        // 該当日の商品の消費量を全て（product_names.php定義）取得し
+        // 商品名 => 消費数量 のcollectionクラスをreturnする.
+        $product_seach_name = explode(',', Config::get('product_names.ki_product_names'));        
+        $resultat_products = AdminConcumedTools::get_product_consodatas($collections, $product_seach_name);   
+        $product_collect = collect($resultat_products);
+        // [商品] End
+        // view
+        return $product_collect;
+    }
+    /**
      * conso. 検索
      * 
      * @return \Illuminate\Contracts\Support\Renderable
@@ -27,18 +46,33 @@ class AdminConcumedController extends Controller
         // リクエストデータ取得
         $input_date = $inputs['input_date'];
         $shop = $inputs['shop_list'];
-        //dd($input_date);
         // session 格納
         \Session::flash('input_date', $input_date);
         \Session::flash('shop_now', $shop);
+
+        // [画面表示用 設定] 
+        // SelectBox初期化 店リスト  
+        $shops = $this->get_shop_list();
 
         // [食材消費量] Curl https通信＿SSL エラー回避
         $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
             'store' => $shop,
             'date' => $input_date,
         ]);
-
         $collections = collect($response->json());
+
+        if($shop == 'currykitano'){
+            // キタノの場合の処理
+            $product_collect = collect($this->search_kitano($inputs, $collections));
+
+            // view
+            return view('admin/admin_consumed', compact(
+                    "product_collect",
+                    "shops"
+            ));
+
+        }else{
+            // ビストロ日本の場合の処理
         $total_qty_rmn = 0;
         $total_qty_udn = 0;        
         $ramen_datas = [];
@@ -167,6 +201,8 @@ class AdminConcumedController extends Controller
             }
         }
         $paikos_ary = array('Type/Enfant'=> $type_total, 'Paiko (tapas)'=> $plat_total, 'Dunburi/Udon Katsu'=> $katsu_total);
+
+        } // 　else end ビストロ日本終了 end
 
         // [画面表示用 設定] 
         // SelectBox初期化 店リスト  

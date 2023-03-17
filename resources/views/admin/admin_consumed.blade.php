@@ -161,9 +161,14 @@
 
 	{{-- 検索結果表示 CurryKitano start --}}
 	@if(Request::is('search') && Session::get('shop_now')  == 'currykitano' )
-	<div class="d-flex text-muted pt-3">
-		Curry Kitano　用エリア　開発中
-	</div>
+		<div class="text-muted pt-3">
+			<h4>消費量</h4>
+			@foreach ($product_collect as $item)
+				@foreach ($item as $key => $val)
+					<p>{{ $key }} : {{ $item[$key] }}</p>
+				@endforeach
+			@endforeach
+		</div>
 	@endif
 	{{-- 検索結果表示 CurryKitano end --}}
 	

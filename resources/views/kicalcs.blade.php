@@ -9,18 +9,22 @@
         <img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
         <div class="lh-1">
             <h1 class="h6 mb-0 text-white lh-1">curry kitano</h1>
-            <small></small>
+            <small>calc</small>
         </div>
     </div>
 
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Bouillons</h6>
-        <div class="text-muted pt-3">
-          <p class="pb-3 mb-0 small lh-sm border-bottom">
-            <input type="number" id="number" name="number" value="" style="font-size:2em;width:140px;border: 1px solid gray;border-radius: 5px;">
-            <input type="submit" value="click" onclick="calcurry()" style="" class="btn btn-outline-primary"> 
-         </p>
+    <div class="my-3 p-2 bg-body rounded shadow-sm">
+
+        <div class="form-group-lg d-flex">
+            <label class="control-label me-2" for="lg">Bouillons</label>
+            <div class="col-sm-3">
+                <input class="form-control input-lg" id="number" name="number" type="number">
+            </div>
+            <div class="col-sm-5 ms-1">
+                <button type="submit" class="btn btn-primary" onclick="calcurry()">calc</button>
+            </div>                
         </div>
+
 
         <p class="pb-3 mb-0 small lh-sm">
             <div class="col-md-6"> <p>PATE DU CURRY: <span id="roux" style="color:red;"></span> g</p></div>
