@@ -16,35 +16,41 @@
 	<div class=" text-muted pt-3 pb-3">
 		{{-- 通常指示 --}}
 		<!--日付入力エリア-->
-			{{-- 日付 対象商品入力 --}}
-			<form action="search" method="post">
-			@csrf		
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<button class="btn btn-outline-secondary" type="submit">Submit</button>
-					</div>
-					<div class="input-group-prepend">
-						<select class="form-select" id="shop_list" name="shop_list" required>
-							@foreach ($shops as $shop)
-								<option value="{{ $shop['id'] }}" @if( Session::get('shop_now')  == $shop['id'] ) selected @endif> {{ $shop['name'] }} </option>
-							@endforeach
-						</select>
-					</div>
-					<input type="date" id="input_date" name="input_date" 
-					value="{{ Session::get('input_date') }}" class="form-control" 
-					placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
-				</div>
-				<input type="hidden" name="actual_page_id" id="actual_page_id" value="search_post">
-			</form>
+		{{-- 日付 対象商品入力 --}}
+		<form action="search" method="post">
+		@csrf
+		<div class="form-group">
+			<div class="input-group col-sm-3 m-1">
+				<span class="input-group-text" id="basic-addon3">SHOP</span>
+				<select class="form-select" id="shop_list" name="shop_list" required>
+				@foreach ($shops as $shop)
+					<option value="{{ $shop['id'] }}" @if( Session::get('shop_now')  == $shop['id'] ) selected @endif> {{ $shop['name'] }} </option>
+				@endforeach
+				</select>      
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="input-group col-sm-3 m-1">
+				<span class="input-group-text" id="basic-addon3">DATE</span>
+				<input type="date" id="input_date" name="input_date" 
+						value="{{ Session::get('input_date') }}" class="form-control" 
+						placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
+			</div>
+			<div class="input-group col-sm-2 m-1">
+				<button class="btn btn-info" type="submit" id='btn_emp' name='btn_emp' >Get data!</button>				           
+			</div>		
+		</div>
+		</form>
 	</div>
 	{{-- 検索結果表示 start BistroNippon --}}
 	@if(Request::is('search') && Session::get('shop_now')  == 'main' )
-	<div class="d-flex text-muted pt-3">
+	<div class="d-flex text-muted pt-1">
 		<!--container データ表示-->
-		<div class="container px-4 p-3">
-			<div class="row gy-3 px-3">
-				<div class="p-2 col-md-12">
-				<h4>Ramen消費数カウント: {{ $total_qty_rmn }}</h4>
+		<div class="container">
+			<div class="row gy-3">
+				<div class="col-md-12">
+				<h4>Ramen消費数: {{ $total_qty_rmn }}</h4>
 				<table class="table">
 					<thead>
 						<tr>
@@ -72,7 +78,7 @@
 			<hr>
 			<div class="row gy-3 px-3">
 				<div class="p-2 col-md-12">
-				<h4>Udon消費数カウント: {{ $total_qty_udn }}</h4>
+				<h4>Udon消費数: {{ $total_qty_udn }}</h4>
 				<table class="table">
 					<thead>
 						<tr>
@@ -161,8 +167,8 @@
 
 	{{-- 検索結果表示 CurryKitano start --}}
 	@if(Request::is('search') && Session::get('shop_now')  == 'currykitano' )
-		<div class="text-muted pt-3">
-			<h4>消費量</h4>
+		<div class="text-muted pt-1">
+			<h5>消費量</h5>
 			@foreach ($product_collect as $item)
 				@foreach ($item as $key => $val)
 					<p>{{ $key }} : {{ $item[$key] }}</p>

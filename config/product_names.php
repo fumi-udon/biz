@@ -18,7 +18,7 @@ return [
     | キタノ用 商品名 Name https://bistronippon.currykitano.tn/search に表示される。
     |--------------------------------------------------------------------------
     */
-    'ki_product_names' => 'Udn,C Rice,gyz veg 10 p,F-Chicken',
+    'ki_product_names' => 'C Udon,C Rice,F-Chicken,croquettes,sld',
     'ki_type_names' => 'type_names,type_names2,type_names3',
     'ki_extra_names' => '',
 ];
