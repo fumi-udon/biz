@@ -45,16 +45,16 @@
 			</div>
 
 			<div class="form-group d-flex">
-				<div class="col-sm-2 m-1">
+				<div class="col-sm-5 m-1">
 					<input type="date" id="input_date" name="input_date" 
 						value="{{ Session::get('input_date') }}" class="form-control" 
 						placeholder="日付入力してください" aria-label="" aria-describedby="basic-addon1" required>
 				</div>
-				<div class="col-sm-2 m-1">
+				<div class="col-sm-6 m-1">
 					<button class="btn btn-info" type="submit" id='btn_emp' name='btn_emp' >Get data!</button>
 				</div>           
 			</div>
-			
+
 		</form>
 		</div>
 	</div>
