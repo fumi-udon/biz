@@ -169,23 +169,24 @@
 
 	{{-- 検索結果表示 CurryKitano start --}}
 	@if(Request::is('search') && Session::get('shop_now')  == 'currykitano' )
-		<div class="text-muted pt-1">
-			<h5>消費量</h5>
+		<div class="text-body ms-3 w-50">
+			<hr>
+			<h6>消費量</h6>
+			<ul class="list-group list-group-flush">
 			@foreach ($product_collect as $item)
 				@foreach ($item as $key => $val)
-					<p>{{ $key }} : {{ $item[$key] }}</p>
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						{{ $key }}
+						<span class="badge badge-primary badge-pill" style="background-color: blue !important; color: white !important;">{{ $item[$key] }}</span>
+					</li>
 				@endforeach
 			@endforeach
+			</ul>
 		</div>
 	@endif
-	{{-- 検索結果表示 CurryKitano end --}}
-	
+	{{-- 検索結果表示 CurryKitano end --}}	
 </div>
-
 </main>
-
 <!--fumi new end-->
-<script src="{{ asset('js/admin_consumed.js') }}" ></script>
-
 @endsection
 @extends('layouts.footer')
