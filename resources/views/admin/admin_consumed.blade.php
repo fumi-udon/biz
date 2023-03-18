@@ -50,8 +50,9 @@
 		<div class="container">
 			<div class="row gy-3">
 				<div class="col-md-12">
-				<h4>Ramen消費数: {{ $total_qty_rmn }}</h4>
-				<table class="table">
+				<h4>Ramen消費数: {{ $total_qty_rmn }} </h4>
+				<p class="m-2"><a href="javascript:void(0)" id="rmn_open">詳細</a> <a href="javascript:void(0)" id="rmn_close">Close</a></p>
+				<table class="table" id="rmn_record" style="display:none;">
 					<thead>
 						<tr>
 						<th scope="col">注文番号</th>
@@ -76,10 +77,11 @@
 				</div>
 			</div><!--row end-->
 			<hr>
-			<div class="row gy-3 px-3">
-				<div class="p-2 col-md-12">
+			<div class="row gy-3">
+			<div class="col-md-12">
 				<h4>Udon消費数: {{ $total_qty_udn }}</h4>
-				<table class="table">
+				<p class="m-2"><a href="javascript:void(0)" id="udn_open">詳細</a> <a href="javascript:void(0)" id="udn_close">Close</a></p>
+				<table class="table" id="udn_record" style="display:none;">
 					<thead>
 						<tr>
 						<th scope="col">注文番号</th>
@@ -104,7 +106,7 @@
 				</div>
 			</div><!--row end-->
 			<hr>
-			<div class="row gx-3 p-3">
+			<div class="row gx-3">
 				<div class="col-md-4 center-block">
 				<h4>Paiko消費数カウント</h4>
 				@foreach ($paikos_ary as $key => $val)
@@ -113,7 +115,7 @@
 				</div>
 			</div><!--row end-->
 			<hr>
-			<div class="row gx-3 p-3">
+			<div class="row gx-3">
 				<div class="col-md-4 center-block">
 				<h4>米消費</h4>
 				@foreach ($riz_resultats as $item)
@@ -131,7 +133,7 @@
 				@endforeach
 				</div>
 			</div><!--row end-->
-			<div class="row gx-3 p-3">
+			<div class="row gx-3">
 				<div class="col-md-4 center-block">
 				<h4>エクストラ検索</h4>
 				@foreach ($extra_collect as $item)
@@ -141,7 +143,7 @@
 				@endforeach
 				</div>
 			</div><!--row end-->
-			<div class="row gx-3 p-3">
+			<div class="row gx-3">
 				<div class="col-md-4 center-block">
 				<h4>商品消費量</h4>
 				@foreach ($product_collect as $item)
@@ -151,7 +153,7 @@
 				@endforeach
 				</div>
 			</div>
-			<div class="row gx-3 p-3">
+			<div class="row gx-3">
 				<div class="col-md-4 center-block">
 				<h4>餃子消費量</h4>
 				@foreach ($gyoza_collect as $item)
@@ -181,8 +183,9 @@
 </div>
 
 </main>
-<!--fumi new end-->
 
+<!--fumi new end-->
+<script src="{{ asset('js/admin_consumed.js') }}" ></script>
 
 @endsection
 @extends('layouts.footer')

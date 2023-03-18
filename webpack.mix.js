@@ -16,6 +16,7 @@ mix.js( 'resources/js/app.js', 'public/js' )
 .js( 'resources/js/currypateculs.js', 'public/js' )
 .js( 'resources/js/fumi0214.js', 'public/js' )
 .js( 'resources/js/fumi0307.js', 'public/js' )
+.js( 'resources/js/admin_consumed.js', 'public/js' )
 .autoload( {
     "jquery": [ '$', 'window.jQuery' ],
 } )

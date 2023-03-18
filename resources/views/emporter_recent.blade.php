@@ -54,8 +54,6 @@
 					<button class="btn btn-info" type="submit" id='btn_emp' name='btn_emp' >Get data!</button>				           
 				</div>		
 			</div>
-
-
 		</form>
 		</div>
 	</div>

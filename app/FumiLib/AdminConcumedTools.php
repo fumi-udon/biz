@@ -96,14 +96,8 @@ class AdminConcumedTools
                 // ※注文毎の処理
                 // order: 各テーブル毎の注文データ（全員分の商品格納）
                 $items = collect($order['items']);
-                // items: テーブル単位の注文商品データ群(type/extraの情報が格納)
-                $filtered = $items->filter(function ($product) {
-                    // 提供済のみフィルター
-                    return $product['is_served'] == 1;
-                });
-
                 // 注文単位でkey（商品名）に一致したデータ 例＞TABLE1のramen sojaの数 等
-                $collect_by_key = $filtered->filter(function ($unit) use ($key) {
+                $collect_by_key = $items->filter(function ($unit) use ($key) {
                     return str_contains($unit['product_name_for_staff'], $key);
                 })
                 ->reject(function ($unit) {
