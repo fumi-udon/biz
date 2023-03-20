@@ -83,7 +83,7 @@ class AdminConcumedController extends Controller
         //お米データ取得 collectionクラスが格納される (RIZ用)
         $rice_collections_ary = [];
         //お米使う商品名 
-        $riz_plats_name = Config::get('product_names.riz_plats_name');        
+        $riz_plats_name = Config::get('product_names.riz_plats_name');
         $riz_types_name = Config::get('product_names.riz_types_name');
 
         // fumi独自クラス
@@ -170,11 +170,21 @@ class AdminConcumedController extends Controller
         $tatal_order = [];
         //集計結果
         $riz_resultats = collect();
+        $riz_grammes = [] ;
         foreach ($riz_plats as $key) {
             $tatal_order = $riz_collections->pluck('products.'.$key)->sum();
             $riz_resultats->push([$key => $tatal_order]);
+            $riz_grammes[] = Config::get('product_names.'.$key) * $tatal_order;            
         }
         //dd($riz_resultats);
+        // 米の消費量合計
+        foreach($extra_collect as $key => $array){
+            if (isset($array["riz"])) {
+                $value = $array["riz"];
+                $riz_grammes[] = Config::get('product_names.RIZ') * $value;
+            } 
+        }
+        $riz_grammes_total = array_sum($riz_grammes);
     // rice end
 
     // paiko start
@@ -205,8 +215,9 @@ class AdminConcumedController extends Controller
         } // 　else end ビストロ日本終了 end
 
         // [画面表示用 設定] 
-        // SelectBox初期化 店リスト  
+        // SelectBox初期化 店リスト   
         $shops = $this->get_shop_list();
+        \Session::flash('riz_g', Config::get('product_names.RIZ'));
 
         return view('admin/admin_consumed', compact(
                 "product_collect",
@@ -218,6 +229,7 @@ class AdminConcumedController extends Controller
                 "total_qty_udn",
                 "paikos_ary",
                 "riz_resultats",
+                "riz_grammes_total",
                 "shops"
         ));
     }

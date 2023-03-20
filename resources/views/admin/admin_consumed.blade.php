@@ -45,7 +45,7 @@
 	</div>
 	{{-- 検索結果表示 start BistroNippon --}}
 	@if(Request::is('search') && Session::get('shop_now')  == 'main' )
-	<div class="d-flex text-muted pt-1">
+	<div class="d-flex text-body pt-1">
 		<!--container データ表示-->
 		<div class="container">
 			<div class="row gy-3">
@@ -117,7 +117,7 @@
 			<hr>
 			<div class="row gx-3">
 				<div class="col-md-4 center-block">
-				<h4>米消費</h4>
+				<h4>米消費:&#x1f35a; {{ $riz_grammes_total }} グラム / {{ number_format($riz_grammes_total / 330, 1) }}合</h4>
 				@foreach ($riz_resultats as $item)
 					@foreach ($item as $key => $val)
 						<p>{{ $key }} : {{ $item[$key] }}</p>
@@ -126,13 +126,13 @@
 				<p><u>[ Extra_米 ]</u></p>
 				@foreach ($extra_collect as $item)
 					@foreach ($item as $key => $val)
-					@if( $key == 'riz')
+					@if( $key == 'riz')					
 					<p>{{ $key }} : {{ $item[$key] }}</p>
 					@endif				
 					@endforeach
 				@endforeach
 				</div>
-			</div><!--row end-->
+			</div><!--row end riz_g-->
 			<div class="row gx-3">
 				<div class="col-md-4 center-block">
 				<h4>エクストラ検索</h4>
