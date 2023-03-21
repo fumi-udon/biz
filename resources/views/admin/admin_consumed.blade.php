@@ -106,6 +106,24 @@
 				</div>
 			</div><!--row end-->
 			<hr>
+			<div class="row gx-3 my-3">
+				<div class="col-md-4 center-block">
+				<h5>餃子消費</h5>
+				@php
+					$total_gyoza = 0;
+				@endphp
+				@foreach ($gyoza_collect as $item)
+					@foreach ($item as $key => $val)
+						<span>{{ $key }} : {{ $item[$key] }} 個</span><br>
+						@php
+							$total_gyoza += $item[$key]
+						@endphp
+					@endforeach
+				@endforeach				
+				<p class="my-3">合計: {{ @$total_gyoza }} 個</p>
+				</div>
+			</div><!--row end--><!--row end-->
+			<hr>
 			<div class="row gx-3">
 				<div class="col-md-4 center-block">
 				<h5>Paiko消費</h5>
@@ -157,16 +175,7 @@
 				</div>
 			</div>
 			<hr>
-			<div class="row gx-3 my-3">
-				<div class="col-md-4 center-block">
-				<h5>餃子消費量</h5>
-				@foreach ($gyoza_collect as $item)
-					@foreach ($item as $key => $val)
-						<span>{{ $key }} : {{ $item[$key] }} 個</span><br>
-					@endforeach
-				@endforeach
-				</div>
-			</div><!--row end--><!--row end-->
+
 		</div><!--container end paikos_ary -->
 	@endif
 	{{-- 検索結果表示 BistroNippon END--}}
