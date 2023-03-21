@@ -13,7 +13,7 @@
 </div>
 
 <div class="my-3 p-3 bg-body rounded shadow-sm">
-	<div class=" text-muted pt-3 pb-3">
+	<div class=" text-body pt-3 pb-3">
 		{{-- 通常指示 --}}
 		<!--日付入力エリア-->
 		{{-- 日付 対象商品入力 --}}
@@ -45,12 +45,12 @@
 	</div>
 	{{-- 検索結果表示 start BistroNippon --}}
 	@if(Request::is('search') && Session::get('shop_now')  == 'main' )
-	<div class="d-flex text-body pt-1">
+	<div class="text-body pt-1">
 		<!--container データ表示-->
 		<div class="container">
 			<div class="row gy-3">
 				<div class="col-md-12">
-				<h4>Ramen消費数: {{ $total_qty_rmn }} </h4>
+				<h5>Ramen消費数: {{ $total_qty_rmn }} </h5>
 				<p class="m-2"><a href="javascript:void(0)" id="rmn_open">詳細</a> <a href="javascript:void(0)" id="rmn_close">Close</a></p>
 				<table class="table" id="rmn_record" style="display:none;">
 					<thead>
@@ -79,7 +79,7 @@
 			<hr>
 			<div class="row gy-3">
 			<div class="col-md-12">
-				<h4>Udon消費数: {{ $total_qty_udn }}</h4>
+				<h5>Udon消費数: {{ $total_qty_udn }}</h5>
 				<p class="m-2"><a href="javascript:void(0)" id="udn_open">詳細</a> <a href="javascript:void(0)" id="udn_close">Close</a></p>
 				<table class="table" id="udn_record" style="display:none;">
 					<thead>
@@ -108,57 +108,61 @@
 			<hr>
 			<div class="row gx-3">
 				<div class="col-md-4 center-block">
-				<h4>Paiko消費数カウント</h4>
+				<h5>Paiko消費</h5>
 				@foreach ($paikos_ary as $key => $val)
-					<p>{{ $key }}:{{ $val }}</p>
+					<span>{{ $key }}:{{ $val }}</span><br> 
 				@endforeach
 				</div>
 			</div><!--row end-->
 			<hr>
-			<div class="row gx-3">
+			<div class="row gx-3 my-3">
 				<div class="col-md-4 center-block">
-				<h4>米消費:&#x1f35a; {{ $riz_grammes_total }} グラム / {{ number_format($riz_grammes_total / 330, 1) }}合</h4>
+				<h5>米消費</h5> 
+				<p>&#x1f35a; {{ $riz_grammes_total }} グラム / {{ number_format($riz_grammes_total / 330, 1) }}合</p>
 				@foreach ($riz_resultats as $item)
 					@foreach ($item as $key => $val)
-						<p>{{ $key }} : {{ $item[$key] }}</p>
+						<span>{{ $key }} : {{ $item[$key] }}</span><br>
 					@endforeach
 				@endforeach
-				<p><u>[ Extra_米 ]</u></p>
+				<span><u>[ Extra_米 ]</u></span>
 				@foreach ($extra_collect as $item)
 					@foreach ($item as $key => $val)
 					@if( $key == 'riz')					
-					<p>{{ $key }} : {{ $item[$key] }}</p>
+					<span>{{ $key }} : {{ $item[$key] }}</span><br>
 					@endif				
 					@endforeach
 				@endforeach
 				</div>
 			</div><!--row end riz_g-->
-			<div class="row gx-3">
+			<hr>
+			<div class="row gx-3 my-3">
 				<div class="col-md-4 center-block">
-				<h4>エクストラ検索</h4>
+				<h5>エクストラ</h5>
 				@foreach ($extra_collect as $item)
 					@foreach ($item as $key => $val)
-						<p>{{ $key }} : {{ $item[$key] }}</p>
+						<span>{{ $key }} : {{ $item[$key] }}</span><br>
 					@endforeach
 				@endforeach
 				</div>
 			</div><!--row end-->
-			<div class="row gx-3">
+			<hr>
+			<div class="row gx-3 my-3">
 				<div class="col-md-4 center-block">
-				<h4>商品消費量</h4>
+				<h5>商品消費量</h5>
 				@foreach ($product_collect as $item)
 					@foreach ($item as $key => $val)
-						<p>{{ $key }} : {{ $item[$key] }}</p>
+						<span>{{ $key }} : {{ $item[$key] }}</span><br>
 					@endforeach
 				@endforeach
 				</div>
 			</div>
-			<div class="row gx-3">
+			<hr>
+			<div class="row gx-3 my-3">
 				<div class="col-md-4 center-block">
-				<h4>餃子消費量</h4>
+				<h5>餃子消費量</h5>
 				@foreach ($gyoza_collect as $item)
 					@foreach ($item as $key => $val)
-						<p>{{ $key }} : {{ $item[$key] }} 個</p>
+						<span>{{ $key }} : {{ $item[$key] }} 個</span><br>
 					@endforeach
 				@endforeach
 				</div>
