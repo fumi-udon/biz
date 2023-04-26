@@ -15,6 +15,8 @@
 
     <div class="my-3 p-2 bg-body rounded shadow-sm">
 
+    <form class="" name="form_adpage2" id="form_adpage2" method="post" action="javascript:void(0)">
+        @csrf
         <div class="form-group-lg d-flex">
             <label class="control-label me-2" for="lg">Bouillons</label>
             <div class="col-sm-3">
@@ -22,14 +24,13 @@
             </div>
             <div class="col-sm-5 ms-1">
                 <button type="submit" class="btn btn-primary" onclick="calcurry()">calc</button>
-            </div>                
+            </div>      
         </div>
-
-
-        <p class="pb-3 mb-0 small lh-sm">
-            <div class="col-md-6"> <p>PATE DU CURRY: <span id="roux" style="color:red;"></span> g</p></div>
-            <div class="col-md-6"> <p>POUDRE: <span id="poud" style="color:red;"></span> g</p></div>
-        </p>
+            <p class="pb-3 mb-0 small lh-sm">
+                <div class="col-md-6"> <p>PATE DU CURRY: <span id="roux" style="color:red;"></span> g</p></div>
+                <div class="col-md-6"> <p>POUDRE: <span id="poud" style="color:red;"></span> g</p></div>
+            </p>  
+    </form>
 
     </div>
 </main>

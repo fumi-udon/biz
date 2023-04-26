@@ -20,6 +20,7 @@ Auth::routes();
 
 use App\Http\Controllers\KicalcsController;
 Route::get('/calcs', [KicalcsController::class, 'index']);
+Route::post('/reg_amounts', [KicalcsController::class, 'reg_amounts']);
 
 // コントローラを使う宣言 
 use App\Http\Controllers\TaskOrderController;
