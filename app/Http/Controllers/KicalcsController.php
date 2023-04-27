@@ -29,7 +29,14 @@ class KicalcsController extends Controller
      */
     public function index()
     {
-        return view('kicalcs');
+        // 過去20日間の計量データ取得 
+        $twentyDaysAgo = \Carbon\Carbon::now()->subDays(20);
+        $cry_datas = KitanoCurryAmount::where('created_at', '>=', $twentyDaysAgo)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        Log::debug($cry_datas);
+        return view('kicalcs', compact('cry_datas'));
     }
 
    /**

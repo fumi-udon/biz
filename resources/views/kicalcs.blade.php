@@ -14,7 +14,6 @@
     </div>
 
     <div class="my-3 p-2 bg-body rounded shadow-sm">
-
     <form class="" name="form_adpage2" id="form_adpage2" method="post" action="javascript:void(0)">
         @csrf
         <div class="form-group-lg d-flex">
@@ -31,8 +30,34 @@
                 <div class="col-md-6"> <p>POUDRE: <span id="poud" style="color:red;"></span> g</p></div>
             </p>  
     </form>
-
     </div>
+    <hr>
+			<div class="row gy-3">
+			<div class="col-md-12">
+				<h5>計量データ</h5>
+				
+				<table class="table" id="cry_record" style="">
+					<thead>
+						<tr>
+						<th scope="col">日付</th>
+						<th scope="col">ブイヨン</th>
+						<th scope="col">ルー</th>
+						<th scope="col">魔法の粉</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach ($cry_datas as $datas)
+					<tr>
+                        <td>{{ $datas['created_at'] }}</td>
+						<td>{{ $datas['bouillons'] }}</td>
+						<td>{{ $datas['pate'] }}</td>
+						<td>{{ $datas['poudre'] }}</td> 						
+					</tr>
+					@endforeach
+					</tbody>
+				</table>
+			</div>
+			</div><!--row end-->
 </main>
 <!-- end -->
 @endsection
