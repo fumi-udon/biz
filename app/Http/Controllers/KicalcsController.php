@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 
+use App\Models\KitanoCurryAmount;
+
 class KicalcsController extends Controller
 {
         /**
@@ -41,15 +43,35 @@ class KicalcsController extends Controller
     {
         Log::debug('やっとだよ。カレー屋');
         Log::debug($request);
+        $inputs = $request->all();
+        // リクエストデータ取得
+        $bouillons = $inputs['number'];
+        Log::debug($bouillons);
 
-        $auth_flg = false;
-        $ermsg = "dummy ermsg";
-        $gourl = "dummy url";
+        $r = $bouillons * 0.155;
+        $roux = floor($r);
+
+        $p = $bouillons * 0.0036;
+        $poudre = floor($p);
+
+        Log::debug($roux);
+        Log::debug($poudre);
+
+        try {
+            $kitano_curry_amount  = new KitanoCurryAmount;
+            $kitano_curry_amount ->bouillons = $bouillons;
+            $kitano_curry_amount ->pate = $roux;
+            $kitano_curry_amount ->poudre = $poudre;
+            $kitano_curry_amount ->save();
+            
+            // 成功時の処理
+        } catch (\Exception $e) {
+            Log::debug($e);
+        }
 
         return response()->json([
-            'auth_flg' => $auth_flg,
-            'gourl' => $gourl,
-            'ermsg' => $ermsg
+            'roux' => $roux,
+            'poudre' => $poudre
          ]);
     }
 }

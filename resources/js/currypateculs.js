@@ -1,13 +1,13 @@
 window.calcurry = function(){
-    var  b = $('#number').val();
-    var r = b * 0.155;
-    var r2 = Math.floor(r);
+    var  bouillons = $('#number').val();
+    var r = bouillons * 0.155;
+    var roux = Math.floor(r);
 
-    var p = b * 0.0036;
-    var p2 = Math.floor(p);
+    var p = bouillons * 0.0036;
+    var poudre = Math.floor(p);
 
-    $("#roux").text(r2);
-    $("#poud").text(p2);
+    $("#roux").text(roux);
+    $("#poud").text(poudre);
 
     // test
     $.ajaxSetup({
@@ -25,7 +25,7 @@ window.calcurry = function(){
           //データの送信先URLを指定
           url: "/reg_amounts",
           dataType: "json",
-          data: senddata,          
+          data: senddata,     
         })
           //通信が成功したとき
           .then((res) => {
