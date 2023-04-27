@@ -30,7 +30,7 @@ class SalesDataByProduct extends Model
         'json_data'
     ];
     
-        /**
+    /**
      * The attributes that should be cast.
      *
      * @var array
