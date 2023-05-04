@@ -2,7 +2,7 @@
 @extends('layouts.head')
 <!-- パンくずリスト stock_record sato_record -->
 @section('content')
-<h4>Bonsoir Chantal ! 15H</h4>
+<h4>Bonsoir ! 15H</h4>
 
 <div class="row gx-3">
     <div class="col-md-12 center-block">

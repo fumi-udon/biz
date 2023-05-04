@@ -8,7 +8,7 @@
 
 <main class="container">
 <div class="my-3 p-3 bg-body rounded shadow-sm">
-	<h6 class="border-bottom pb-2 mb-0">Bonjour Chantal ! &#128536;</h6>
+	<h6 class="border-bottom pb-2 mb-0">Bonjour ! 8H &#128536;</h6>
 	<div class="d-flex text-muted pt-3">
 		<p class="pb-3 mb-0 small lh-sm border-bottom">
 	@if (@$yes_sato)
