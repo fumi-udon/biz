@@ -33,8 +33,8 @@
 	{{-- 通常指示 --}}
 	<div class="text-muted pt-3">
 		<p class="pb-3 mb-0 small lh-sm border-bottom">            
-			<p><b>&#129508; ramen mélangé : </b> {{ $rmn_today }}<br></p>
-			<p><b>&#9889; udon coupe : </b>{{ $udon_today }}</p>
+			<p><b>&#129508; ramen à mélanger et le couper pour aujourd'hui : </b> {{ $rmn_today }}<br></p>
+			<p><b>&#9889; udon à couper pour ce matin : </b>{{ $udon_today }}</p>
 		</p>
 	</div>
 	@endif

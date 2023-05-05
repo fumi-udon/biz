@@ -12,7 +12,7 @@
 			</div>	
 		@elseif ( Session::has('stock_record') )
 		<p>
-			<b>&#9889; Udon pour le soir:  {{ $result }}</b><br>
+			<b>&#9889; Udon à couper pour le soir:  {{ $result }}</b><br>
 		</p>
 		@else
 		<div class="alert alert-danger" role="alert">
