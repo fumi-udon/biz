@@ -3,7 +3,7 @@
 <!-- パンくずリスト -->
 
 @section('content')
-<!-- start -->
+<!-- start スタート-->
 <main class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white bg-kitano rounded shadow-sm">
         <img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
