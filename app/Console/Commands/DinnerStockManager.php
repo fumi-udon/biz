@@ -47,8 +47,8 @@ class DinnerStockManager extends Command
      */
     public function handle()
     {
-        // ovh cron setting 18h00 / 19h00 / 20h00 / 21h00
-        Log::debug('[OVHのCron]米のストック管理');
+        // ovh cron setting 18h00 / 19h00 / 20h00 / 21h00        
+        logger()->info('[FUMI_cron] 米のストック管理');
         $today = (new DateTime())->format('Y-m-d');
         // [食材消費量] Curl https通信＿SSL エラー回避
         $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
