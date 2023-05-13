@@ -74,7 +74,7 @@ class DinnerStockManager extends Command
         logger()->info('[FUMI_cron] 範囲 : '.$startOfDayString.'  - '.$endOfDayString);
         if($riz_dline < $riz_grammes){
             // Mail 送信 OK 済
-            $subject ='Rice alert : conso '.$riz_grammes.' g';
+            $subject ='Rice alert : consomation '.$riz_grammes.' g';
             $body = 'Veuillez vérifier le riz'.'  設定値 / 消費量 : '.$riz_dline.' g / '.$riz_grammes.' g';
             Mail::to('fuminippon@outlook.com')
                 ->cc(['satoe1227@gmail.com'])

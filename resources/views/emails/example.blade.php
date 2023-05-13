@@ -5,7 +5,7 @@
     <title>BN {{ $subject }}</title>
 </head>
 <body>
-    <h1>{{ $subject }}</h1>
+    <h6>{{ $subject }}</h6>
     <p>{{ $body }}</p>
 </body>
 </html>
