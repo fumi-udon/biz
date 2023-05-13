@@ -6,13 +6,12 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use Illuminate\Support\Facades\Log;
-use App\Console\Commands\BnRadoDataLoadCommand;
+use App\Console\Commands\DinnerStockManager;
 
-class Kernel extends ConsoleKernel
+class KernelDinnerStock extends ConsoleKernel
 {
-
     protected $commands = [
-        Commands\BnRadoDataLoadCommand::Class,
+        Commands\DinnerStockManager::class,
     ];
 
     /**
@@ -23,9 +22,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        Log::debug('[OVHのCron] schedule関数呼ばれた');
-        //Load Json datas from Rado server and insert to database
-        $schedule->command('radodataload:info --force')->daily();
+        Log::debug('[OVHのCron] KernelDinnerStock->schedule関数呼ばれた');
+
+        // dinnerの食材量をチェックしてアラートメールを送信
+        // 30分毎に10回実行
+        $schedule->command('dinnerstock:manager --force')->everyThirtyMinutes()->times(10);
         // OVH独特のCron仕様（分がランダム取得されちゃう）をハックするコマンド
         $this->scheduleRunsHourly($schedule);
     }
@@ -55,8 +56,8 @@ class Kernel extends ConsoleKernel
      *
      * @return \DateTimeZone|string|null
      */
-    // protected function scheduleTimezone()
-    // {
-    //     return 'Africa/Tunis';
-    // }
+    protected function scheduleTimezone()
+    {
+        return 'Africa/Tunis';
+    }
 }
