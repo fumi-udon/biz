@@ -44,15 +44,15 @@ class TestDevController extends Controller
         // Rizの消費量取得 [END]
 
         // Riz の閾値を超えたらアラートメール送信
-        Log::debug('米 消費量:'.$riz_grammes);      
+        Log::debug('米 消費量:'.$riz_grammes); 
         if(Config::get('fumi_calc.riz_conso_alart') < $riz_grammes){
             // Mail 送信 OK 済
-            $subject ='Rice alert : conso '.$riz_grammes.' g';
-            $body = 'Veuillez vérifier le riz';
-            Mail::to('fumi.0000000@gmail.com')
-                ->send(new SendinBlueDemoEmail($subject, $body));
-            Log::debug('[メール]送信しました。');            
-            //dd('取得範囲:'.$startOfDay.' - '.$endOfDay);
+            // $subject ='Rice alert : conso '.$riz_grammes.' g';
+            // $body = 'Veuillez vérifier le riz';
+            // Mail::to('fumi.0000000@gmail.com')
+            //     ->send(new SendinBlueDemoEmail($subject, $body));
+            // Log::debug('[メール]送信しました。');            
+            // //dd('取得範囲:'.$startOfDay.' - '.$endOfDay);
         }
         $str = 'test str';
         return view('welcome', compact('str'));
