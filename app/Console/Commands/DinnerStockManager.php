@@ -49,7 +49,7 @@ class DinnerStockManager extends Command
     public function handle()
     {
         // ovh cron setting 18h00 / 19h00 / 20h00 / 21h00        
-        logger()->info('[FUMI_cron] 米のストック管理');
+        logger()->info('[FUMI_cron] handle() _ 米のストック管理');
         $today = (new DateTime())->format('Y-m-d');
         // [食材消費量] Curl https通信＿SSL エラー回避
         $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
@@ -58,24 +58,24 @@ class DinnerStockManager extends Command
         ]);
         $collections = collect($response->json());
 
-        // Rizの消費量取得 [Start] 
-        $startOfDay = (new DateTime('today'))->setTime(11, 0, 0);
-        $endOfDay = (new DateTime('today'))->setTime(16, 0, 0);        
+        // Rizの消費量取得 [Start]
+        $startOfDay = (new DateTime('today'))->setTime(17, 00, 0);
+        $endOfDay = (new DateTime('today'))->setTime(23, 0, 0); 
         $riz_grammes = AdminConcumedTools::get_riz_stock_data($collections,$startOfDay,$endOfDay);
         // Rizの消費量取得 [END]
 
         // 2 
         // 基準以下の場合はメールを送信
         // Riz の閾値を超えたらアラートメール送信
-        Log::debug('米 消費量:'.$riz_grammes);      
-        if(Config::get('fumi_calc.riz_conso_alart') < $riz_grammes){
+        $riz_dline = Config::get('fumi_calc.riz_conso_alart'); 
+        logger()->info('[FUMI_cron] 設定値 / 消費量 : '.$riz_dline.' g / '.$riz_grammes.' g');
+        if($riz_dline < $riz_grammes){
             // Mail 送信 OK 済
             $subject ='Rice alert : conso '.$riz_grammes.' g';
-            $body = 'Veuillez vérifier le riz';
-            Mail::to('fumi.0000000@gmail.com')
-                ->send(new SendinBlueDemoEmail($subject, $body));
-            Log::debug('[メール]送信しました。');            
-            //dd('取得範囲:'.$startOfDay.' - '.$endOfDay);
+            $body = 'Veuillez vérifier le riz'.'  設定値 / 消費量 : '.$riz_dline.' g / '.$riz_grammes.' g';
+            Mail::to('fuminippon@outlook.com')
+                ->send(new SendinBlueDemoEmail($subject, $body));           
+            logger()->info('[FUMI_cron] メール送信しました。');
         }
 
         return 0;
