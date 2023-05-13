@@ -7,12 +7,14 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use Illuminate\Support\Facades\Log;
 use App\Console\Commands\BnRadoDataLoadCommand;
+use App\Console\Commands\DinnerStockManager;
 
 class Kernel extends ConsoleKernel
 {
 
     protected $commands = [
         Commands\BnRadoDataLoadCommand::Class,
+        Commands\DinnerStockManager::Class,
     ];
 
     /**
@@ -23,6 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        Log::debug('[OVHのCron] schedule関数呼ばれた');
         //Load Json datas from Rado server and insert to database
         $schedule->command('radodataload:info --force')->daily();
         // dinnerの食材量をチェックしてアラートメールを送信

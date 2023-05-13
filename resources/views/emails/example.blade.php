@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{ $subject }}</title>
+    <title>BN {{ $subject }}</title>
 </head>
 <body>
     <h1>{{ $subject }}</h1>
