@@ -69,7 +69,7 @@
           </p>
         </div>
         <div class="d-flex text-muted pt-3">
-         <a href="/calcs">
+         <a href="/stock_email">
          <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>kitano</title><rect width="100%" height="100%" fill="#ffd900"/><text x="10%" y="10%" fill="#ffd900" dy="">curry</text></svg>
         </a>
           <p class="pb-3 mb-0 small lh-sm border-bottom">

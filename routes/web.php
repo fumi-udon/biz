@@ -21,6 +21,9 @@ Auth::routes();
 use App\Http\Controllers\KicalcsController;
 Route::get('/calcs', [KicalcsController::class, 'index']);
 Route::post('/reg_amounts', [KicalcsController::class, 'reg_amounts']);
+use App\Http\Controllers\TestDevController;
+// 開発テスト
+Route::get('/stock_email', [TestDevController::class, 'stock_email']);
 
 // コントローラを使う宣言 
 use App\Http\Controllers\TaskOrderController;

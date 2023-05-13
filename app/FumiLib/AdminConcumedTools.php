@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
-
+use App\FumiLib\FumiTools;
+use \DateTime; // 追加: PHPのグローバルな名前空間にあるDateTimeクラスを使用することを明示
+use DateTimeZone;
 
 class AdminConcumedTools
 {
@@ -114,4 +116,78 @@ class AdminConcumedTools
         return $collects_resultat;
     }
 
+    /**
+     * 範囲内の米の消費量を取得
+     * 開始時間～終了時間
+     * 例：18時～22時　startOfDay　endOfDay
+     */
+    public function get_riz_stock_data($collections,$startOfDay,$endOfDay)
+    {
+        // fumi独自クラス
+        $fumi_tools =new FumiTools();
+        //お米データ取得 collectionクラスが格納される (RIZ用)
+        $rice_collections_ary = [];
+        //お米使う商品名 
+        $riz_plats_name = Config::get('product_names.riz_plats_name');
+        $riz_types_name = Config::get('product_names.riz_types_name');
+
+        // Dinnerの時間のコレクションだけ取得する。
+        // created_atが12:00〜15:00の間にあるデータを抽出
+        $collections2 = $collections->filter(function ($item)use ($startOfDay, $endOfDay) {
+            $createdAt = new DateTime($item['created_at']);
+            return $createdAt >= $startOfDay && $createdAt <= $endOfDay;
+        });
+
+        foreach($collections2 as $collection) {
+            $items = collect($collection['items']);
+            foreach($items as $item) {
+                $item = collect($item);
+                //rice お米データ取得
+                $riz_collection = $fumi_tools->fumi_get_consom_pn_staff($item, $riz_plats_name,$riz_types_name);
+                if (! $riz_collection->isEmpty()) {
+                    $rice_collections_ary[] = $riz_collection;
+                }
+            } // foreach インナー end
+        }// foreach 親 end
+
+        // rice start
+        // 配列をループして集計する
+        $riz_collections = collect($rice_collections_ary);
+        // カンマを区切り文字として、文字列を配列に変換する
+        $riz_plats = explode(',', $riz_plats_name);
+        $riz_types = explode(',', $riz_types_name);
+        
+        // 配列の各要素にアクセスする
+        $tatal_order = [];
+        //集計結果
+        $riz_resultats = collect();
+
+        // [米の量] Start
+        $riz_grammes = [] ;
+        foreach ($riz_plats as $key) {
+            $tatal_order = $riz_collections->pluck('products.'.$key)->sum();
+            $riz_resultats->push([$key => $tatal_order]);
+            $riz_grammes[] = Config::get('product_names.'.$key) * $tatal_order;            
+        }
+        // [米の量] End
+
+        // エクストラ
+        // [Extra] Start
+        // 該当日のエクストラの消費量を全て（product_names.php定義）取得し
+        // 商品名 => 消費数量 のcollectionクラスをreturnする.
+        $extra_seach_name = explode(',', Config::get('product_names.extra_names'));
+        $resultat_extras = self::get_extra_consodatas($collections2, $extra_seach_name);   
+        $extra_collect = collect($resultat_extras);
+        foreach($extra_collect as $key => $array){
+            if (isset($array["riz"])) {
+                $value = $array["riz"];
+                $riz_grammes[] = Config::get('product_names.RIZ') * $value;
+            } 
+        }
+        // [Extra] End
+
+        $riz_grammes_total = array_sum($riz_grammes);
+
+        return $riz_grammes_total;
+    }
 }
