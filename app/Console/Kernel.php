@@ -60,8 +60,8 @@ class Kernel extends ConsoleKernel
      *
      * @return \DateTimeZone|string|null
      */
-    protected function scheduleTimezone()
-    {
-        return 'Africa/Tunis';
-    }
+    // protected function scheduleTimezone()
+    // {
+    //     return 'Africa/Tunis';
+    // }
 }
