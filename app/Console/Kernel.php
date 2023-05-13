@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         //Load Json datas from Rado server and insert to database
         $schedule->command('radodataload:info --force')->daily();
         // dinnerの食材量をチェックしてアラートメールを送信
+        // ->twiceDaily(1, 13);	毎日1:00と13:00時に実行
         $schedule->command('dinnerstock:manager --force')->everyFiveMinutes();
         // OVH独特のCron仕様（分がランダム取得されちゃう）をハックするコマンド
         $this->scheduleRunsHourly($schedule);
@@ -52,5 +53,15 @@ class Kernel extends ConsoleKernel
         foreach ($schedule->events() as $event) {
             $event->expression = substr_replace($event->expression, '*', 0, 1);
         }
+    }
+
+    /**
+     * スケジュールされたイベントで使用するデフォルトのタイムゾーン取得
+     *
+     * @return \DateTimeZone|string|null
+     */
+    protected function scheduleTimezone()
+    {
+        return 'Africa/Tunis';
     }
 }
