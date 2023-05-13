@@ -74,7 +74,8 @@ class DinnerStockManager extends Command
             $subject ='Rice alert : conso '.$riz_grammes.' g';
             $body = 'Veuillez vérifier le riz'.'  設定値 / 消費量 : '.$riz_dline.' g / '.$riz_grammes.' g';
             Mail::to('fuminippon@outlook.com')
-                ->send(new SendinBlueDemoEmail($subject, $body));           
+                ->cc(['satoe1227@gmail.com'])
+                ->send(new SendinBlueDemoEmail($subject, $body));       
             logger()->info('[FUMI_cron] メール送信しました。');
         }
 
