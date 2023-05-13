@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
         //Load Json datas from Rado server and insert to database
         $schedule->command('radodataload:info --force')->daily();
         // dinnerの食材量をチェックしてアラートメールを送信
-        // ->twiceDaily(1, 13);	毎日1:00と13:00時に実行
-        $schedule->command('dinnerstock:manager --force')->everyFiveMinutes();
+        // ->twiceDaily(1, 13);	毎日1:00と13:00時に実行 
+        $schedule->command('dinnerstock:manager --force')->everyThirtyMinutes()->times(10);
         // OVH独特のCron仕様（分がランダム取得されちゃう）をハックするコマンド
         $this->scheduleRunsHourly($schedule);
     }
