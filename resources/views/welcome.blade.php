@@ -60,21 +60,24 @@
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">curry kitano</h6>
         <div class="d-flex text-muted pt-3">
-         <a href="/calcs">
+        <a href="/calcs">
          <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>kitano</title><rect width="100%" height="100%" fill="#ffd900"/><text x="10%" y="10%" fill="#ffd900" dy="">curry</text></svg>
         </a>
           <p class="pb-3 mb-0 small lh-sm border-bottom">
             <strong class="d-block text-gray-dark">calcul de la pâte</strong>
-            assaisonnement au curry
+             assaisonnement au curry
           </p>
         </div>
+      </div>
+      <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">Gestion</h6>
         <div class="d-flex text-muted pt-3">
          <a href="/stock_email">
-         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>kitano</title><rect width="100%" height="100%" fill="#ffd900"/><text x="10%" y="10%" fill="#ffd900" dy="">curry</text></svg>
+         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>gestion</title><rect width="100%" height="100%" fill="#ffd0dd"/><text x="10%" y="10%" fill="#ffd900" dy="">curry</text></svg>
         </a>
           <p class="pb-3 mb-0 small lh-sm border-bottom">
-            <strong class="d-block text-gray-dark">開発中機能</strong>
-            TestDevController::stock_email() call 
+            <strong class="d-block text-gray-dark">ディナーストック管理</strong>
+            TestDevController::stock_email() call <br>ディナー営業時間内のストック状況をCronで把握(19H/20H/21H)
           </p>
         </div>
       </div>
