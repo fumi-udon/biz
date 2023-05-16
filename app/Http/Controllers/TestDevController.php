@@ -58,8 +58,11 @@ class TestDevController extends Controller
             $body = 'Veuillez vérifier le riz'.'  設定値 / 消費量 : '.$riz_dline.' g / '.$riz_grammes.' g';
             Mail::to('fuminippon@outlook.com')
                 ->cc(['satoe1227@gmail.com'])
-                ->send(new SendinBlueDemoEmail($subject, $body));  
+                ->send(new SendinBlueDemoEmail($subject, $body));
                 logger()->info('[Win_タスクスケジューラ] メール送信しました。');
+            // TODO Mail 送信は1日1度のみ
+            // TODO もしくは2段階の閾値を設定する。例： 3300g / 4000g
+            
         }
         return view('dinner_stock', compact('startOfDayString','endOfDayString','riz_dline','riz_grammes'));
     }
