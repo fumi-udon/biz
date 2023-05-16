@@ -22,7 +22,7 @@ class KernelDinnerStock extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        Log::debug('[OVHのCron] KernelDinnerStock->schedule関数呼ばれた');
+        //Log::debug('[OVHのCron] KernelDinnerStock->schedule関数呼ばれた');
 
         // dinnerの食材量をチェックしてアラートメールを送信
         // 30分毎に10回実行

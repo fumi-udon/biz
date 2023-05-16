@@ -69,7 +69,7 @@ class DinnerStockManager extends Command
         // 2 
         // 基準以下の場合はメールを送信
         // Riz の閾値を超えたらアラートメール送信 
-        $riz_dline = Config::get('fumi_calc.riz_conso_alart'); 
+        $riz_dline = Config::get('fumi_calc.riz_conso_alart');
         logger()->info('[FUMI_cron] 設定値 / 消費量 : '.$riz_dline.' g / '.$riz_grammes.' g');
         logger()->info('[FUMI_cron] 範囲 : '.$startOfDayString.'  - '.$endOfDayString);
         if($riz_dline < $riz_grammes){
