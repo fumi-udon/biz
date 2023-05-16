@@ -13,25 +13,30 @@
         </div>
     </div>
     <div class="row gy-3">
-    <div class="col-md-12">
-        <h5>ディナーの米消費量</h5>        
-        <table class="table" id="cry_record" style="">
-            <thead>
+        <div class="col-md-12">
+            <h5>ディナーの米消費量</h5>        
+            <table class="table" id="cry_record" style="">
+                <thead>
+                    <tr>
+                    <th scope="col">設定範囲</th>
+                    <th scope="col">設定閾値</th>
+                    <th scope="col">米の消費量</th>
+                    </tr>
+                </thead>
+                <tbody>
                 <tr>
-                <th scope="col">設定範囲</th>
-                <th scope="col">設定閾値</th>
-                <th scope="col">米の消費量</th>
+                    <td>{{ $startOfDayString }} ～ {{ $endOfDayString }}</td>
+                    <td>{{ $riz_dline }}</td>
+                    <td>{{ $riz_grammes }}</td>
                 </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{ $startOfDayString }} ～ {{ $endOfDayString }}</td>
-                <td>{{ $riz_dline }}</td>
-                <td>{{ $riz_grammes }}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">
+        @if($count > 0)
+            <p style='color:blue'>アラートメール送信済です。condition_typesテーブルにレコード有り。</p>
+        @endif
+        </div>
     </div><!--row end-->
 </main>
 <!-- end -->
