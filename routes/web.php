@@ -74,3 +74,5 @@ Route::post('/emporter_search/{type?}/{shop?}', [EmporterRecentController::class
 use App\Http\Controllers\DevController;
 Route::get('/dev_home', [DevController::class, 'index'])->name('dev.index');
 Route::get('/importCSV', [DevController::class, 'importCSV'])->name('dev.import.csv');
+Route::post('/importCSV2', [DevController::class, 'importCSV2'])->name('dev.import.csv2');
+Route::get('/importCSV3', [DevController::class, 'importCSV3'])->name('dev.import.csv3');

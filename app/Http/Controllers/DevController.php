@@ -89,4 +89,108 @@ class DevController extends Controller
     
         return response()->download($filePath)->deleteFileAfterSend(true);
     }
+
+  /**
+     * Execl.
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function importCSV2(Request $request, $page_id = null)
+    {
+        // csvファイルチェック
+        // $request->validate([
+        //     'amecanjapan' => 'required|mimes:csv',
+        // ]);
+        ini_set('max_execution_time', 240); // 120秒に設定
+
+        // view から読み込む
+        $file = $request->file('amecanjapan');
+
+        // file 読み込み
+        $data = Excel::toArray([], $file, null, \Maatwebsite\Excel\Excel::CSV, [
+            'encoding' => 'UTF-8',
+            'delimiter' => ',',
+            'skip' => 1 // タイトル行をスキップします
+        ])[0];
+        array_shift($data); // タイトル行を削除
+    
+        $collection = collect($data);
+        $collection = $collection->map(function ($item) {
+            $string = $item[1];
+            $katakanaOnly = preg_replace('/[^ァ-ヶー]/u', '', $string); // カタカナのみを抽出
+            $katakanaOnly = preg_replace('/\s+/', '', $katakanaOnly); // 空白を削除
+        
+            $item[] = $katakanaOnly; // 最終列に追加
+            //$item = array_merge([$katakanaOnly], $item); // 最初の行に追加
+
+            return $item;
+        });
+        // $lastIndex = count($item) - 1;
+        // グループ化するためのキーを生成するコールバック関数
+        $groupKeyCallback = function ($item) use ($collection) {
+            $string = $item[count($item) - 1];
+            $groupKey = '';
+
+            for ($i = 0; $i <= mb_strlen($string) - 10; $i++) {
+                $substring = mb_substr($string, $i, 10);
+        
+                $isSubstringInOtherItems = $collection->filter(function ($otherItem) use ($substring) {
+                    $otherString = $otherItem[1];
+                    return mb_strpos($otherString, $substring) !== false;
+                })->isNotEmpty();
+        
+                if ($isSubstringInOtherItems) {
+                    $groupKey = $substring;
+                    break;
+                }
+            }
+        
+            return $groupKey;
+        };
+        
+        // グループ化されたコレクションを作成
+        $groupedCollection = $collection->groupBy($groupKeyCallback);
+
+        // グループ名の行でソート
+        $groupedCollection = $groupedCollection->sort(function ($a, $b) {
+            if ($a->isEmpty() && $b->isEmpty()) {
+                return 0;
+            } elseif ($a->isEmpty()) {
+                return 1;
+            } elseif ($b->isEmpty()) {
+                return -1;
+            }
+            
+            $groupA = $a->first()[2] ?? '';
+            $groupB = $b->first()[2] ?? '';
+            
+            return strcmp($groupA, $groupB);
+        });
+
+        // グループ化されたデータを出力
+        $groupedCollection = $groupedCollection->map(function ($group) {
+            return $group->map(function ($item) {
+                return mb_convert_encoding($item, 'UTF-8', 'UTF-8');
+            });
+        });
+
+        //dd($groupedCollection);
+        // csv 出力処理
+        $csvData = '';
+        foreach ($groupedCollection as $group => $items) {
+            $csvData .= "Group: $group\n"; // グループ名の行
+            $csvData .= "ID,Name,Group\n"; // ヘッダー行
+    
+            foreach ($items as $item) {
+                $csvData .= implode(',', $item) . "\n"; // データ行 
+            }
+    
+            $csvData .= "\n\n"; // 改行
+        }
+    
+        $filePath = public_path('csv/output.csv');
+        file_put_contents($filePath, $csvData);
+    
+        return response()->download($filePath)->deleteFileAfterSend(true);
+    }
 }
