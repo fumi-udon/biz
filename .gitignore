@@ -14,3 +14,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+# ディレクトリを無視
+public/csv/
+
+*.csv
+public/csv/file.csv
