@@ -96,6 +96,6 @@
        
     </main>
     @endsection
-<!-- メインエリア表示　END -->
+<!-- メインエリア表示　END d-->
 
 @extends('layouts.footer')

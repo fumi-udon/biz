@@ -70,7 +70,7 @@ Route::get('/emporter_index', [EmporterRecentController::class, 'index'])->name(
 Route::post('/emporter_search/{type?}/{shop?}', [EmporterRecentController::class, 'search'])->name('search.index');
 //Route::post('/all_search/{btn_id?}/{params?}', [EmporterRecentController::class, 'all_search'])->name('allsearch.index');
 
-//開発遊び用
+//開発遊び用d
 use App\Http\Controllers\DevController;
 Route::get('/dev_home', [DevController::class, 'index'])->name('dev.index');
 Route::get('/importCSV', [DevController::class, 'importCSV'])->name('dev.import.csv');

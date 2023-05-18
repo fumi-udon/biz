@@ -78,7 +78,7 @@ class DevController extends Controller
             $csvData .= "ID,Name,Group\n"; // ヘッダー行
     
             foreach ($items as $item) {
-                $csvData .= implode(',', $item) . "\n"; // データ行
+                $csvData .= implode(',', $item) . "\n"; // データ行 
             }
     
             $csvData .= "\n\n"; // 改行
