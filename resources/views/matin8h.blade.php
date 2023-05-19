@@ -39,7 +39,7 @@
 		<p style="margin:15px;">
 		@if (!empty($note_today))
     		{{-- メモがあった場合 --}}
-    		&#x1f408; <span style="color:red">NOTE:</span> {!! $note_today !!}
+    		&#x1f408; <span style="color:red">NOTE: {!! $note_today !!} </span>
 		@endif
 		</p>
 	</div>
