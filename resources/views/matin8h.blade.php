@@ -36,6 +36,12 @@
 			<p><b>&#129508; ramen à mélanger et le couper pour aujourd'hui : </b> {{ $rmn_today }}<br></p>
 			<p><b>&#9889; udon à couper pour ce matin : </b>{{ $udon_today }}</p>
 		</p>
+		<p style="margin:15px;">
+		@if (!empty($note_today))
+    		{{-- メモがあった場合 --}}
+    		&#x1f408; <span style="color:red">NOTE:</span> {!! $note_today !!}
+		@endif
+		</p>
 	</div>
 	@endif
 <!--テスト　デバック-->

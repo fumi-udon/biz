@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
+use Illuminate\Support\Facades\Config; // Configクラスをインポートする
 
 //Fumi 独自クラス
 use App\FumiLib\FumiTools;
@@ -37,7 +38,7 @@ class TaskOrderController extends Controller
         if(! is_null($sato_instruction)){
             // サトの独自指示がある場合は viewをgetして処理終了
             //dd('サト指示あり'.$sato_instruction);
-            $yes_sato = true;        
+            $yes_sato = true;
         }
         return view('matin8h',compact('sato_instruction','yes_sato'));
     }
@@ -229,10 +230,16 @@ class TaskOrderController extends Controller
         $attributes = $request->only(['rest_udn', 'actual_page_id']);
         // Sessionにデータ保持
         \Session::flash('rest_udn', $attributes['rest_udn']);
+        $date_today = date_create()->format('Y-m-d'); 
+        /**
+         * Note取得
+         * Table作るの面倒だから設定ファイルで
+         */
+        $note_today = Config::get('fumi_note_alice.'.$date_today);
         /**
          * Satoの手動指示がある場合は優先表示
          */
-        $date_today = date_create()->format('Y-m-d');          
+               
         $sato_instruction = SatoInstruction::where([
             //AMの指示を取得
             ['flg_int', '=', '1'],
@@ -243,7 +250,7 @@ class TaskOrderController extends Controller
             // サトの独自指示がある場合は viewをgetして処理終了
             //dd('サト指示あり'.$sato_instruction);
             $yes_sato = true;
-            return view('matin8h',compact('sato_instruction','yes_sato','attributes'));
+            return view('matin8h',compact('sato_instruction','yes_sato','attributes','note_today'));
         }
 
         /**
@@ -294,7 +301,7 @@ class TaskOrderController extends Controller
         //dd ($udon_today);
         
         
-        return view('matin8h',compact('rmn_today','udon_today','sato_instruction','attributes'));
+        return view('matin8h',compact('rmn_today','udon_today','sato_instruction','attributes','note_today'));
     }
 
     
