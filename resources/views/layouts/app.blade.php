@@ -33,6 +33,16 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/fumi.css') }}" rel="stylesheet">
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LTR7FBVN7P"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-LTR7FBVN7P');
+    </script>
+    
   </head>
     <body class="bg-light">
     @yield('head')
