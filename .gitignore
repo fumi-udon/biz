@@ -16,3 +16,5 @@ yarn-error.log
 /.vscode
 # ディレクトリを無視
 public/csv/
+# Alice 指示用ファイル
+/config/fumi_note_alice.php
