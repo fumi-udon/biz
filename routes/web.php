@@ -70,6 +70,11 @@ Route::get('/emporter_index', [EmporterRecentController::class, 'index'])->name(
 Route::post('/emporter_search/{type?}/{shop?}', [EmporterRecentController::class, 'search'])->name('search.index');
 //Route::post('/all_search/{btn_id?}/{params?}', [EmporterRecentController::class, 'all_search'])->name('allsearch.index');
 
+//レシピ集 / マニュアル 
+use App\Http\Controllers\RecettesController;
+Route::get('/recettes_index', [RecettesController::class, 'recettes_index'])->name('recettes.index');
+Route::get('/riz_jp', [RecettesController::class, 'riz_jp'])->name('recettes.rizjp');
+
 //開発遊び用d
 use App\Http\Controllers\DevController;
 Route::get('/dev_home', [DevController::class, 'index'])->name('dev.index');

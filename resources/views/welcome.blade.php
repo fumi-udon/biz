@@ -69,6 +69,19 @@
           </p>
         </div>
       </div>
+
+      <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">レシピ集 / Recettes</h6>
+        <div class="d-flex text-muted pt-3">
+         <a href="/recettes_index">
+         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>recettes</title><rect width="100%" height="100%" fill="#1100dd"/><text x="10%" y="10%" fill="#ff99cc" dy="">レシピ</text></svg>
+        </a>
+          <p class="pb-3 mb-0 small lh-sm border-bottom">
+            <strong class="d-block text-gray-dark">bistro nippon の味</strong>
+          </p>
+        </div>
+      </div>
+
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">Gestion</h6>
         <div class="d-flex text-muted pt-3">
