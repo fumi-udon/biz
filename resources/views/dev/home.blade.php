@@ -18,6 +18,7 @@
 				<div class="alert" role="alert">
 
 				<p>カタカナのみ抽出してグループ化</p>
+				<p style="color:red;">※ファイルの文字コードは UTF8のみ指定可能</p>
 					<div id="excel-uploadzone">
 						<form action="{{ route('dev.import.csv2') }}" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}"  accept=".csv">
