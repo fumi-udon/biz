@@ -16,3 +16,4 @@ yarn-error.log
 /.vscode
 # ディレクトリを無視
 public/csv/
+app/Http/Controllers/DevController copy.php
