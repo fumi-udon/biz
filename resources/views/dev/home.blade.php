@@ -16,7 +16,6 @@
             <h5>Amecan Japan File importer</h5>        
 			<div class="my-3 p-2 bg-body rounded shadow-sm">
 				<div class="alert" role="alert">
-
 				<p>カタカナのみ抽出してグループ化</p>
 				<p style="color:red;">※ファイルの文字コードは UTF8のみ指定可能</p>
 					<div id="excel-uploadzone">
@@ -35,6 +34,10 @@
 						</form>
 					</div>
 				</div>
+				@if(!empty($filePath))
+    				<p style="color:blue">ファイルの作成が完了しました。管理者にファイル名を連絡してください。: {{ $filePath }}</p>
+				@endif
+
 			</div>
         </div>
     </div><!--row end-->
