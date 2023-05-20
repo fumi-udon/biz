@@ -127,14 +127,15 @@ class DevController extends Controller
     
         // グループ化するためのキーを生成するコールバック関数
         $groupKeyCallback = function ($item) use ($collection) {
+            $enditemindex = count($item) - 1;
             $string = $item[count($item) - 1];
             $groupKey = '';
     
             for ($i = 0; $i <= mb_strlen($string) - 10; $i++) {
                 $substring = mb_substr($string, $i, 10);
     
-                $isSubstringInOtherItems = $collection->filter(function ($otherItem) use ($substring) {
-                    $otherString = $otherItem[1];
+                $isSubstringInOtherItems = $collection->filter(function ($otherItem) use ($substring,$enditemindex) {
+                    $otherString = $otherItem[count($otherItem) - 1];               
                     return mb_strpos($otherString, $substring) !== false;
                 })->isNotEmpty();
     
