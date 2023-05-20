@@ -8,5 +8,5 @@ return [
     |--------------------------------------------------------------------------
     */
     '2023-05-20' =>
-        "Dits mme.kadhija ce matin: vous n'avez pas besoin de préparer du curry, veuillez donc nettoyer la cuisine",
+        "Dits mme.kadhija : vous n'avez pas besoin de préparer du curry, veuillez donc nettoyer la cuisine",
 ];
