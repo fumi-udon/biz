@@ -182,14 +182,14 @@ class DevController extends Controller
     
         // 一時ファイルの削除
         Storage::delete($filePath);
-    
+
         // ファイルの保存
         $timestamp = Carbon::now()->format('YmdHisu');
         $fileName = 'r_'.$timestamp.'.csv';
-        Storage::put($fileName, $csvData);
+        Storage::put('amecan/'.$fileName, $csvData);
 
         // ファイルのパスを返却
-        $filePath = storage_path('app/' . $fileName);
+        $filePath = storage_path('app/amecan/' . $fileName);
         
         return view('dev/home', compact("filePath"));
     }
