@@ -32,7 +32,8 @@ Route::post('/task8h', [TaskOrderController::class, 'task8h']);
 Route::get('/soir15h', [TaskOrderController::class, 'soir15h']);
 Route::post('/task15h', [TaskOrderController::class, 'task15h']);
 Route::get('/bn_register_top', [TaskOrderController::class, 'bn_register_top'])->name('bn.register.top');
-Route::post('/bn_register_store/{id?}/{params?}', [TaskOrderController::class, 'bn_register_store'])->name('bn.register.store');
+// Alice 用のこと付け
+Route::post('/add_note8h', [TaskOrderController::class, 'add_note8h'])->name('add.note8h');
 
 use App\Http\Controllers\AdminProductionController;
 // debug nav サンプルテスト

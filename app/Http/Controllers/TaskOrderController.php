@@ -233,13 +233,20 @@ class TaskOrderController extends Controller
         $date_today = date_create()->format('Y-m-d'); 
         /**
          * Note取得
-         * Table作るの面倒だから設定ファイルで
-         */
-        $note_today = Config::get('fumi_note_alice.'.$date_today);
+         * Table作るの面倒だから設定ファイルで →
+         * Table作るの面倒だからサト指示テーブルを使う
+         * flg_int 3
+         */               
+        $sato_instruction = SatoInstruction::where([
+            //カディジャ用の指示を取得
+            ['flg_int', '=', '3'],
+            ['aply_date', '=', $date_today]
+        ])->first();
+        $note_today = $sato_instruction->override_tx_1 ?? '';
+        //$note_today = Config::get('fumi_note_alice.'.$date_today);
         /**
          * Satoの手動指示がある場合は優先表示
-         */
-               
+         */               
         $sato_instruction = SatoInstruction::where([
             //AMの指示を取得
             ['flg_int', '=', '1'],
@@ -304,5 +311,35 @@ class TaskOrderController extends Controller
         return view('matin8h',compact('rmn_today','udon_today','sato_instruction','attributes','note_today'));
     }
 
-    
+    /**
+     * 朝8時 カディジャ用こと付け登録
+     * 
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function add_note8h(Request $request)
+    {
+        // Post データ取得
+        $inputs = $request->only(['note8h', 'note_date']);
+        // Sessionにデータ保持
+        \Session::flash('note8h', $inputs['note8h']);
+        \Session::flash('note_date', $inputs['note_date']);
+        //$date_today = date_create()->format('Y-m-d'); 
+
+        /**
+         * Table作るの面倒だからサト指示テーブルを使う
+         * flg_int 3
+         */               
+        $sato_instruction = SatoInstruction::updateOrCreate(
+            [
+                'aply_date' => $inputs['note_date'],
+                'flg_int' => 3
+            ],
+            [
+                'override_tx_1' => $inputs['note8h'],
+            ]
+         );
+
+        return view('matin8h',compact('sato_instruction'));
+    }
 }

@@ -12,11 +12,12 @@ const mix = require('laravel-mix');
  */
 
 mix.js( 'resources/js/app.js', 'public/js' )
-//FUMI js 追加 カレールー計算用
+//FUMI js 追加 カレールー計算用 8h_alice.js
 .js( 'resources/js/currypateculs.js', 'public/js' )
 .js( 'resources/js/fumi0214.js', 'public/js' )
 .js( 'resources/js/fumi0307.js', 'public/js' )
 .js( 'resources/js/admin_consumed.js', 'public/js' )
+.js( 'resources/js/8h_alice.js', 'public/js' )
 .autoload( {
     "jquery": [ '$', 'window.jQuery' ],
 } )
