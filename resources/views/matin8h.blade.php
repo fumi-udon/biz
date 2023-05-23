@@ -54,7 +54,7 @@
 	<hr>
 	<p class="p-3"><b>登録しました</b><br>表示日：{{ session('note_date') }}<br>{{ session('note8h') }}</p>
 	@endif
-	<p class="m-2"><a href="javascript:void(0)" id="note_open">詳細</a></p>
+	<p class="m-2 text-secondary small"><a href="javascript:void(0)" id="note_open">詳細</a></p>
 	<!-- sato独自指示 エリア end -->
 	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 80%;">
 		<div class=" text-muted">
