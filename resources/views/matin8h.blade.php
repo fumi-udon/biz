@@ -32,7 +32,7 @@
 	<!--task8hのページのみ表示  -->
 	{{-- 通常指示 --}}
 	<div class="text-muted pt-3">
-		<p class="pb-3 mb-0 small lh-sm border-bottom">            
+		<p class="pb-3 mb-0 small lh-sm border-bottom">
 			<p><b>&#129508; ramen à mélanger et le couper pour aujourd'hui : </b> {{ $rmn_today }}<br></p>
 			<p><b>&#9889; udon à couper pour ce matin : </b>{{ $udon_today }}</p>
 		</p>
@@ -41,6 +41,8 @@
     		{{-- メモがあった場合 --}}
     		&#x1f408; <span style="color:red">NOTE: {!! $note_today !!} </span>
 		@endif
+		<br>
+		&#x1f302; <span style="color:#111">Contact d'urgence: Bilel 55 240 581 </span>
 		</p>
 	</div>
 	@endif
