@@ -77,6 +77,11 @@ use App\Http\Controllers\RecettesController;
 Route::get('/recettes_index', [RecettesController::class, 'recettes_index'])->name('recettes.index');
 Route::get('/riz_jp', [RecettesController::class, 'riz_jp'])->name('recettes.rizjp');
 
+//check list
+use App\Http\Controllers\CheckListController;
+Route::get('/close_top', [CheckListController::class, 'close_top'])->name('close.top');
+Route::get('/close_store', [CheckListController::class, 'close_store'])->name('close.store');
+
 //開発遊び用d
 use App\Http\Controllers\DevController;
 Route::get('/dev_home', [DevController::class, 'index'])->name('dev.index');

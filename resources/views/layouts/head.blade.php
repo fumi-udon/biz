@@ -14,6 +14,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/conso">食材消費履歴</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/close_top">CLOSE Check</a>
+            </li>
             @if(session('auth_flg'))
             <li class="nav-item">
               <a class="nav-link" href="/index_finance">財務</a>
