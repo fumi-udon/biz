@@ -23,9 +23,9 @@ class CheckListController extends Controller
      */
     public function close_top(){
 
-        // -------[本番環境でのみ処理]-------- START
-        // 22時前は表示不可
-        if (App::environment('production')) {            
+        // -------[本番環境でのみ処理]-------- START  
+        if (App::environment('production')) {
+            // [検証1]. 22時前は表示不可       
             $currentDateTime = Carbon::now();
             if ($currentDateTime->hour < 22 ){
                 // 22時前
@@ -62,6 +62,14 @@ class CheckListController extends Controller
     public function close_step1(Request $request)    {
 
         $inputs = $request->all();
+        // -------[本番環境でのみ処理]-------- START  
+        //if (App::environment('production')) { 
+            // ユーザーエージェント名を取得
+            $userAgent = $request->header('User-Agent');
+            dd($userAgent);
+            Log::info($close_name);
+        //}
+        // -------[本番環境でのみ処理]-------- END
         return view('chk_close_step1');
     }
 
