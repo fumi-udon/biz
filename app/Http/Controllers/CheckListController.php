@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\App;
 use Carbon\Carbon;
 
 // MODELS
@@ -21,19 +22,21 @@ class CheckListController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function close_top(){
-        // 22時前は表示不可    
-        // 現在時刻の取得
-        $currentDateTime = Carbon::now();
-        if ($currentDateTime->hour < 22 ){
-            // 22時前
-            $error_message = "Nous sommes avant l'heure de fermeture. Veuillez patienter jusqu'à 22 heures<br><br>" 
-                            ."Nahnu qabla waqt al-igla'. Yurja al-intidar hatta al-sa'at 22.";
-            \Session::flash('error_message', $error_message);
-            //時刻表示用
-            $date = Carbon::now();
-            $formattedDate = $date->format('H:i:s');
-            \Session::flash('formattedDate', $formattedDate);            
-            return view('error_page');
+
+        // 22時前は表示不可　(本番環境でのみ処理)
+        if (App::environment('production')) {            
+            $currentDateTime = Carbon::now();
+            if ($currentDateTime->hour < 22 ){
+                // 22時前
+                $error_message = "Nous sommes avant l'heure de fermeture. Veuillez patienter jusqu'à 22 heures<br><br>" 
+                                ."Nahnu qabla waqt al-igla'. Yurja al-intidar hatta al-sa'at 22.";
+                \Session::flash('error_message', $error_message);
+                //時刻表示用
+                $date = Carbon::now();
+                $formattedDate = $date->format('H:i:s');
+                \Session::flash('formattedDate', $formattedDate);            
+                return view('error_page');
+            }
         }
 
         // 履歴表示
