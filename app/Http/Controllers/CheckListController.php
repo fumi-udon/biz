@@ -23,7 +23,8 @@ class CheckListController extends Controller
      */
     public function close_top(){
 
-        // 22時前は表示不可　(本番環境でのみ処理)
+        // -------[本番環境でのみ処理]-------- START
+        // 22時前は表示不可
         if (App::environment('production')) {            
             $currentDateTime = Carbon::now();
             if ($currentDateTime->hour < 22 ){
@@ -38,6 +39,7 @@ class CheckListController extends Controller
                 return view('error_page');
             }
         }
+        // -------[本番環境でのみ処理]-------- END
 
         // 履歴表示
         $records = Responsable::where('type', 'close')
