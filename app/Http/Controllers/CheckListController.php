@@ -24,21 +24,21 @@ class CheckListController extends Controller
     public function close_top(){
 
         // -------[本番環境でのみ処理]-------- START  
-        // if (App::environment('production')) {
-        //     // [検証1]. 22時前は表示不可       
-        //     $currentDateTime = Carbon::now();
-        //     if ($currentDateTime->hour < 22 ){
-        //         // 22時前
-        //         $error_message = "Nous sommes avant l'heure de fermeture. Veuillez patienter jusqu'à 22 heures<br><br>" 
-        //                         ."Nahnu qabla waqt al-igla'. Yurja al-intidar hatta al-sa'at 22.";
-        //         \Session::flash('error_message', $error_message);
-        //         //時刻表示用
-        //         $date = Carbon::now();
-        //         $formattedDate = $date->format('H:i:s');
-        //         \Session::flash('formattedDate', $formattedDate);            
-        //         return view('error_page');
-        //     }
-        // }
+        if (App::environment('production')) {
+            // [検証1]. 22時前は表示不可       
+            $currentDateTime = Carbon::now();
+            if ($currentDateTime->hour < 22 ){
+                // 22時前
+                $error_message = "Nous sommes avant l'heure de fermeture. Veuillez patienter jusqu'à 22 heures<br><br>" 
+                                ."Nahnu qabla waqt al-igla'. Yurja al-intidar hatta al-sa'at 22.";
+                \Session::flash('error_message', $error_message);
+                //時刻表示用
+                $date = Carbon::now();
+                $formattedDate = $date->format('H:i:s');
+                \Session::flash('formattedDate', $formattedDate);            
+                return view('error_page');
+            }
+        }
         // -------[本番環境でのみ処理]-------- END
 
         // 履歴表示
@@ -62,14 +62,6 @@ class CheckListController extends Controller
     public function close_step1(Request $request)    {
 
         $inputs = $request->all();
-        // -------[本番環境でのみ処理]-------- START  
-        //if (App::environment('production')) { 
-            // ユーザーエージェント名を取得
-            $userAgent = $request->header('User-Agent');
-            dd($userAgent);
-            Log::info($close_name);
-        //}
-        // -------[本番環境でのみ処理]-------- END
         return view('chk_close_step1');
     }
 
