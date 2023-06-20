@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
+use Carbon\Carbon;
+
+// MODELS
+use App\Models\AuthHanabishi;
+use App\Models\Responsable;
 
 class CheckListController extends Controller
 {
@@ -16,78 +21,117 @@ class CheckListController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function close_top(){    
-            
-        // input create
-        // select ボックス要素作成
-        $rizs = collect([
-            ['id' => '', 'name' => ''],
-            ['id' => '0', 'name' => '0'],
-            ['id' => '1', 'name' => '1'],
-            ['id' => '2', 'name' => '2'],
-            ['id' => '3', 'name' => '3'],
-            ['id' => '4', 'name' => '4'],
-            ['id' => '5', 'name' => '5'],
-        ]);
-        $bouillons = collect([
-            ['id' => '', 'name' => ''],
-            ['id' => '0', 'name' => 'moins 1L'],
-            ['id' => '1', 'name' => '1L'],
-            ['id' => '2', 'name' => '2L'],
-            ['id' => '3', 'name' => '3L'],
-            ['id' => '4', 'name' => '4L'],
-            ['id' => '5', 'name' => '5L'],
-        ]);
-        // select ボックス要素作成 END
 
         $session__all = \Session::all();
         Log::debug($session__all);
 
-        return view('chk_close_top', compact('rizs','bouillons'));
+        // 履歴表示
+        $records = Responsable::where('type', 'close')
+        ->where('charge', 'close_chk')
+        ->where('fuseau_horaire', 1)
+        ->get()    
+        ->map(function ($record) {
+            $record['formatted_created_at'] = Carbon::parse($record['created_at'])->format('d/m/Y _ H:i:s');
+            return $record;
+        })->sortByDesc('formatted_created_at')
+        ->toArray();
+        return view('chk_close_top', compact('records'));
     }
 
     /**
-     * アイシャ15時登録ページ 登録処理
-     * Detabase登録処理
+     * step1
+     * 
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function close_store(Request $request)    {
+    public function close_step1(Request $request)    {
 
         $inputs = $request->all();
+        return view('chk_close_step1');
+    }
 
-        // リクエストデータ取得
-        $req_udn = $inputs['udon_rest_8h'];
-        $req_riz = $inputs['rizs_list'];
-        $req_bil = $inputs['bouillons_list'];
+    /**
+     * step2
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function close_step2(Request $request)    {
 
-        // StockIngredient テーブル
-        date_default_timezone_set('Africa/Tunis');
-        $stock_ingredient = StockIngredient::updateOrCreate(
+        $inputs = $request->all();
+        // select ボックス要素作成
+        $close_names = $this->create_data_selectbox("user_name");
+        return view('chk_close_step2',compact('close_names'));
+    }
+
+    /**
+     * 完了ページ
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function close_garantie(Request $request)    {
+
+        $inputs = $request->all();
+        // 責任者 / password
+        $close_name = $inputs['close_names_list'];
+        $input_pass = $inputs['input_pass'];
+        Log::debug($close_name);
+        Log::debug($input_pass);
+        // パスワード認証 
+        $adminpass = AuthHanabishi::where('user_name', '=', $close_name)->value('password');
+        // 認証チェック
+        $auth_flg = false;
+
+        if($adminpass === $input_pass){
+            //パスワード認証OK
+            $auth_flg = true; 
+            //セッションに認証OKフラグ立てる
+            $request->session()->put("auth_flg","true");
+        }else {
+            //管理者認証エラー
+            $action_message = "[ERROR] Password is not correct ";
+            // 現在の認証者名
+            \Session::flash('close_name_now', $close_name);
+            \Session::flash('action_message', $action_message);
+            // select ボックス要素作成
+            $close_names = $this->create_data_selectbox("user_name");
+            return view('chk_close_step2', compact('action_message', 'close_names'));
+        }
+
+        \Session::flash('flash_message', 'Merci !  ' .$close_name. '   Bonne nuit :}');
+        
+        //退勤時間表示ページ
+        $date = Carbon::now();
+        $formattedDate = $date->format('H:i:s');
+
+        // データベースに挿入
+        $result_1 = Responsable::create(
             [
-                'registre_date' => date('Y-m-d'),
-                'flg1' => 1
-            ],
-            [
-                'udon_rest_15h' => $req_udn,
-                'article1_rest' => $req_riz,
-                'article2_rest' => $req_bil,
-                'registre_date' => date('Y-m-d'),
-                'registre_datetime' => now(),
+                'name' => $close_name,
+                'type' => 'close',
+                'charge' => 'close_chk',
+                'fuseau_horaire' => 1,
             ]
         );
 
-        // session 格納
-        \Session::flash('flash_message', 'MERCI Aicha!'.
-            '<br>UDON:'.$req_udn.
-            '<br>RIZ:'.$req_riz.
-            '<br>BOUILLONS:'.$req_bil
-        );
+        return view('chk_garantie', compact('close_name', 'auth_flg', 'formattedDate'));
+    }
 
-        // リダイレクト
-        return redirect()->route('bn.register.top')->with([
-            //画面引継ぎsession格納
-            'udon_rest_8h' => $req_udn,
-            'riz_now' => $req_riz,
-            'bouillon_now' => $req_bil,
+    /**
+     *  select box データ作成
+     */
+    public function create_data_selectbox($type)
+    {
+        $datas = null;
+        // 
+        if($type == "user_name"){
+            // ユーザーネーム
+            $datas = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => 'fumi', 'name' => 'fumi'],
+                ['id' => 'sato', 'name' => 'sato'],
+                ['id' => 'bilel', 'name' => 'bilel'],
+                ['id' => 'guest', 'name' => 'guest'],
             ]);
+        }
+        return $datas;
     }
 }
