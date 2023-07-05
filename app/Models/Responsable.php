@@ -20,6 +20,6 @@ class Responsable extends Model
     public function prunable()
     {
         // 100日前以前のレコードを自動削除
-        return static::where('created_at', '<=', now()->subDays(100));
+        return static::where('created_at', '<=', now()->subDays(2000));
     }
 }
