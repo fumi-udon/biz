@@ -31,7 +31,7 @@ class CheckListController extends Controller
         ->map(function ($record) {
             $record['formatted_created_at'] = Carbon::parse($record['created_at'])->format('d/m/Y _ H:i:s');
             return $record;
-        })->sortByDesc('formatted_created_at')
+        })->sortByDesc('created_at')
         ->toArray();
         return view('chk_close_top', compact('records'));
     }
