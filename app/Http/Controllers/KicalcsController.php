@@ -48,7 +48,7 @@ class KicalcsController extends Controller
      */
     public function reg_amounts(Request $request)
     {
-        Log::debug('やっとだよ。カレー屋');
+        Log::debug('やっとだよ。カレー屋: reg_amountsメソッド呼ばれた');
         Log::debug($request);
         $inputs = $request->all();
         // リクエストデータ取得

@@ -78,7 +78,7 @@
 		</form>
 
 		<div class="my-3 p-3"><ul class="list-group">
-			<li class="list-group-item">Dits mme.kadhija demain matin: vous n'avez pas besoin de préparer du curry, veuillez donc nettoyer la cuisine</li>
+			<li class="list-group-item">Dits mme.Khouloud au matin: vous n'avez pas besoin de préparer du curry, veuillez donc ménager la cuisine</li>
 			<li class="list-group-item">Préparer du curry comme habitude </li>
 		</ul></div>
 

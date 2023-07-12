@@ -12,7 +12,6 @@
             <small>calc</small>
         </div>
     </div>
-
     <div class="my-3 p-2 bg-body rounded shadow-sm">
     <form class="" name="form_adpage2" id="form_adpage2" method="post" action="javascript:void(0)">
         @csrf
@@ -25,6 +24,7 @@
                 <button type="submit" class="btn btn-primary" onclick="calcurry()">calc</button>
             </div>      
         </div>
+        <div class="lh-1" id="curry_reg_ok"></div>
             <p class="pb-3 mb-0 small lh-sm">
                 <div class="col-md-6"> <p>PATE DU CURRY: <span id="roux" style="color:red;"></span> g</p></div>
                 <div class="col-md-6"> <p>POUDRE: <span id="poud" style="color:red;"></span> g</p></div>

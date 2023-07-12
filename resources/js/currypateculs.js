@@ -40,13 +40,16 @@ window.calcurry = function(){
                 console.log(k);
                 console.log(obj[k]);
             }
+            $('#curry_reg_ok').css({
+              "background-color": "pink",
+              "height": "50px",
+              "width": "300px",
+              "display": "flex",
+              "justify-content": "center",
+              "align-items": "center",
+              "margin": "10px",
+            }).text("Voilà résultat: ");
 
-            // 処理
-            // key=auth_flg 認証error(false) or 管理ページ遷移(true)
-            // 
-            var auth_flg = obj["auth_flg"];
-            var ermsg = obj["ermsg"];
-            //alert(ermsg);
           })
           //通信が失敗したとき
           .fail((error) => {
