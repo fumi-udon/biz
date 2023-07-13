@@ -84,16 +84,16 @@
 
 <!-- FUMI end -->
 <!-- Modal friture start-->
-<div class="modal fade" id="frituresModal" tabindex="-1" aria-labelledby="frituresModalLabel" aria-hidden="true">
+<div class="modal fade" id="clesgazModal" tabindex="-1" aria-labelledby="clesgazModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="frituresModalLabel">sécurité incendie</h5>
+        <h5 class="modal-title" id="clesgazModalLabel">sécurité incendie</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 	  <span style="color: red;">Attention au feu</span>
-	  <img src="/img/insendies.png" alt="flayerKasai Image" class="ms-1" style="width: 140px; height: 110px;">
+	  <img src="/img/firefigter.png" alt="flayerKasai Image" class="ms-1" style="width: 140px; height: 110px;">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Je garantie</button>
