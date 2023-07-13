@@ -40,15 +40,16 @@ window.calcurry = function(){
                 console.log(k);
                 console.log(obj[k]);
             }
+
             $('#curry_reg_ok').css({
               "background-color": "pink",
               "height": "50px",
-              "width": "300px",
+              "width": "150px",
               "display": "flex",
               "justify-content": "center",
               "align-items": "center",
               "margin": "10px",
-            }).text("Voilà résultat: ");
+            }).text("Voilà résultat: ").animate({ width: 600 },  1000,  "linear");
 
           })
           //通信が失敗したとき
