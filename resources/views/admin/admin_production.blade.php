@@ -97,6 +97,12 @@
 		</div>
 		<button type="submit" class="btn btn-primary" name="sato_btn">登録</button>
 	</form>
+		<div class="row mb-3">
+			<div class="col-sm-7">
+				example: <br>
+				🧤 ramen à mélanger et le couper pour aujourd'hui : ?? <br> ⚡ udon à couper pour ce matin : ??
+			</div>
+		</div>
 	</div>
 </div><!--row end -->
 <!-- sato独自指示 エリア end -->
