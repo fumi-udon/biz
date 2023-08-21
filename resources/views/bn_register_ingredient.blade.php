@@ -36,7 +36,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="rizs_list"><b>&#9859;Riz </b> <br> 0: zéro ～ 5: beaucoup
+					<label for="rizs_list"><b>&#9859;Riz </b> <br> 0～3: peu <br> 4～7:moyen <br> 8～10: beaucoup
 					<select class="form-select" id="rizs_list" name="rizs_list" required>
 						@foreach ($rizs as $riz)
 							<option value="{{ $riz['id'] }}" @if( Session::get('riz_now')  == $riz['id'] ) selected @endif> {{ $riz['name'] }} </option>
