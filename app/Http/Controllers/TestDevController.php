@@ -230,4 +230,74 @@ class TestDevController extends Controller
             'lait_now' => $req_laits
             ]);
     }
+
+    /**
+     * 朝の買物リスト表示.
+     * courses pour le matin リンクから
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function courses_matin()    {
+        /**
+         * Satoの手動指示がある場合は優先表示
+         * 朝の買物用は flg 3
+         */
+        $date_today = date_create()->format('Y-m-d');   
+        $sato_record = SatoInstruction::where([
+            // PM 2
+            ['flg_int', '=', '3'],
+            ['aply_date', '=', $date_today]
+        ])->first();
+
+        if(! empty($sato_record)){
+            //dd($sato_record);
+            //サト指示有の為 表示
+            $st_flg = 1;
+            \Session::flash('sato_record', $sato_record);
+            return view('courses_matin')->with(['表示ステータス: ' => $st_flg]);
+        }
+
+        /**
+         * アイシャデータ取得 PM id = 2
+         * 
+         */
+        $stock_record = StockIngredient::where([
+            ['flg1', '=', '2'], // 朝の買物・プレパレ用データ
+            ['registre_date', '=', $date_today] // ★TODO : registre_datetime で範囲指定14時間前。日曜考慮
+        ])->first();
+
+        // ★TODO stock_recordが無い場合は以降するーしてviewをゲット
+        if(empty($stock_record)){
+            //ビレルがデータ登録忘れの為エラーメッセージ表示
+            $st_flg = 2;
+            return view('courses_matin')->with(['表示ステータス: ' => $st_flg]);
+        }
+
+        // PlanProduction テーブルから本日のうどん基準数を取得 (id=2 PM)
+        $plan_production = PlanProduction::where([
+            // 買物とプレパレ用　id = 3
+            ['id', '=', '3']
+        ])->first();
+
+        // Fumi 独自クラスインスタンス化
+        $fumi_tools =new FumiTools();
+        $return_ybi = $fumi_tools->fumi_get_youbi_for_table(date('w'));
+        $column = 'udon_base_'.$return_ybi;
+
+        // 本日の必要うどん数取得（曜日毎）
+        $udon_base_cnt = $plan_production->$column;
+        // 一玉から取れるうどんの数 portion_par_udon
+        $portions = $plan_production->portion_par_udon;
+        // 残りのうどん数（Aicha入力データ）取得
+        $rests = $stock_record->udon_rest_15h;
+
+        $result = (int)$udon_base_cnt - $rests;
+
+        // session 格納        
+        \Session::flash('stock_record', $stock_record);
+
+        // 表示ステータス 通常指示表示
+        return view('soir15h',compact('result'))->with(['表示ステータス: ' => 0]);
+    }
+
 }

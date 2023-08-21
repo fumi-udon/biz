@@ -47,6 +47,25 @@
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">aicha</h6>
         <div class="d-flex text-muted pt-3">
+         <a href="/courses_matin">
+         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>aicha</title><rect width="100%" height="100%" fill="#00ab4b"/><text x="10%" y="10%" fill="#00ab4b" dy="">aicha</text></svg>
+        </a>
+          <p class="pb-3 mb-0 small lh-sm border-bottom">
+            <strong class="d-block text-gray-dark">Courses pour le matin</strong>
+            list de articles
+          </p>
+        </div>
+        <div class="d-flex text-muted pt-3">
+         <a href="/preparer_matin">
+         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>aicha</title><rect width="100%" height="100%" fill="#00ab4b"/><text x="10%" y="10%" fill="#00ab4b" dy="">aicha</text></svg>
+        </a>
+          <p class="pb-3 mb-0 small lh-sm border-bottom">
+            <strong class="d-block text-gray-dark">Préparation pour le matin</strong>
+            mise en place pour le matin
+          </p>
+        </div>
+
+        <div class="d-flex text-muted pt-3">
          <a href="/bn_register_top">
          <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>aicha</title><rect width="100%" height="100%" fill="#00ab4b"/><text x="10%" y="10%" fill="#00ab4b" dy="">aicha</text></svg>
         </a>
