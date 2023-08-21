@@ -93,6 +93,15 @@
             TestDevController::stock_email() call <br>ディナー営業時間内のストック状況をCronで把握(19H/20H/21H)
           </p>
         </div>
+        <div class="d-flex text-muted pt-3">
+         <a href="/stock_close_input">
+         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>gestion</title><rect width="100%" height="100%" fill="#ffd0dd"/><text x="10%" y="10%" fill="#ffd900" dy="">curry</text></svg>
+        </a>
+          <p class="pb-3 mb-0 small lh-sm border-bottom">
+            <strong class="d-block text-gray-dark">stock à la fermeture</strong>
+            TestDevController: stock_close_input <br>Bilel 22h30 
+          </p>
+        </div>
       </div>
 
       <div class="my-3 p-3 bg-body rounded shadow-sm">

@@ -14,7 +14,7 @@ class StockIngredient extends Model
     protected $fillable = [
         'id','udon_rest_15h','udon_rest_a','article1_rest','article2_rest',
         'pudding_mt','pudding_sm','oeuf','article3_rest','article4_rest','article5_rest',
-        'flg1','boo1','registre_date','registre_datetime'
+        'flg1','boo1','registre_date','registre_datetime','chashu','paiko','poulet_cru','riz','lait'
     ]; 
 
     // ここで初期値を定義する
