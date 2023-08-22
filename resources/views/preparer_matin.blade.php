@@ -38,7 +38,7 @@
 		<h4>Préparation pour le matin</h4>
 		@if ($yes_sato)
 			{{-- サト指示があった場合 --}}
-			&#x1f308;<br>{!! $sato_instruction['override_tx_1'] !!}
+			<br>{!! $sato_instruction['override_tx_1'] !!}
 		@else			
 			<p class="pb-3">
 				&#127833; RIZ:
@@ -53,11 +53,14 @@
 				@elseif($req_riz == 7)
 					0
 				@endif
+			</p>			
+		@endif
+			<p>
+				<br>&#128720; Si c'est peu : namuru, pudding, etc...
 			</p>
 			<p>
 			&#x1f302; <span style="color:#111">Contact d'urgence: Bilel 55 240 581 </span>
-			</p>			
-		@endif
+			</p>
 		</div>
 	</div>
 	@endif
