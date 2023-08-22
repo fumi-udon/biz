@@ -56,7 +56,7 @@
 			</p>			
 		@endif
 			<p>
-				<br>&#128720; Si c'est peu : namuru, pudding, etc...
+				&#128720; Si c'est peu : namuru, pudding, etc...
 			</p>
 			<p>
 			&#x1f302; <span style="color:#111">Contact d'urgence: Bilel 55 240 581 </span>
