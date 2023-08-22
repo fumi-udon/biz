@@ -22,7 +22,11 @@
 			<p>
 				&#128019; Poulet  {{ $courses_poulet }} pièces
 			</p>
-			@if ($bilel_lait < 2) <p>&#129371; Lait  4 paquets</p> @endif
+			@if ($bilel_lait === 0)
+				<p>&#129371; Lait 4 paquets</p> 
+			@elseif ($bilel_lait === 1)
+				<p>&#129371; Lait 2 paquets</p> 
+			@endif
 			</div>
 		@else
 			@if (!Request::is('addnote_courses'))
@@ -67,7 +71,7 @@
 		@if ( isset($stock_ingredients) )
 		<div class="my-3 p-3">
 			<div class="my-3 p-3 bg-body rounded shadow-sm">
-					<B>Bilel登録データ StockIngredientテーブル / flg 2</B><br>
+					<B>Bilel登録データ StockIngredientテーブル / flg 2 </B><br>
 					<div class="container">
 						<b>lait :</b>
 						<ul class="list-group">
