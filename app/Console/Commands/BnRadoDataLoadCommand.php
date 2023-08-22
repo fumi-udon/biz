@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+//お掃除テーブル
 use App\Models\StockIngredient;
+use App\Models\SatoInstruction;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Console\Command;
@@ -48,7 +50,12 @@ class BnRadoDataLoadCommand extends Command
         $deleteRecords = StockIngredient::where('registre_date', '<=', $deleteDate)->get();
         foreach($deleteRecords as $deleteRecord) {
             $deleteRecord->delete();
-        }     
+        }
+
+        $deleteRecords = SatoInstruction::where('aply_date', '<=', $deleteDate)->get();
+        foreach($deleteRecords as $deleteRecord) {
+            $deleteRecord->delete();
+        }  
 
         return 0;
     }

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+
 class RapelleCron extends Command
 {
     /**
@@ -38,6 +39,6 @@ class RapelleCron extends Command
     public function handle()
     {
         logger()->info('This is FUMI s RapelleCron.');
-        // TODO
+        return 0;
     }
 }
