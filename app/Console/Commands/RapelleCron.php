@@ -75,13 +75,13 @@ class RapelleCron extends Command
         }
 
         if($forget){
-            // Mail 送信 OK 済
-            $subject ='BistroNippon: Bilel forget alart';
-            $body = '閉店時の在庫チェック忘れ。ingrédients à la fermeture';
-            Mail::to('fuminippon@outlook.com')
-                ->cc(['satoe1227@gmail.com'])
-                ->send(new SendinBlueDemoEmail($subject, $body));       
-            logger()->info('[FUMI_cron] Bilel forget Alartメール送信しました。');
+            // // Mail 送信 OK 済
+            // $subject ='BistroNippon: Bilel forget alart';
+            // $body = '閉店時の在庫チェック忘れ。ingrédients à la fermeture';
+            // Mail::to('fuminippon@outlook.com')
+            //     ->cc(['satoe1227@gmail.com'])
+            //     ->send(new SendinBlueDemoEmail($subject, $body));       
+            logger()->info('TODO [FUMI_cron] Bilel forget Alartメール実装');
         }
 
         return 0;
