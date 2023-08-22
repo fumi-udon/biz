@@ -408,7 +408,39 @@ class TestDevController extends Controller
          );
         return view('courses_matin',compact('sato_instruction'));
     }
+    /**
+     * プレパレ こと付け登録
+     * 
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function addnote_preparer(Request $request)
+    {
+        // Post データ取得
+        $inputs = $request->only(['note8h', 'note_date']);
+        // Sessionにデータ保持
+        \Session::flash('note8h', $inputs['note8h']);
+        \Session::flash('note_date', $inputs['note_date']);
+        //$date_today = date_create()->format('Y-m-d'); 
 
+        /**
+         * Table作るの面倒だからサト指示テーブルを使う
+         * flg_int 5
+         * 朝 買物用
+         */               
+        $sato_instruction = SatoInstruction::updateOrCreate(
+            [
+                'aply_date' => $inputs['note_date'],
+                'flg_int' => 5
+            ],
+            [
+                'override_tx_1' => $inputs['note8h'],
+            ]
+         );
+        // select ボックス要素作成
+        $rizs = $this->get_select_values('rizs');
+        return view('preparer_matin',compact('sato_instruction', 'rizs'));
+    }
     /**
      * select values
      * 
