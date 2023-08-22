@@ -67,7 +67,7 @@
 		@if ( isset($stock_ingredients) )
 		<div class="my-3 p-3">
 			<div class="my-3 p-3 bg-body rounded shadow-sm">
-					<p>Bilel登録データ p>StockIngredientテーブル / flg 2 </p>
+					<H3>Bilel登録データ StockIngredientテーブル / flg 2 </H3><br>
 					laits: 0 _ rien / 1 _ '1 ～ 3 paquets' / 4 _ plus que 4 paquets<br>
 					poulet_crus: 0 _ rien / 1 _ moyen / 2 _ beaucoup
 			<table class="table">
