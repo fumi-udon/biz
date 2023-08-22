@@ -7,12 +7,14 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use Illuminate\Support\Facades\Log;
 use App\Console\Commands\BnRadoDataLoadCommand;
+use App\Console\Commands\RapelleCron;
 
 class Kernel extends ConsoleKernel
 {
 
     protected $commands = [
         Commands\BnRadoDataLoadCommand::Class,
+        Commands\RapelleCron::Class,
     ];
 
     /**
@@ -26,6 +28,7 @@ class Kernel extends ConsoleKernel
         Log::debug('[OVHのCron] schedule関数呼ばれた');
         //Load Json datas from Rado server and insert to database
         $schedule->command('radodataload:info --force')->daily();
+        $schedule->command('rapelle:do  --force')->daily();
         // OVH独特のCron仕様（分がランダム取得されちゃう）をハックするコマンド
         $this->scheduleRunsHourly($schedule);
     }
