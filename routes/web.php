@@ -30,6 +30,7 @@ Route::post('/stock_close_store/{id?}/{params?}', [TestDevController::class, 'st
 // 朝の買物リストとプレパレリスト
 Route::get('/courses_matin', [TestDevController::class, 'courses_matin'])->name('courses.matin');
 Route::get('/preparer_matin', [TestDevController::class, 'preparer_matin']);
+Route::post('/addnote_courses', [TestDevController::class, 'addnote_courses'])->name('addnote.courses');
 
 // コントローラを使う宣言 
 use App\Http\Controllers\TaskOrderController;

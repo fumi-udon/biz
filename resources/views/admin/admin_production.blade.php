@@ -101,6 +101,8 @@
 			<div class="col-sm-7">
 				example: <br>
 				🧤 ramen à mélanger et le couper pour aujourd'hui : ?? <br> ⚡ udon à couper pour ce matin : ??
+				<br><br>				
+				<p>&#128019; Poulet  x pièces <pre>&lt;br&gt;</pre> &#129371; Lait  4 paquets</p>
 			</div>
 		</div>
 	</div>

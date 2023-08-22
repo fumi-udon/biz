@@ -2,28 +2,112 @@
 @extends('layouts.head')
 <!-- パンくずリスト stock_record sato_record -->
 @section('content')
-<h4>Bonjour! courses pour le matin お買い物リストお願い。</h4>
+<main class="container">
+<div class="d-flex align-items-center p-3 my-3 text-white bg-fumi-1 rounded shadow-sm">
+	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
+	<div class="lh-1">
+		<h1 class="h6 mb-0 text-white lh-1">Courses pour le matin</h1>
+		<small></small>
+	</div>
+</div>
 
-<div class="row gx-3">
-    <div class="col-md-12 center-block">
-		@if( Session::has('sato_record') )			
+<div class="my-3 p-3 bg-body rounded">
+	<div class="row gx-3">
+	@if( Session::has('sato_record') )			
 			<div class="alert alert-primary" role="alert">
 				<b>&#3889;<br> {!! Session::get('sato_record')->override_tx_1 !!} </b>
 			</div>	
-		@elseif ( Session::has('stock_record') )
-		<p>
-			<b>&#9889; Udon à couper pour le soir:  {{ $result }}</b><br>
-		</p>
+		@elseif ( isset($stock_record) )
+			<div style=''>
+			<p>
+				&#128019; Poulet  {{ $courses_poulet }} pièces
+			</p>
+			@if ($bilel_lait < 2) <p>&#129371; Lait  4 paquets</p> @endif
+			</div>
 		@else
-		<div class="alert alert-danger" role="alert">
-			Les données ne sont pas prêtes Rappellez Aicha pour enregistrer le reste de Udons <br> TEL: 24986077
+			@if (!Request::is('addnote_courses'))
+			<div class="alert alert-danger" role="alert">
+				Les données ne sont pas prêtes Rappellez Bilel pour se remseigner <br> TEL: 55 240 581
+			</div>
+			@endif
+		@endif
+	</div>
+</div>
+
+<!-- Note 入力エリア ◆通常は非表示 start-->
+<div class="col-md-12">
+	@if(Request::is('addnote_courses'))
+	<hr>
+	<p class="p-3"><b>登録しました。flg=4</b><br>表示日：{{ session('note_date') }}<br>{{ session('note8h') }}</p>
+	@endif
+	<p class="m-2 text-secondary small"><a href="javascript:void(0)" id="note_open">詳細</a></p>
+	<!-- sato独自指示 エリア end -->
+	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 80%;">
+		<div class=" text-muted">
+		<form method='POST' action="{{ route('addnote.courses') }}">
+			@csrf
+			<div class="row">
+				<label for="note_date" class="col-form-label">表示日</label>
+				<div class="">
+				<input type="date" class="form-control" name="note_date" id="note_date" value="{{ session('note_date') }}" required>
+				</div>
+			</div>
+			<div class="row">
+				<label for="note_content" class="col-form-label">内容 _ 例:&#128019; Poulet  x pièces @php echo (htmlspecialchars('<br>', ENT_QUOTES)) @endphp &#129371; Lait  4 paquets</label>
+				<div class="">
+					<textarea style="width: 98%;height:100px;" class="Form-Item-Textarea" name="note8h" id="note8h" value=""required>{{ session('note8h') }}</textarea>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary" name="alice_btn">登録</button>
+		</form>
+	</div><!--row end -->
+	<!-- sato独自指示 エリア end -->
+
+		<!-- Bilel登録データ -->
+		@if ( isset($stock_ingredients) )
+		<div class="my-3 p-3">
+			<div class="my-3 p-3 bg-body rounded shadow-sm">
+				<div class=" text-muted pt-3 pb-3">
+					<h6>Bilel登録データ </h6><p>StockIngredientテーブル / flg 2 </p>
+				</div>
+			<table class="table">
+				<thead>
+					<tr>
+					<th scope="col">registre_datetime</th>
+					<th scope="col">chashu</th>
+					<th scope="col">paiko</th>
+					<th scope="col">poulet_cru</th>
+					<th scope="col">riz</th>
+					<th scope="col">lait</th>
+					</tr>
+				</thead>
+				<tbody>
+				@foreach ($stock_ingredients as $stock_ingredient)
+					<tr>
+					<td>{{ $stock_ingredient->registre_datetime }}</td>
+					<td>{{ $stock_ingredient->chashu }}</td>
+					<td>{{ $stock_ingredient->paiko }}</td>
+					<td>{{ $stock_ingredient->poulet_cru }}</td>
+					<td>{{ $stock_ingredient->riz }}</td>
+					<td>{{ $stock_ingredient->lait }}</td>					
+					</tr>
+				@endforeach
+				</tbody>
+			</table>
+			</div>
 		</div>
 		@endif
-    </div>
-</div><!--インライングリッド row end -->
+		<!-- Bilel登録データ end-->
+	</div>
+<!-- Note 入力エリア end-->
+
+</main>
+<!--インライングリッド row end -->
 
 <!--テスト　デバック-->
 
 @endsection
 
 @extends('layouts.footer')
+<!-- [ADD]FUMI Javascripts  -->
+<script src="{{ asset('js/courses_matin.js') }}"></script>
