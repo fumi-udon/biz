@@ -182,6 +182,17 @@ class TestDevController extends Controller
             // サトの独自指示がある場合は viewをgetして処理終了
             $yes_sato = true;
         }
+        /**
+         * Aicha入力データ表示
+         */
+         // 2週間以内のデータ取得
+         $stock_ingredients = StockIngredient::where('flg1', 3)
+            ->where('registre_datetime', '>=', Carbon::now()->subDays(14))
+            ->orderBy('registre_datetime', 'desc')
+            ->get();
+        
+        // Sessionにデータ保持
+        \Session::flash('stock_ingredients', $stock_ingredients);
 
         return view('preparer_matin', compact('today','rizs','sato_instruction','yes_sato'));
     }
@@ -202,9 +213,20 @@ class TestDevController extends Controller
         \Session::flash('riz_now', $req_riz);
         $today = date_create()->format('Y-m-d'); 
 
-        //TODO req_rizをデータベース挿入
-
-        //米の計算はviewでする
+        //req_rizをデータベース挿入
+        $stock_ingredient = StockIngredient::updateOrCreate(
+            [
+                'registre_date' => date('Y-m-d'),
+                'flg1' => 3
+            ],
+            [
+                'riz' => $req_riz,
+                'registre_date' => date('Y-m-d'),
+                'registre_datetime' => now(),
+                // error回避：ダミーデータ挿入
+                'udon_rest_15h' => 88,
+            ]
+        );
 
         /**
          * Satoの手動指示がある場合は優先表示
@@ -243,6 +265,8 @@ class TestDevController extends Controller
 
         //dd($inputs);
         // StockIngredient テーブル
+        // 閉店時ビレル入力データ登録
+        // ※ 'flg1' => 2
         date_default_timezone_set('Africa/Tunis');
         $stock_ingredient = StockIngredient::updateOrCreate(
             [

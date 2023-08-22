@@ -95,6 +95,18 @@
 			<button type="submit" class="btn btn-primary" name="alice_btn">登録</button>
 		</form>
 		</div>
+		@php
+			$stock_ingredients = session('stock_ingredients');
+		@endphp
+
+		@if ($stock_ingredients)
+			@foreach ($stock_ingredients as $ingredient)
+				<hr>
+				<p>本日のAicha登録データ _ Riz: {{ $ingredient->riz }}</p>
+				<!-- 他のメンバーも同様に表示 --> 
+			@endforeach
+		@else
+		@endif
 	</div><!--row end -->
 	<!-- sato独自指示 エリア end -->
 	</div>
