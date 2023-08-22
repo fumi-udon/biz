@@ -287,7 +287,6 @@ class TestDevController extends Controller
         }
 
         // PlanProduction テーブルから基準データ取得 (パイコー、チャーシュー、生の鶏肉)
-        // ★TODO　本番環境レコード追加
         $paiko_plan_production = PlanProduction::where([
             // パイコーデータ　id = 3
             ['id', '=', '3']
