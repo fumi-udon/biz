@@ -27,10 +27,11 @@ Route::get('/stock_email', [TestDevController::class, 'stock_email']);
 // Gestion 
 Route::get('/stock_close_input', [TestDevController::class, 'stock_close_input'])->name('stock.close.input');
 Route::post('/stock_close_store/{id?}/{params?}', [TestDevController::class, 'stock_close_store'])->name('stock.close.store');
-// 朝の買物リストとプレパレリスト
+// 朝の買物リストとプレパレリスト 
 Route::get('/courses_matin', [TestDevController::class, 'courses_matin'])->name('courses.matin');
-Route::get('/preparer_matin', [TestDevController::class, 'preparer_matin']);
+Route::get('/preparer_matin', [TestDevController::class, 'preparer_matin'])->name('preparer.matin');
 Route::post('/addnote_courses', [TestDevController::class, 'addnote_courses'])->name('addnote.courses');
+Route::post('/preparer_list', [TestDevController::class, 'preparer_list'])->name('preparer.list');
 
 // コントローラを使う宣言 
 use App\Http\Controllers\TaskOrderController;

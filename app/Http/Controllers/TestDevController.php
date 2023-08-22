@@ -115,17 +115,8 @@ class TestDevController extends Controller
      */
     public function stock_close_input()
     {
-        // ovh cron setting 
-        //logger()->info('[Win_タスクスケジューラ] handle() _ 米のストック管理');
         $today = (new DateTime())->format('Y-m-d');
-        // // [食材消費量] Curl https通信＿SSL エラー回避
-        // $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
-        //     'store' => "main",
-        //     'date' => $today,
-        // ]);
-        // $collections = collect($response->json());
 
-        // input create
         // select ボックス要素作成
         $paikos = collect([
             ['id' => '', 'name' => ''],
@@ -159,24 +150,80 @@ class TestDevController extends Controller
         ]);
 
         // select ボックス要素作成
-        $rizs = collect([
-            ['id' => '', 'name' => ''],
-            ['id' => '0', 'name' => '0'],
-            ['id' => '1', 'name' => '1'],
-            ['id' => '2', 'name' => '2'],
-            ['id' => '3', 'name' => '3'],
-            ['id' => '4', 'name' => '4'],
-            ['id' => '5', 'name' => '5'],
-            ['id' => '6', 'name' => '6'],
-            ['id' => '7', 'name' => '7'],
-            ['id' => '8', 'name' => '8'],
-            ['id' => '9', 'name' => '9'],
-            ['id' => '10', 'name' => '10'],
-        ]);
-        $session__all = \Session::all();
-        Log::debug($session__all);
+        $rizs = $this->get_select_values('rizs');
 
         return view('stock_close_input', compact('today','paikos','poulet_crus', 'laits', 'rizs'));
+    }
+
+    /**
+     * アイシャの買物リスト
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function preparer_matin()
+    {
+        $today = (new DateTime())->format('Y-m-d');
+
+        // select ボックス要素作成
+        $rizs = $this->get_select_values('rizs');
+
+        /**
+         * Satoの手動指示がある場合は優先表示
+         * Aichaプレパレ用は　flg = 5
+         * 
+         */       
+        $sato_instruction = SatoInstruction::where([
+            //AMの指示を取得
+            ['flg_int', '=', '5'],
+            ['aply_date', '=', $today]
+        ])->first();
+
+        $yes_sato = false;
+        if(! is_null($sato_instruction)){
+            // サトの独自指示がある場合は viewをgetして処理終了
+            $yes_sato = true;
+        }
+
+        return view('preparer_matin', compact('today','rizs','sato_instruction','yes_sato'));
+    }
+
+    /**
+     * 朝 プレパレリスト表示
+     * Aichaプレパレ用は　flg = 5
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function preparer_list(Request $request)
+    {
+        // Post データ取得
+        $attributes = $request->only(['rizs_list', 'actual_page_id']);
+
+        $req_riz = $attributes['rizs_list'];
+        // Sessionにデータ保持
+        \Session::flash('riz_now', $req_riz);
+        $today = date_create()->format('Y-m-d'); 
+
+        //TODO req_rizをデータベース挿入
+
+        //米の計算はviewでする
+
+        /**
+         * Satoの手動指示がある場合は優先表示
+         * flt 5
+         */               
+        $sato_instruction = SatoInstruction::where([
+            //AMのプレパレ指示を取得
+            ['flg_int', '=', '5'],
+            ['aply_date', '=', $today]
+        ])->first();
+        $yes_sato = false;
+        if(! is_null($sato_instruction)){
+            // サトの独自指示がある
+            $yes_sato = true;
+        }
+
+        // select ボックス要素作成
+        $rizs = $this->get_select_values('rizs');
+        return view('preparer_matin', compact('today','req_riz','rizs','sato_instruction','yes_sato'));
     }
 
     /**
@@ -187,7 +234,6 @@ class TestDevController extends Controller
     public function stock_close_store(Request $request, $id=null, $params=null)    {
 
         $inputs = $request->all();
-
         // リクエストデータ取得 
         $req_chashu = intval($inputs['chashu']);
         $req_paiko = floatval($inputs['paikos_list']);
@@ -361,5 +407,30 @@ class TestDevController extends Controller
             ]
          );
         return view('courses_matin',compact('sato_instruction'));
+    }
+
+    /**
+     * select values
+     * 
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function get_select_values($s_id){
+
+            if($s_id == 'rizs'){
+                // select ボックス要素作成
+                $rizs = collect([
+                    ['id' => '', 'name' => ''],
+                    ['id' => '0', 'name' => 'rien'],
+                    ['id' => '1', 'name' => 'moins que la moitié'],
+                    ['id' => '2', 'name' => 'la moitié'],
+                    ['id' => '3', 'name' => '1 casserole'],
+                    ['id' => '4', 'name' => '1 casserole et demi'],
+                    ['id' => '5', 'name' => '2 casserole'],
+                    ['id' => '6', 'name' => '2 casseroles et demi'],
+                    ['id' => '7', 'name' => 'plus de 3 casseroles'],
+                ]);
+                return $rizs;
+            }
     }
 }
