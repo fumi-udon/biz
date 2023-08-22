@@ -311,7 +311,7 @@ class TestDevController extends Controller
         $bilel_lait = (int)$stock_record->lait;
 
         /**
-         * 鶏肉購入枚数  ★TODO:
+         * 鶏肉購入枚数
          */
         // paiko
         $paiko_base = $paiko_plan_production->$daysoftheweek;
