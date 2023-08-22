@@ -22,11 +22,7 @@ class KernelRapelle extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //Log::debug('[OVHのCron] KernelDinnerStock->schedule関数呼ばれた');
-
-        // dinnerの食材量をチェックしてアラートメールを送信
-        // 30分毎に10回実行
-        $schedule->command('rapelle:do --force')->everyThirtyMinutes()->times(10);
+        $schedule->command('rapelle:do --force')->dailyAt('23:00');
         // OVH独特のCron仕様（分がランダム取得されちゃう）をハックするコマンド
         $this->scheduleRunsHourly($schedule);
     }
