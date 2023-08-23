@@ -81,7 +81,7 @@ class RapelleCron extends Command
             // Mail::to('fuminippon@outlook.com')
             //     ->cc(['satoe1227@gmail.com'])
             //     ->send(new SendinBlueDemoEmail($subject, $body));       
-            logger()->info('TODO [FUMI_cron] Bilel forget Alartメール実装');
+            logger()->info('[FUMI] -RapelleCron- Bilel登録忘れ ');
         }
 
         return 0;
