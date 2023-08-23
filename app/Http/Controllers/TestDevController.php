@@ -183,20 +183,30 @@ class TestDevController extends Controller
             $yes_sato = true;
         }
         /**
-         * Aicha入力データ表示
+         * Aicha 入力米データ表示 / flg= 3
          */
-         // 2週間以内のデータ取得
-         $stock_ingredients = StockIngredient::where('flg1', 3)
-            ->where('registre_datetime', '>=', Carbon::now()->subDays(14))
-            ->orderBy('registre_datetime', 'desc')
-            ->get();
-        
+        $stock_ingredients = $this->get_stockIngredient_by_keys('3', '7');
+
+        //dd($stock_ingredients);
         // Sessionにデータ保持
         \Session::flash('stock_ingredients', $stock_ingredients);
 
         return view('preparer_matin', compact('today','rizs','sato_instruction','yes_sato'));
     }
 
+    /**
+     * StockIngredient テーブルからフラグのデータを取得
+     * x 以内のデータ取得
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function get_stockIngredient_by_keys($flg1, $sub_days){
+        $stock_ingredients = StockIngredient::where('flg1', $flg1)
+        ->where('registre_datetime', '>=', Carbon::now()->subDays($sub_days))
+        ->orderBy('registre_datetime', 'desc')
+        ->get();
+
+        return $stock_ingredients;
+    }
     /**
      * 朝 プレパレリスト表示
      * Aichaプレパレ用は　flg = 5
@@ -242,6 +252,13 @@ class TestDevController extends Controller
             // サトの独自指示がある
             $yes_sato = true;
         }
+
+        /**
+         * Aicha 入力米データ表示 / flg= 3
+         */
+        $stock_ingredients = $this->get_stockIngredient_by_keys('3', '7');
+        // Sessionにデータ保持
+        \Session::flash('stock_ingredients', $stock_ingredients);
 
         // select ボックス要素作成
         $rizs = $this->get_select_values('rizs');

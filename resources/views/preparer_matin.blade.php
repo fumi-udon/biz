@@ -95,18 +95,44 @@
 			<button type="submit" class="btn btn-primary" name="alice_btn">登録</button>
 		</form>
 		</div>
+		<!--row Aicha 入力データ表示 start -->
+		<div class='col-md-12 m-2 p-3 text-secondary small'>
 		@php
 			$stock_ingredients = session('stock_ingredients');
 		@endphp
-
 		@if ($stock_ingredients)
+			<b>Aicha 米入力データ</b>
+			<ul class="list-group list-group-flush" style="font-size: 14px; border: none; padding: 0;">
+			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 0 - rien</li>
+			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 1 - moins que la moitié</li>
+			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 2 - la moitié</li>
+			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 3 - 1 casserole</li>
+			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 4 - 1 casserole et demi</li>
+			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 5 - 2 casseroles</li>
+			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 6 - 2 casseroles et demi</li>
+			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 7 - plus de 3 casseroles</li>
+			</ul>		
+			<table class="table">
+				<thead>
+					<tr>
+					<th scope="col">DATE</th>
+					<th scope="col">RIZ</th>
+					</tr>
+				</thead>
 			@foreach ($stock_ingredients as $ingredient)
-				<hr>
-				<p>本日のAicha登録データ _ Riz: {{ $ingredient->riz }}</p>
-				<!-- 他のメンバーも同様に表示 --> 
+				<tbody>
+					<tr>
+					<td>{{ $ingredient->registre_datetime }}</td>
+					<td>{{ $ingredient->riz }}</td>
+					</tr>
+				</tbody>
 			@endforeach
+			</table>
 		@else
 		@endif
+		</div>
+		<!--row Aicha 入力データ表示 end
+	 -->
 	</div><!--row end -->
 	<!-- sato独自指示 エリア end -->
 	</div>
