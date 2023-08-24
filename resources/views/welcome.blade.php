@@ -47,31 +47,11 @@
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">aicha</h6>
         <div class="d-flex text-muted pt-3">
-         <a href="/courses_matin">
+         <a href="/aicha_works_top">
          <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>aicha</title><rect width="100%" height="100%" fill="#00ab4b"/><text x="10%" y="10%" fill="#00ab4b" dy="">aicha</text></svg>
         </a>
           <p class="pb-3 mb-0 small lh-sm border-bottom">
-            <strong class="d-block text-gray-dark">Courses pour le matin</strong>
-            list de articles
-          </p>
-        </div>
-        <div class="d-flex text-muted pt-3">
-         <a href="/preparer_matin">
-         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>aicha</title><rect width="100%" height="100%" fill="#00ab4b"/><text x="10%" y="10%" fill="#00ab4b" dy="">aicha</text></svg>
-        </a>
-          <p class="pb-3 mb-0 small lh-sm border-bottom">
-            <strong class="d-block text-gray-dark">Préparation pour le matin</strong>
-            mise en place pour le matin
-          </p>
-        </div>
-
-        <div class="d-flex text-muted pt-3">
-         <a href="/bn_register_top">
-         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>aicha</title><rect width="100%" height="100%" fill="#00ab4b"/><text x="10%" y="10%" fill="#00ab4b" dy="">aicha</text></svg>
-        </a>
-          <p class="pb-3 mb-0 small lh-sm border-bottom">
-            <strong class="d-block text-gray-dark">@15h</strong>
-            veuillez enregistrer la quantité d'ingrédients restants.
+            <strong class="d-block text-gray-dark">menu page</strong>            
           </p>
         </div>
       </div>    
@@ -89,7 +69,7 @@
         </div>
       </div>
 
-      <div class="my-3 p-3 bg-body rounded shadow-sm">
+      <!-- <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">レシピ集 / Recettes</h6>
         <div class="d-flex text-muted pt-3">
          <a href="/recettes_index">
@@ -99,11 +79,11 @@
             <strong class="d-block text-gray-dark">bistro nippon の味</strong>
           </p>
         </div>
-      </div>
+      </div> -->
 
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">Gestion</h6>
-        <div class="d-flex text-muted pt-3">
+        <!-- <div class="d-flex text-muted pt-3">
          <a href="/stock_email">
          <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>gestion</title><rect width="100%" height="100%" fill="#ffd0dd"/><text x="10%" y="10%" fill="#ffd900" dy="">curry</text></svg>
         </a>
@@ -111,19 +91,19 @@
             <strong class="d-block text-gray-dark">ディナーストック管理</strong>
             TestDevController::stock_email() call <br>ディナー営業時間内のストック状況をCronで把握(19H/20H/21H)
           </p>
-        </div>
+        </div> -->
         <div class="d-flex text-muted pt-3">
          <a href="/stock_close_input">
          <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>gestion</title><rect width="100%" height="100%" fill="#ffd0dd"/><text x="10%" y="10%" fill="#ffd900" dy="">curry</text></svg>
         </a>
           <p class="pb-3 mb-0 small lh-sm border-bottom">
             <strong class="d-block text-gray-dark">ingrédients à la fermeture</strong>
-            <br>Bilel 22h30 
+            Bilel 22h30 
           </p>
         </div>
       </div>
 
-      <div class="my-3 p-3 bg-body rounded shadow-sm">
+      <!-- <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">遊びふみ</h6>
         <div class="d-flex text-muted pt-3">
          <a href="/dev_home">
@@ -133,7 +113,7 @@
             <strong class="d-block text-gray-dark">開発遊び</strong>
           </p>
         </div>
-      </div>
+      </div> -->
        
     </main>
     @endsection

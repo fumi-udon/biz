@@ -26,6 +26,102 @@ use Carbon\Carbon;
 
 class TestDevController extends Controller
 {
+    
+    /**
+     * ディナープレパレリスト表示. Aichaとアンドレア用
+     * Udon は VIEWで固定表示 / 米とブイヨンはアイシャの入力値から計算
+     * Aicha top page リンクから
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function preparer_diner(){
+
+        // 曜日を取得 Fumi 独自クラスインスタンス化 
+        $fumi_tools =new FumiTools();
+        $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
+
+        // Aicha 15時 入力データ取得 / flg= 3
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('3', '7'); 
+        \Session::flash('stock_ingredients', $stock_ingredients);
+
+        // /**
+        //  * Bilel入力データ表示
+        //  */
+        //  // 2週間以内のデータ取得
+        //  $stock_ingredients = StockIngredient::where('flg1', 2)
+        //     ->where('registre_datetime', '>=', Carbon::now()->subDays(14))
+        //     ->orderBy('registre_datetime', 'desc')
+        //     ->get();
+
+        /**
+         * Satoの手動指示がある場合は優先表示
+         * flg 6:  ディナー アイシャとアンドレアプレパレページ表示
+         */
+        $date_today = date_create()->format('Y-m-d');   
+        $sato_record = SatoInstruction::where([
+            ['flg_int', '=', '6'],
+            ['aply_date', '=', $date_today]
+        ])->first();
+
+        $sato_text_flg = false;
+        if(! empty($sato_record)){
+            //サト指示有の為 表示
+            $sato_text_flg = true;
+            \Session::flash('sato_record', $sato_record);
+        }
+
+        // 入力データ取得 flg = 3
+        // 7時間以内の最新レコード取得
+        $hour_minus = 7;
+        $stock_ingredient = StockIngredient::where('flg1', 3)
+            ->where('registre_datetime', '>=', Carbon::now()->subHours($hour_minus))
+            ->orderBy('registre_datetime', 'desc')
+            ->first();
+
+        // stock_recordが無い場合は以降するーしてviewをゲット
+        $display_stock_flg = true;
+        if(empty($stock_ingredient)){
+            //アイシャがデータ登録忘れの為エラーメッセージ表示
+            $display_stock_flg = false;
+        }
+
+        // Aicha入力データ取得
+        $aicha_udon_rest_15h = (int)$stock_ingredient->udon_rest_15h;
+        $aicha_riz = (int)$stock_ingredient->article1_rest;
+        $aicha_bouillons = (int)$stock_ingredient->article2_rest;
+
+        // 表示ステータス 通常指示表示
+        return view('preparer_diner',compact('daysoftheweek','stock_ingredient', 'display_stock_flg', 'sato_text_flg', 'sato_record'));
+    }
+    /**
+     * ディナー サト指示こと付け登録
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function addnote_diner(Request $request)
+    {
+        // Post データ取得
+        $inputs = $request->only(['note8h', 'note_date']);
+        // Sessionにデータ保持
+        \Session::flash('note8h', $inputs['note8h']);
+        \Session::flash('note_date', $inputs['note_date']);
+
+        /**
+         * Table作るの面倒だからサト指示テーブルを使う
+         * flg 6:  ディナー アイシャとアンドレアプレパレページ表示
+         * 朝 買物用
+         */               
+        $sato_instruction = SatoInstruction::updateOrCreate(
+            [
+                'aply_date' => $inputs['note_date'],
+                'flg_int' => 6
+            ],
+            [
+                'override_tx_1' => $inputs['note8h'],
+            ]
+         );
+        return view('preparer_diner',compact('sato_instruction'));
+    } 
     /**
      * 米のストック管理用.
      * get_riz_stock_data
@@ -184,29 +280,14 @@ class TestDevController extends Controller
         }
         /**
          * Aicha 入力米データ表示 / flg= 3
+         * Sessionにデータ保持
          */
-        $stock_ingredients = $this->get_stockIngredient_by_keys('3', '7');
-
-        //dd($stock_ingredients);
-        // Sessionにデータ保持
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('3', '7'); 
         \Session::flash('stock_ingredients', $stock_ingredients);
 
         return view('preparer_matin', compact('today','rizs','sato_instruction','yes_sato'));
     }
-
-    /**
-     * StockIngredient テーブルからフラグのデータを取得
-     * x 以内のデータ取得
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function get_stockIngredient_by_keys($flg1, $sub_days){
-        $stock_ingredients = StockIngredient::where('flg1', $flg1)
-        ->where('registre_datetime', '>=', Carbon::now()->subDays($sub_days))
-        ->orderBy('registre_datetime', 'desc')
-        ->get();
-
-        return $stock_ingredients;
-    }
+    
     /**
      * 朝 プレパレリスト表示
      * Aichaプレパレ用は　flg = 5
@@ -256,7 +337,7 @@ class TestDevController extends Controller
         /**
          * Aicha 入力米データ表示 / flg= 3
          */
-        $stock_ingredients = $this->get_stockIngredient_by_keys('3', '7');
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('3', '7');
         // Sessionにデータ保持
         \Session::flash('stock_ingredients', $stock_ingredients);
 

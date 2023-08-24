@@ -33,6 +33,10 @@ Route::get('/preparer_matin', [TestDevController::class, 'preparer_matin'])->nam
 Route::post('/addnote_courses', [TestDevController::class, 'addnote_courses'])->name('addnote.courses');
 Route::post('/preparer_list', [TestDevController::class, 'preparer_list'])->name('preparer.list');
 Route::post('/addnote_preparer', [TestDevController::class, 'addnote_preparer'])->name('addnote.preparer');
+// ディナーのプレパレ 15時 Aicha and Andrea用
+Route::get('/preparer_diner', [TestDevController::class, 'preparer_diner'])->name('preparer.diner');
+// ディナーのプレパレ 15時 Aicha and Andrea用 サト指示登録
+Route::post('/addnote_diner', [TestDevController::class, 'addnote_diner'])->name('addnote.diner');
 
 // コントローラを使う宣言 
 use App\Http\Controllers\TaskOrderController;
@@ -42,6 +46,8 @@ Route::get('/soir15h', [TaskOrderController::class, 'soir15h']);
 Route::post('/task15h', [TaskOrderController::class, 'task15h']);
 Route::get('/bn_register_top', [TaskOrderController::class, 'bn_register_top'])->name('bn.register.top');
 Route::post('/bn_register_store/{id?}/{params?}', [TaskOrderController::class, 'bn_register_store'])->name('bn.register.store');
+Route::get('/aicha_works_top', [TaskOrderController::class, 'aicha_works_top']);
+
 // Alice 用のこと付け
 Route::post('/add_note8h', [TaskOrderController::class, 'add_note8h'])->name('add.note8h');
 

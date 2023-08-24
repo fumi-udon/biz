@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
+
 use Illuminate\Support\Facades\Config; // Configクラスをインポートする
 
 //Fumi 独自クラス
@@ -17,7 +18,31 @@ use Illuminate\Support\Facades\Log;
 class TaskOrderController extends Controller
 {
     /**
-     * Show the cals page dashboard.
+     * StockIngredient テーブルからフラグのデータを取得
+     * x 以内のデータ取得
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function get_stockIngredient_by_keys($flg1, $sub_days){
+        $stock_ingredients = StockIngredient::where('flg1', $flg1)
+        ->where('registre_datetime', '>=', Carbon::now()->subDays($sub_days))
+        ->orderBy('registre_datetime', 'desc')
+        ->get();
+
+        return $stock_ingredients;
+    }
+
+    /**
+     * aicha_works
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function aicha_works_top()    {
+        $today = date_create()->format('Y-m-d');
+        return view('aicha_works_top',compact('today'));
+    }
+
+    /**
+     * Show the cals page dashboard.aicha_works
      * Log::debug("XXXX:".$XXXX);
      * less +F /cygdrive/c/xampp/htdocs/business/storage/logs/laravel.log
      *
@@ -169,10 +194,12 @@ class TaskOrderController extends Controller
             ['id' => '5', 'name' => '5L'],
         ]);
 
-        $session__all = \Session::all();
-        Log::debug($session__all);
+        /**
+         * Aicha 入力米データ表示 / flg= 1
+         */
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('1', '24');
 
-        return view('bn_register_ingredient', compact('rizs','bouillons'));
+        return view('bn_register_ingredient', compact('rizs','bouillons', 'stock_ingredients'));
     }
 
     /**

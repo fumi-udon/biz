@@ -5,6 +5,8 @@ namespace App\FumiLib;
 use Illuminate\Http\Request;
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
+use App\Models\StockIngredient;
+use Carbon\Carbon;
 
 class FumiTools
 {
@@ -13,7 +15,23 @@ class FumiTools
         return 'Hello world';
     }
    
-    
+    /**
+     * stock_ingredientsテーブルデータ取得.
+     *'flg1' => 3　アイシャの朝プレパレで入力する米の残量データ
+     *'flg1' => 2　ビレルの閉店時登録データ
+     *'flg1' => 1　15時のアイシャ登録在庫
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public static function get_stockIngredient_by_keys($flg, $sub_days)
+    {
+        $stock_ingredients = StockIngredient::where('flg1', $flg)
+        ->where('registre_datetime', '>=', Carbon::now()->subDays($sub_days))
+        ->orderBy('registre_datetime', 'desc')
+        ->get();
+
+        return $stock_ingredients;
+    }
+
     /**
      * FUMI
      *  曜日をdbカラムに適合した文字列で返す 例 mon,tue...

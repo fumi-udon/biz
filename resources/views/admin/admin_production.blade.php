@@ -101,8 +101,6 @@
 			<div class="col-sm-7">
 				example: <br>
 				🧤 ramen à mélanger et le couper pour aujourd'hui : ?? <br> ⚡ udon à couper pour ce matin : ??
-				<br><br>				
-				<p>&#128019; Poulet  x pièces <pre>&lt;br&gt;</pre> &#129371; Lait  4 paquets</p>
 			</div>
 		</div>
 	</div>
@@ -111,31 +109,6 @@
 <hr/>
 
 <!--container ストック残表示-->
-	<div class="my-3 p-3 bg-body rounded shadow-sm">
-		<div class=" text-muted pt-3 pb-3">
-			<h5>StockIngredient テーブル </h5>
-		</div>
-		<table class="table">
-			<thead>
-				<tr>
-				<th scope="col">日付</th>
-				<th scope="col">うどん</th>
-				<th scope="col">米</th>
-				<th scope="col">ブイヨン</th>
-				</tr>
-			</thead>
-			<tbody>
-			@foreach ($stock_ingredients as $stock_ingredient)
-				<tr>
-				<th>{{ $stock_ingredient->registre_date }}</th>
-				<td>{{ $stock_ingredient->udon }}</td>
-				<td>{{ $stock_ingredient->riz }}</td>
-				<td>{{ $stock_ingredient->bouillons }} L</td>
-				</tr>
-			@endforeach
-			</tbody>
-		</table>
-	</div>
 	<!--row end-->
 
 </main>

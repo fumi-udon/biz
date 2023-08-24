@@ -58,8 +58,9 @@
 					</select>
 					</label>
 				</div>
+			</div>			
 			</div>
-			</div>
+
 			</div><!--row end-->
 
 			<div class="row p-2">
@@ -69,10 +70,57 @@
 			</div><!--row end-->
 		</form>
 	  </div><!--コンテナー end -->
+        <!--aicha_works_topに戻るリンク-->
+        <div class="container mt-5">
+            <a href="/aicha_works_top" class="text-primary">Retour</a>
+        </div>
     </div>
+
+<!-- Note 入力エリア ◆通常は非表示 start-->
+<div class="col-md-12">
+	<div style="text-align: right;">
+		<p class="m-2 small"><a href="javascript:void(0)" id="note_open" style="color: grey;">詳細</a></p>
+	</div>
+	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 80%;">
+		<!-- 登録データ -->
+		@if ( isset($stock_ingredients) )
+		<div class="my-3 p-3">
+			<div class="my-3 p-3 bg-body rounded shadow-sm">
+			<B>StockIngredientテーブル / flg 1 </B><br>	
+			<table class="table">
+				<thead>
+					<tr>
+					<th scope="col">registre_datetime</th>
+					<th scope="col">udon 15h</th>
+					<th scope="col">riz</th>
+					<th scope="col">bouillons</th>
+
+					</tr>
+				</thead>
+				<tbody>
+				@foreach ($stock_ingredients as $stock_ingredient)
+					<tr>
+					<td>{{ $stock_ingredient->registre_datetime }}</td>
+					<td>{{ $stock_ingredient->udon_rest_15h }}</td>
+					<td>{{ $stock_ingredient->article1_rest }}</td>
+					<td>{{ $stock_ingredient->article2_rest }}</td>
+				
+					</tr>
+				@endforeach
+				</tbody>
+			</table>
+			</div>
+		</div>
+		@endif
+		<!-- Bilel登録データ end-->
+	</div>
+<!-- Note 入力エリア end-->
+
 </main>
 <!-- FUMI end -->
 <!--テスト　デバック-->
 @endsection
 
 @extends('layouts.footer')
+<!-- [ADD]FUMI Javascripts  -->
+<script src="{{ asset('js/courses_matin.js') }}"></script>

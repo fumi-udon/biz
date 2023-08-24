@@ -36,6 +36,10 @@
 			@endif
 		@endif
 	</div>
+	        <!--aicha_works_topに戻るリンク-->
+			<div class="container mt-5">
+            <a href="/aicha_works_top" class="text-primary">Retour</a>
+        	</div>
 </div>
 
 <!-- Note 入力エリア ◆通常は非表示 start-->
@@ -44,7 +48,9 @@
 	<hr>
 	<p class="p-3"><b>登録しました。flg=4</b><br>表示日：{{ session('note_date') }}<br>{{ session('note8h') }}</p>
 	@endif
-	<p class="m-2 text-secondary small"><a href="javascript:void(0)" id="note_open">詳細</a></p>
+	<div style="text-align: right;">
+		<p class="m-2 small"><a href="javascript:void(0)" id="note_open" style="color: grey;">詳細</a></p>
+	</div>
 	<!-- sato独自指示 エリア end -->
 	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 80%;">
 		<div class=" text-muted">
@@ -64,8 +70,8 @@
 			</div>
 			<button type="submit" class="btn btn-primary" name="alice_btn">登録</button>
 		</form>
-	</div><!--row end -->
-	<!-- sato独自指示 エリア end -->
+		</div><!--row end -->
+		<!-- sato独自指示 エリア end -->
 
 		<!-- Bilel登録データ -->
 		@if ( isset($stock_ingredients) )
