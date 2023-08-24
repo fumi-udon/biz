@@ -44,30 +44,25 @@ class TestDevController extends Controller
         $stock_ingredients = FumiTools::get_stockIngredient_by_keys('3', '7'); 
         \Session::flash('stock_ingredients', $stock_ingredients);
 
-        // /**
-        //  * Bilel入力データ表示
-        //  */
-        //  // 2週間以内のデータ取得
-        //  $stock_ingredients = StockIngredient::where('flg1', 2)
-        //     ->where('registre_datetime', '>=', Carbon::now()->subDays(14))
-        //     ->orderBy('registre_datetime', 'desc')
-        //     ->get();
-
         /**
          * Satoの手動指示がある場合は優先表示
          * flg 6:  ディナー アイシャとアンドレアプレパレページ表示
          */
         $date_today = date_create()->format('Y-m-d');   
-        $sato_record = SatoInstruction::where([
-            ['flg_int', '=', '6'],
-            ['aply_date', '=', $date_today]
-        ])->first();
+        $sato_record = SatoInstruction::whereIn('flg_int', [6, 7])
+            ->where('aply_date', $date_today)
+            ->latest('updated_at')
+            ->first();
 
         $sato_text_flg = false;
+        $sato_text_mode = 0;
         if(! empty($sato_record)){
+            // 6:上書き / 7:追加
+            $sato_text_mode = $sato_record->flg_int;
             //サト指示有の為 表示
             $sato_text_flg = true;
             \Session::flash('sato_record', $sato_record);
+            \Session::flash('sato_text_mode', $sato_text_mode);
         }
 
         // Aicha 入力データ取得 flg = 1
@@ -89,7 +84,8 @@ class TestDevController extends Controller
         $aicha_udon_rest_15h = (int)$stock_ingredient->udon_rest_15h;
         $aicha_riz = (int)$stock_ingredient->article1_rest;
         $aicha_bouillons = (int)$stock_ingredient->article2_rest;
-
+        // select ボックス要素作成
+        $mode_inserts = $this->get_select_values('mode_inserts');
         // View
         return view('preparer_diner',compact('daysoftheweek',
             'stock_ingredient', 
@@ -99,6 +95,8 @@ class TestDevController extends Controller
             'aicha_udon_rest_15h',
             'aicha_riz',
             'aicha_bouillons',
+            'mode_inserts',
+            'sato_text_mode'
         ));
     }
     /**
@@ -109,10 +107,13 @@ class TestDevController extends Controller
     public function addnote_diner(Request $request)
     {
         // Post データ取得
-        $inputs = $request->only(['note8h', 'note_date']);
+        $inputs = $request->only(['note8h', 'note_date', 'mode_inserts_list']);
+        $mode_insert = $inputs['mode_inserts_list'];
+
         // Sessionにデータ保持
         \Session::flash('note8h', $inputs['note8h']);
         \Session::flash('note_date', $inputs['note_date']);
+        \Session::flash('mode_insert_now', $mode_insert);
 
         /**
          * Table作るの面倒だからサト指示テーブルを使う
@@ -122,13 +123,16 @@ class TestDevController extends Controller
         $sato_instruction = SatoInstruction::updateOrCreate(
             [
                 'aply_date' => $inputs['note_date'],
-                'flg_int' => 6
+                'flg_int' => $mode_insert
             ],
             [
                 'override_tx_1' => $inputs['note8h'],
             ]
          );
-        return view('preparer_diner',compact('sato_instruction'));
+
+        // select ボックス要素作成
+        $mode_inserts = $this->get_select_values('mode_inserts');
+        return view('preparer_diner',compact('sato_instruction', 'mode_inserts'));
     } 
     /**
      * 米のストック管理用.
@@ -573,7 +577,7 @@ class TestDevController extends Controller
     }
     /**
      * select values
-     * 
+     * 追加：　　mode_inserts
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -594,5 +598,16 @@ class TestDevController extends Controller
                 ]);
                 return $rizs;
             }
+
+            if($s_id == 'mode_inserts'){
+                // select ボックス要素作成
+                $mode_inserts = collect([
+                    ['id' => '', 'name' => ''],
+                    ['id' => '6', 'name' => '上書き更新'],
+                    ['id' => '7', 'name' => '追加'],
+                ]);
+                return $mode_inserts;
+            }
     }
+
 }
