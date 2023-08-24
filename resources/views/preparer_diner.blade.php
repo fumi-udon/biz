@@ -6,7 +6,7 @@
 <div class="d-flex align-items-center p-3 my-3 text-white bg-fumi-1 rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">
-		<h1 class="h6 mb-0 text-white lh-1">Préparation pour le diner</h1>
+		<h1 class="h4 mb-0 text-white lh-1"><b>Préparation pour le diner</b></h1>
 		<small></small>
 	</div>
 </div>
@@ -17,10 +17,42 @@
 			<div class="alert alert-primary" role="alert">
 				<b>&#3889;<br> {!! Session::get('sato_record')->override_tx_1 !!} </b>
 			</div>
-		@elseif ( isset($stock_record) )
+		@elseif ( isset($stock_ingredient) )
 			<div>
-				<p>	&#128019; Poulet </p>
+				<p>&#127837; Udon: 4 </p>
+				<p>
+					&#127833; RIZ:
+					@if($aicha_riz == 0 || $aicha_riz == 1)
+						14 portions
+					@elseif($aicha_riz == 2)
+						12 portions
+					@elseif($aicha_riz == 3)
+						9 portions
+					@elseif($aicha_riz == 4)
+						8 portions
+					@elseif($aicha_riz == 5)
+						5 portions
+					@elseif($aicha_riz == 6)
+						4 portions
+					@elseif($aicha_riz == 7)
+						 non
+					@endif
+				</p>
+				<p>
+					&#129379; Bouillons:
+					<!-- 週末 金/土 -->
+					@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')
+						{{ 8 - $aicha_bouillons }} L
+					@else
+					<!-- 平日 -->
+						{{ 7 - $aicha_bouillons }} L
+					@endif
+					
+				</p>
 			</div>
+			<p>
+				&#128720; Si c'est peu : oeuf, chips, namuru, pudding, salade, légumes etc...
+			</p>
 		@else
 			@if (!Request::is('addnote_diner'))
 			<div class="alert alert-danger" role="alert">

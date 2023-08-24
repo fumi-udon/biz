@@ -70,10 +70,10 @@ class TestDevController extends Controller
             \Session::flash('sato_record', $sato_record);
         }
 
-        // 入力データ取得 flg = 3
+        // Aicha 入力データ取得 flg = 1
         // 7時間以内の最新レコード取得
         $hour_minus = 7;
-        $stock_ingredient = StockIngredient::where('flg1', 3)
+        $stock_ingredient = StockIngredient::where('flg1', 1)
             ->where('registre_datetime', '>=', Carbon::now()->subHours($hour_minus))
             ->orderBy('registre_datetime', 'desc')
             ->first();
@@ -90,8 +90,16 @@ class TestDevController extends Controller
         $aicha_riz = (int)$stock_ingredient->article1_rest;
         $aicha_bouillons = (int)$stock_ingredient->article2_rest;
 
-        // 表示ステータス 通常指示表示
-        return view('preparer_diner',compact('daysoftheweek','stock_ingredient', 'display_stock_flg', 'sato_text_flg', 'sato_record'));
+        // View
+        return view('preparer_diner',compact('daysoftheweek',
+            'stock_ingredient', 
+            'display_stock_flg', 
+            'sato_text_flg', 
+            'sato_record',
+            'aicha_udon_rest_15h',
+            'aicha_riz',
+            'aicha_bouillons',
+        ));
     }
     /**
      * ディナー サト指示こと付け登録
