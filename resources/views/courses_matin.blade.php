@@ -52,7 +52,7 @@
 		<p class="m-2 small"><a href="javascript:void(0)" id="note_open" style="color: grey;">詳細</a></p>
 	</div>
 	<!-- sato独自指示 エリア end -->
-	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 80%;">
+	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 100%;">
 		<div class=" text-muted">
 		<form method='POST' action="{{ route('addnote.courses') }}">
 			@csrf
