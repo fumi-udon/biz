@@ -78,6 +78,15 @@ class TestDevController extends Controller
         if(empty($stock_ingredient)){
             //アイシャがデータ登録忘れの為エラーメッセージ表示
             $display_stock_flg = false;
+
+            // [処理終了]
+            return view('preparer_diner_nodata',
+                compact('daysoftheweek',
+                        'stock_ingredient', 
+                        'display_stock_flg', 
+                        'sato_text_flg', 
+                        'sato_record',
+                    ));
         }
 
         // Aicha入力データ取得
