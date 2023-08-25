@@ -102,7 +102,8 @@
 							<li class="list-group-item">6 : 2 casseroles et demi</li>
 							<li class="list-group-item">7 : plus de 3 casseroles</li>
 						</ul>
-					</div>			
+					</div>
+			<div class="table-responsive">	
 			<table class="table">
 				<thead>
 					<tr>
@@ -127,6 +128,7 @@
 				@endforeach
 				</tbody>
 			</table>
+			</div>
 			</div>
 		</div>
 		@endif
