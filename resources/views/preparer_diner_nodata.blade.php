@@ -3,8 +3,6 @@
 <!-- パンくずリスト stock_record sato_record -->
 @section('content')
 <main class="container">
-
-
 <div class="my-3 p-3 bg-body rounded">
 	<div class="row gx-3">
 		<div class="alert alert-danger" role="alert">
@@ -16,7 +14,9 @@
 		<a href="/aicha_works_top" class="text-primary">Retour</a>
 		</div>
 </div>
-
+	<div style="text-align: right;">
+			<p class="m-2 small"><a href="/addnote_diner_page" id="note_open" style="color: grey;">指示追加</a></p>
+	</div>
 </main>
 <!--インライングリッド row end -->
 

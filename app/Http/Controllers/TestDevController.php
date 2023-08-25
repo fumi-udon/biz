@@ -39,6 +39,8 @@ class TestDevController extends Controller
         // 曜日を取得 Fumi 独自クラスインスタンス化 
         $fumi_tools =new FumiTools();
         $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
+        // select ボックス要素作成
+        $mode_inserts = $this->get_select_values('mode_inserts');
 
         // Aicha 15時 入力データ取得 / flg= 3
         $stock_ingredients = FumiTools::get_stockIngredient_by_keys('3', '7'); 
@@ -63,6 +65,17 @@ class TestDevController extends Controller
             $sato_text_flg = true;
             \Session::flash('sato_record', $sato_record);
             \Session::flash('sato_text_mode', $sato_text_mode);
+
+            // TODO 上書きの時は強制的に表示
+            if($sato_text_mode == 6){
+            // View
+            return view('preparer_diner',compact('daysoftheweek',
+                'sato_text_flg', 
+                'sato_record',
+                'mode_inserts',
+                'sato_text_mode'
+            ));       
+            }
         }
 
         // Aicha 入力データ取得 flg = 1
@@ -80,12 +93,13 @@ class TestDevController extends Controller
             $display_stock_flg = false;
 
             // [処理終了]
-            return view('preparer_diner_nodata',
+            return view('preparer_diner',
                 compact('daysoftheweek',
                         'stock_ingredient', 
                         'display_stock_flg', 
                         'sato_text_flg', 
                         'sato_record',
+                        'mode_inserts',
                     ));
         }
 
@@ -93,8 +107,7 @@ class TestDevController extends Controller
         $aicha_udon_rest_15h = (int)$stock_ingredient->udon_rest_15h;
         $aicha_riz = (int)$stock_ingredient->article1_rest;
         $aicha_bouillons = (int)$stock_ingredient->article2_rest;
-        // select ボックス要素作成
-        $mode_inserts = $this->get_select_values('mode_inserts');
+
         // View
         return view('preparer_diner',compact('daysoftheweek',
             'stock_ingredient', 
@@ -108,6 +121,19 @@ class TestDevController extends Controller
             'sato_text_mode'
         ));
     }
+
+    /**
+     * サト指示こと付け登録 Page
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function addnote_diner_page(Request $request)
+    {
+        // select ボックス要素作成
+        $mode_inserts = $this->get_select_values('mode_inserts');
+        return view('preparer_diner_addnote',compact('mode_inserts'));
+    } 
+
     /**
      * ディナー サト指示こと付け登録
      *
@@ -141,7 +167,7 @@ class TestDevController extends Controller
 
         // select ボックス要素作成
         $mode_inserts = $this->get_select_values('mode_inserts');
-        return view('preparer_diner',compact('sato_instruction', 'mode_inserts'));
+        return view('preparer_diner_addnote',compact('sato_instruction', 'mode_inserts'));
     } 
     /**
      * 米のストック管理用.

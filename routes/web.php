@@ -35,7 +35,8 @@ Route::post('/preparer_list', [TestDevController::class, 'preparer_list'])->name
 Route::post('/addnote_preparer', [TestDevController::class, 'addnote_preparer'])->name('addnote.preparer');
 // ディナーのプレパレ 15時 Aicha and Andrea用
 Route::get('/preparer_diner', [TestDevController::class, 'preparer_diner'])->name('preparer.diner');
-// ディナーのプレパレ 15時 Aicha and Andrea用 サト指示登録
+Route::get('/addnote_diner_page', [TestDevController::class, 'addnote_diner_page'])->name('addnote.diner.page');
+// ディナーのプレパレ 15時 Aicha and Andrea用 サト指示登録 addnote_diner_page
 Route::post('/addnote_diner', [TestDevController::class, 'addnote_diner'])->name('addnote.diner');
 
 // コントローラを使う宣言 
