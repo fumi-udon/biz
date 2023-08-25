@@ -81,16 +81,16 @@
 	<div style="text-align: right;">
 		<p class="m-2 small"><a href="javascript:void(0)" id="note_open" style="color: grey;">詳細</a></p>
 	</div>
-	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 80%;">
+	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 100%;">
 		<!-- 登録データ -->
 		@if ( isset($stock_ingredients) )
-		<div class="my-3 p-3">
-			<div class="my-3 p-3 bg-body rounded shadow-sm">
-			<B>StockIngredientテーブル / flg 1 </B><br>	
+		<div class="">
+			<h5>StockIngredientテーブル / flg 1 </h5>
+			<div class="table-responsive">			
 			<table class="table">
 				<thead>
 					<tr>
-					<th scope="col">registre_datetime</th>
+					<th scope="col">date</th>
 					<th scope="col">udon 15h</th>
 					<th scope="col">riz</th>
 					<th scope="col">bouillons</th>
