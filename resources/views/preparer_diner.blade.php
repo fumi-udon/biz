@@ -23,7 +23,34 @@
 		</div>
 	@elseif ( isset($stock_ingredient) )
 		<div>
+			<p><h5>Aicha</h5></p>
+			<!-- サト追加情報 -->
+			<p>
+				@if(!empty($sato_record_aicha))
+						&#11093; {!! $sato_record_aicha->override_tx_1 !!}
+				@endif
+			</p>
 			<p>&#127837; Udon: 4 </p>
+			<p>
+				&#129379; Bouillons:
+				<!-- 週末 金/土 -->
+				@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')
+					{{ 8 - $aicha_bouillons }} L
+				@else
+				<!-- 平日 -->
+					{{ 7 - $aicha_bouillons }} L
+				@endif
+				
+			</p>
+			<hr>
+			<!-- アンドレア -->
+			<p><h5>Andrea</h5></p>
+			<!-- サト追加情報 -->
+			<p>
+				@if(!empty($sato_record_andrea))
+						&#11093; {!! $sato_record_andrea->override_tx_1 !!}
+				@endif
+			</p>
 			<p>
 				&#127833; RIZ:
 				@if($aicha_riz == 0 || $aicha_riz == 1)
@@ -41,23 +68,6 @@
 				@elseif($aicha_riz == 7)
 						non
 				@endif
-			</p>
-			<p>
-				&#129379; Bouillons:
-				<!-- 週末 金/土 -->
-				@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')
-					{{ 8 - $aicha_bouillons }} L
-				@else
-				<!-- 平日 -->
-					{{ 7 - $aicha_bouillons }} L
-				@endif
-				
-			</p>
-			<!-- サト追加情報 -->
-			<p>
-				@if($sato_text_mode == 7)
-					&#11093; {!! $sato_record->override_tx_1 !!}
-				@endif	
 			</p>
 		</div>
 		<p>

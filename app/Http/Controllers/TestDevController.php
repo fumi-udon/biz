@@ -48,10 +48,10 @@ class TestDevController extends Controller
 
         /**
          * Satoの手動指示がある場合は優先表示
-         * flg 6:  ディナー アイシャとアンドレアプレパレページ表示
+         * flg 6:  上書き
          */
         $date_today = date_create()->format('Y-m-d');   
-        $sato_record = SatoInstruction::whereIn('flg_int', [6, 7])
+        $sato_record = SatoInstruction::where('flg_int', 6)
             ->where('aply_date', $date_today)
             ->latest('updated_at')
             ->first();
@@ -59,21 +59,21 @@ class TestDevController extends Controller
         $sato_text_flg = false;
         $sato_text_mode = 0;
         if(! empty($sato_record)){
-            // 6:上書き / 7:追加
+            // 6:上書き
             $sato_text_mode = $sato_record->flg_int;
             //サト指示有の為 表示
             $sato_text_flg = true;
             \Session::flash('sato_record', $sato_record);
             \Session::flash('sato_text_mode', $sato_text_mode);
 
-            // TODO 上書きの時は強制的に表示
+            // 上書きの時は強制的に表示
             if($sato_text_mode == 6){
-            // View
-            return view('preparer_diner',compact('daysoftheweek',
-                'sato_text_flg', 
-                'sato_record',
-                'mode_inserts',
-                'sato_text_mode'
+                // View
+                return view('preparer_diner',compact('daysoftheweek',
+                    'sato_text_flg', 
+                    'sato_record',
+                    'mode_inserts',
+                    'sato_text_mode'
             ));       
             }
         }
@@ -108,6 +108,20 @@ class TestDevController extends Controller
         $aicha_riz = (int)$stock_ingredient->article1_rest;
         $aicha_bouillons = (int)$stock_ingredient->article2_rest;
 
+
+        /**
+         * サト指示 flg = 7(aicha) / 8(andorea) 
+         * 追加
+         */
+        $sato_record_aicha = SatoInstruction::where('flg_int', 7)
+            ->where('aply_date', $date_today)
+            ->latest('updated_at')
+            ->first();
+        $sato_record_andrea = SatoInstruction::where('flg_int', 8)
+        ->where('aply_date', $date_today)
+        ->latest('updated_at')
+        ->first();
+
         // View
         return view('preparer_diner',compact('daysoftheweek',
             'stock_ingredient', 
@@ -118,7 +132,9 @@ class TestDevController extends Controller
             'aicha_riz',
             'aicha_bouillons',
             'mode_inserts',
-            'sato_text_mode'
+            'sato_text_mode',
+            'sato_record_aicha',
+            'sato_record_andrea'
         ));
     }
 
@@ -152,7 +168,7 @@ class TestDevController extends Controller
 
         /**
          * Table作るの面倒だからサト指示テーブルを使う
-         * flg 6:  ディナー アイシャとアンドレアプレパレページ表示
+         * flg 6 / 7(Aicha) / 8(andrea):  サト指示追加情報
          * 朝 買物用
          */               
         $sato_instruction = SatoInstruction::updateOrCreate(
@@ -639,7 +655,8 @@ class TestDevController extends Controller
                 $mode_inserts = collect([
                     ['id' => '', 'name' => ''],
                     ['id' => '6', 'name' => '上書き更新'],
-                    ['id' => '7', 'name' => '追加'],
+                    ['id' => '7', 'name' => '追加_TO_Aicha'],
+                    ['id' => '8', 'name' => '追加_TO_アンドレア'],
                 ]);
                 return $mode_inserts;
             }
