@@ -31,7 +31,10 @@
 				@endif
 			</p>
 			<p>&#127837; Udon: 4 </p>
+			
+			@if($aicha_bouillons <= 5)
 			<p>
+				<!-- 5L以下の場合のみブイヨン作る -->
 				&#129379; Bouillons:
 				<!-- 週末 金/土 -->
 				@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')
@@ -40,8 +43,9 @@
 				<!-- 平日 -->
 					{{ 7 - $aicha_bouillons }} L
 				@endif
-				
-			</p>
+			</p>	
+			@endif			
+			
 			<hr>
 			<!-- アンドレア -->
 			<p><h5>Andrea</h5></p>
@@ -70,7 +74,7 @@
 				@endif
 			</p>
 		</div>
-		<p>
+		<p class="my-3 p-3">
 			{{ $text_etc }}
 		</p>
 	@else

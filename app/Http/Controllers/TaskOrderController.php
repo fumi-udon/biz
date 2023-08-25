@@ -192,6 +192,9 @@ class TaskOrderController extends Controller
             ['id' => '3', 'name' => '3L'],
             ['id' => '4', 'name' => '4L'],
             ['id' => '5', 'name' => '5L'],
+            ['id' => '6', 'name' => '6L'],
+            ['id' => '7', 'name' => '7L'],
+            ['id' => '8', 'name' => '8L'],
         ]);
 
         /**
