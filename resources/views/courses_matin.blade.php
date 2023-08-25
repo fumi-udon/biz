@@ -75,8 +75,8 @@
 
 		<!-- Bilel登録データ -->
 		@if ( isset($stock_ingredients) )
-		<div class="my-3 p-3">
-			<div class="my-3 p-3 bg-body rounded shadow-sm">
+		<div class="my-3">
+			<div class="">
 					<B>Bilel登録データ StockIngredientテーブル / flg 2 </B><br>
 					<div class="container">
 						<b>lait :</b>
