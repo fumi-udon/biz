@@ -78,10 +78,11 @@ use App\Http\Controllers\AdminConcumedController;
 Route::get('/conso', [AdminConcumedController::class, 'index'])->name('conso.index');
 Route::post('/search', [AdminConcumedController::class, 'search'])->name('conso.search');
 
-//事務所食材 BureauItemsController  
+//事務所食材 BureauItemsController   
 use App\Http\Controllers\BureauItemsController;
 Route::get('/bureau_index', [BureauItemsController::class, 'index'])->name('bureau.index');
-Route::post('/bureau_store', [BureauItemsController::class, 'bureau_store'])->name('bureau.store');
+Route::get('/bureau_stock_top', [BureauItemsController::class, 'bureau_stock_top'])->name('bureau.stock.top');
+Route::post('/bureau_stock_store', [BureauItemsController::class, 'bureau_stock_store'])->name('bureau.stock.store');
 
 use App\Http\Controllers\EmporterRecentController;
 Route::get('/emporter_index', [EmporterRecentController::class, 'index'])->name('emporter.index');

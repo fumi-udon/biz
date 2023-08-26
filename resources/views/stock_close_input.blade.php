@@ -26,7 +26,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="rizs_list"><b>&#129410;Cha-shu </b>  <br>combien de morseaux restes?
+					<label for="chashu"><b>&#129410;Cha-shu </b>  <br>combien de morseaux restes?
 					<input type="number" id="chashu" name="chashu" min="0" max="8" value="{{ Session::get('chashu') }}" class="form-control is-valid w20" required>
 					</label>
 				</div>
