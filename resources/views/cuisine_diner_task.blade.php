@@ -14,7 +14,7 @@
 <div class="my-3 p-3 bg-body rounded">
 	<div class="row gx-3">
     @php
-        $text_etc = "➡ ";
+        $text_etc = "";
     @endphp
 	@if(Session::has('sato_record') && !empty($sato_text_mode) && $sato_text_mode == 9)
 		<div class="alert alert-primary border" role="alert">
@@ -37,7 +37,7 @@
 
 			@if($req_omlettes < 1)
 			<p>
-				&#127833; omlettes pour mazé: préparer 1 p
+				&#127744; omlettes pour mazé: préparer 1 p
 			</p>
 			@endif
 
