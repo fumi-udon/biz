@@ -31,16 +31,20 @@ class TaskOrderDinerController extends TaskOrderController
         $today = (new DateTime())->format('Y-m-d');
 
         // select ボックス要素作成
-        $rizs = $this->get_select_values('rizs');
+        $oeufs = $this->get_select_values('oeufs');
+        $omlettes = $this->get_select_values('omlettes');
+        $fms = $this->get_select_values('fms');
+        $laitues = $this->get_select_values('laitues');
+        $okonomiyakis = $this->get_select_values('okonomiyakis');
 
         /**
          * Satoの手動指示がある場合は優先表示
-         * Aichaプレパレ用は　flg = 5
+         * flg 9:  ディナー オープン前 17h　Cuisinier
          * 
          */       
         $sato_instruction = SatoInstruction::where([
             //AMの指示を取得
-            ['flg_int', '=', '5'],
+            ['flg_int', '=', '9'],
             ['aply_date', '=', $today]
         ])->first();
 
@@ -50,13 +54,149 @@ class TaskOrderDinerController extends TaskOrderController
             $yes_sato = true;
         }
         /**
-         * Aicha 入力米データ表示 / flg= 3
-         * Sessionにデータ保持
+         * 入力データ表示 
+         * 'flg1' => 5　ディナーオープン前のキッチンスタッフ入力データ18時
          */
-        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('3', '7'); 
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14');
+        \Session::flash('stock_ingredients', $stock_ingredients);
+        
+        return view('cuisine_diner_top', compact('today','oeufs','omlettes','fms','laitues','okonomiyakis','sato_instruction','yes_sato'));
+    }
+
+    /**
+     * ディナープレパレリスト表示. 17時用 
+     * 登録後に表示
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function cuisine_diner_task(Request $request, $id=null, $params=null) {
+
+        // 曜日を取得 Fumi 独自クラスインスタンス化 
+        $fumi_tools =new FumiTools();
+        $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
+
+        // きゅいじにえー入力データ取得 / flg= 5 / 2週間 14
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14'); 
         \Session::flash('stock_ingredients', $stock_ingredients);
 
-        return view('cuisine_diner_top', compact('today','rizs','sato_instruction','yes_sato'));
+        /**
+         * Satoの手動指示がある場合は優先表示
+         * flg 9:  ディナー オープン前　Cuisinier 17H アレディン   [上書き]
+         */
+        $date_today = date_create()->format('Y-m-d');   
+        $sato_record = SatoInstruction::where('flg_int', 9)
+            ->where('aply_date', $date_today)
+            ->latest('updated_at')
+            ->first();
+
+        $sato_text_flg = false;
+        $sato_text_mode = 0;
+        if(! empty($sato_record)){
+            // 6:上書き
+            $sato_text_mode = $sato_record->flg_int;
+            //サト指示有の為 表示
+            $sato_text_flg = true;
+            \Session::flash('sato_record', $sato_record);
+            \Session::flash('sato_text_mode', $sato_text_mode);
+
+            // 上書きの時は強制的に表示
+            if($sato_text_mode == 9){
+                // View
+                return view('cuisine_diner_task',compact('daysoftheweek',
+                    'sato_text_flg', 
+                    'sato_record',
+                    'sato_text_mode'
+            ));       
+            }
+        }
+
+        // 前ページ 入力データ取得 
+        $inputs = $request->all();
+       // dd($inputs);
+        // リクエストデータ取得
+        $req_oeufs = intval($inputs['oeufs']);
+        $req_omlettes = intval($inputs['omlettes']);
+        $req_fms = intval($inputs['fms']);
+        $req_laitues = intval($inputs['laitues']);
+        $req_okonomiyakis = intval($inputs['okonomiyakis']);
+
+        /**
+         * サト指示 [追加] flg = 10 
+         * 追加
+         */
+        $sato_record = SatoInstruction::where('flg_int', 10)
+            ->where('aply_date', $date_today)
+            ->latest('updated_at')
+            ->first();
+
+        // View
+        return view('cuisine_diner_task',compact('daysoftheweek',
+            'stock_ingredients', 
+            'sato_text_flg', 
+            'sato_record',
+            'sato_text_mode',
+            'sato_record',
+            'req_oeufs',
+            'req_omlettes',
+            'req_fms',
+            'req_laitues',
+            'req_okonomiyakis',
+        ));
+    } 
+
+    /**
+     * 登録処理してタスクを表示
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function cuisine_diner_regist(Request $request, $id=null, $params=null)    {
+
+        $inputs = $request->all();
+
+        // リクエストデータ取得
+        $oeufs = $inputs['oeufs'];
+        $omlettes = $inputs['omlettes'];
+        $fms = $inputs['fms'];
+        $laitues = $inputs['laitues'];
+        $okonomiyakis = $inputs['okonomiyakis'];
+
+        // StockIngredient テーブル
+        date_default_timezone_set('Africa/Tunis');
+        $stock_ingredient = StockIngredient::updateOrCreate(
+            [
+                'registre_date' => date('Y-m-d'),
+                'flg1' => 5
+            ],
+            [                
+                'article1_rest' => $oeufs,
+                'article2_rest' => $omlettes,
+                'article3_rest' => $fms,
+                'article4_rest' => $laitues,
+                'article5_rest' => $okonomiyakis,
+                // ダミーデータ  55 ディナーオープン前のキッチンスタッフ入力データ18時
+                'udon_rest_15h' => 55,
+                'registre_date' => date('Y-m-d'),
+                'registre_datetime' => now(),
+            ]
+        );
+
+        // session 格納
+        \Session::flash('flash_message', 'MERCI!'.
+            '<br>oeufs:'.$oeufs.
+            '<br>omlette pour mazé:'.$omlettes.
+            '<br>Fruits de mer:'.$fms.
+            '<br>laitues:'.$laitues.
+            '<br>okonomiyaki:'.$okonomiyakis
+        );
+
+        // リダイレクト
+        return redirect()->route('cuisine.diner.task')->with([
+            //画面引継ぎ
+            'oeuf_now' => $oeufs,
+            'omlette_now' => $omlettes,
+            'fm_now' => $fms,
+            'laitue_now' => $laitues,
+            'okonomiyaki_now' => $okonomiyakis,
+            ]);
     }
 
     /**
@@ -67,31 +207,66 @@ class TaskOrderDinerController extends TaskOrderController
      */
     public function get_select_values($s_id){
 
-        if($s_id == 'rizs'){
+
+        if($s_id == 'oeufs'){
             // select ボックス要素作成
-            $rizs = collect([
+            $oeufs = collect([
                 ['id' => '', 'name' => ''],
                 ['id' => '0', 'name' => 'rien'],
-                ['id' => '1', 'name' => 'moins que la moitié'],
-                ['id' => '2', 'name' => 'la moitié'],
-                ['id' => '3', 'name' => '1 casserole'],
-                ['id' => '4', 'name' => '1 casserole et demi'],
-                ['id' => '5', 'name' => '2 casserole'],
-                ['id' => '6', 'name' => '2 casseroles et demi'],
-                ['id' => '7', 'name' => 'plus de 3 casseroles'],
+                ['id' => '1', 'name' => 'moins que 6 p'],
+                ['id' => '2', 'name' => '6 ～ 11 p'],
+                ['id' => '3', 'name' => 'plus que 12 p'],
             ]);
-            return $rizs;
+            return $oeufs;
         }
 
-        if($s_id == 'mode_inserts'){
+        if($s_id == 'omlettes'){
             // select ボックス要素作成
-            $mode_inserts = collect([
+            $omlettes = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '6', 'name' => '上書き更新'],
-                ['id' => '7', 'name' => '追加_TO_Aicha'],
-                ['id' => '8', 'name' => '追加_TO_アンドレア'],
+                ['id' => '0', 'name' => 'rien'],
+                ['id' => '1', 'name' => '1 p'],
+                ['id' => '2', 'name' => '2 p'],
             ]);
-            return $mode_inserts;
+            return $omlettes;
+        }
+
+        if($s_id == 'laitues'){
+            // select ボックス要素作成
+            $laitues = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => 'rien'],
+                ['id' => '1', 'name' => 'un peu'],
+                ['id' => '2', 'name' => 'la moitié'],
+                ['id' => '3', 'name' => 'plein'],
+            ]);
+            return $laitues;
+        }
+
+        if($s_id == 'fms'){
+            // select ボックス要素作成
+            $fms = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => 'rien'],
+                ['id' => '1', 'name' => '1 p'],
+                ['id' => '2', 'name' => '2 p'],
+                ['id' => '3', 'name' => '3 p'],
+                ['id' => '4', 'name' => '4 p'],
+                ['id' => '5', 'name' => '5 p'],
+                ['id' => '6', 'name' => 'plus que 6p'],
+            ]);
+            return $fms;
+        }
+
+        if($s_id == 'okonomiyakis'){
+            // select ボックス要素作成
+            $okonomiyakis = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => 'rien'],
+                ['id' => '1', 'name' => '1 paquet'],
+                ['id' => '2', 'name' => '2 paquets'],
+            ]);
+            return $okonomiyakis;
         }
 }
 }

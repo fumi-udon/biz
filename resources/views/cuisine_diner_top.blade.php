@@ -3,66 +3,88 @@
 <!-- パンくずリスト -->
 
 @section('content')
-<!-- @Fumi old -->
-<!-- @Fumi old end-->
-
 <main class="container">
-<div class="my-3 p-3 bg-body rounded shadow-sm">
-	<h3 class="border-bottom pb-2 mb-0">Kitchen work's for diner</h3>
-	<div class="d-flex text-muted pt-3">
-		<p class="pb-3 mb-0 small lh-sm border-bottom">
+<div class="my-1 p-1 bg-body rounded shadow-sm">
+	<h3 class="border-bottom pb-2 mb-0">Kitchen stocks</h3>
+	@if (Session::has('flash_message'))
+	<div class="my-1 p-1 bg-body rounded shadow-sm">
+		<div class="alert alert-success" role="alert">
+			<p>{!! session('flash_message') !!}</p>	
+		</div>
+	</div>
+	@endif
+	<div>
+		<p class="">
 	{{-- 通常入力 --}}
-		<form action="preparer_list" method="post">
+		<form action="cuisine_diner_task" method="post">
 		@csrf
 			<div class="row">
-				<div class="col-md-6 mb-3">
+				<div class="col-md-6">
 					<div class="form-group">
-						<label for="select1">セレクトボックス1</label>
-						<select class="form-select" id="rizs_list" name="rizs_list" required>
-						@foreach ($rizs as $riz)
-							<option value="{{ $riz['id'] }}" @if( Session::get('riz_now')  == $riz['id'] ) selected @endif> {{ $riz['name'] }} </option>
+						<label for="oeufs">oeuf</label>
+						<select class="form-select" id="oeufs" name="oeufs" required>
+						@foreach ($oeufs as $oeuf)
+							<option value="{{ $oeuf['id'] }}" @if( Session::get('oeuf_now')  == $oeuf['id'] ) selected @endif> {{ $oeuf['name'] }} </option>
 						@endforeach
 						</select>
 					</div>
 				</div>
-				<div class="col-md-6 mb-3">
+				<div class="col-md-6">
 					<div class="form-group">
-						<label for="select2">セレクトボックス2</label>
-						<select class="form-select" id="rizs_list" name="rizs_list" required>
-						@foreach ($rizs as $riz)
-							<option value="{{ $riz['id'] }}" @if( Session::get('riz_now')  == $riz['id'] ) selected @endif> {{ $riz['name'] }} </option>
+						<label for="omlettes">omlette émincée</label>
+						<select class="form-select" id="omlettes" name="omlettes" required>
+						@foreach ($omlettes as $omlette)
+							<option value="{{ $omlette['id'] }}" @if( Session::get('omlette_now')  == $omlette['id'] ) selected @endif> {{ $omlette['name'] }} </option>
 						@endforeach
 						</select>
 					</div>
 				</div>
-				<div class="col-md-6 mb-3">
+			</div><!-- row end -->
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
 					<div class="form-group">
-						<label for="select3">セレクトボックス2</label>
-						<select class="form-select" id="rizs_list" name="rizs_list" required>
-						@foreach ($rizs as $riz)
-							<option value="{{ $riz['id'] }}" @if( Session::get('riz_now')  == $riz['id'] ) selected @endif> {{ $riz['name'] }} </option>
+						<label for="fms">fruits de mer</label>
+						<select class="form-select" id="fms" name="fms" required>
+						@foreach ($fms as $fm)
+							<option value="{{ $fm['id'] }}" @if( Session::get('fm_now')  == $fm['id'] ) selected @endif> {{ $fm['name'] }} </option>
 						@endforeach
 						</select>
 					</div>
 				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="laitues">laitue</label>
+						<select class="form-select" id="laitues" name="laitues" required>
+						@foreach ($laitues as $laitue)
+							<option value="{{ $laitue['id'] }}" @if( Session::get('laitue_now')  == $laitue['id'] ) selected @endif> {{ $laitue['name'] }} </option>
+						@endforeach
+						</select>
+					</div>
+				</div>
+			</div><!-- row end -->
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="okonomiyakis">okonomiyaki</label>
+						<select class="form-select" id="okonomiyakis" name="okonomiyakis" required>
+						@foreach ($okonomiyakis as $okonomiyaki)
+							<option value="{{ $okonomiyaki['id'] }}" @if( Session::get('okonomiyaki_now')  == $okonomiyaki['id'] ) selected @endif> {{ $okonomiyaki['name'] }} </option>
+						@endforeach
+						</select>
+					</div>
+				</div>
+			</div><!-- row end -->
+
+			<div class="p-4">
+				<input type="submit" value="suivant" class="btn btn-primary btn-round">
+				<input type="hidden" name="actual_page_id" id="actual_page_id" value="cuisine_diner">
 			</div>
-			<div class="p-3 border bg-light">
-				<div class="form-group">
-					<label for="rizs_list"><b>&#127834;Reste de riz ce matin? </b>
-					<select class="form-select" id="rizs_list" name="rizs_list" required>
-						@foreach ($rizs as $riz)
-							<option value="{{ $riz['id'] }}" @if( Session::get('riz_now')  == $riz['id'] ) selected @endif> {{ $riz['name'] }} </option>
-						@endforeach
-					</select>
-					</label>
-				</div>
-			</div>
-			<input type="submit" value="suivant" class="btn btn-primary btn-round">
-			<input type="hidden" name="actual_page_id" id="actual_page_id" value="aicha_preparer">
 		</form>
 		</p>
 	</div>
-	@if(Request::is('preparer_list'))
+	@if(Request::is('cuisine_diner_task'))
 	<hr>
 	<!--preparer_listのページのみ表示  -->
 	<div class="col-md-12  pt-3">

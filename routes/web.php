@@ -109,7 +109,7 @@ Route::get('/importCSV', [DevController::class, 'importCSV'])->name('dev.import.
 Route::post('/importCSV2', [DevController::class, 'importCSV2'])->name('dev.import.csv2');
 Route::get('/importCSV3', [DevController::class, 'importCSV3'])->name('dev.import.csv3');
 
-// ディナープレパレ Cuisine  [子クラス]
+// ディナープレパレ Cuisine  [子クラス] 
 use App\Http\Controllers\TaskOrderDinerController;
 Route::get('/cuisine_diner_top', [TaskOrderDinerController::class, 'cuisine_diner_top'])->name('cuisine.diner.top');
 Route::post('/cuisine_diner_task', [TaskOrderDinerController::class, 'cuisine_diner_task'])->name('cuisine.diner.task');
