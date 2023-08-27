@@ -59,7 +59,7 @@ class AdminProductionController extends Controller
         $plan_production_idtwo = PlanProduction::where('id',2)->first()->toArray();
         
         // Stock データ取得
-        //$stock_ingredients = $this->prendre_stock();
+        $stock_ingredients = $this->prendre_stock();
         return view('admin/admin_production', compact('plan_production','plan_production_idtwo','action_message', 'stock_ingredients'));
     }
     /**

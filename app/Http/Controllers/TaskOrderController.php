@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+// model
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
 
-use Illuminate\Support\Facades\Config; // Configクラスをインポートする
-
 //Fumi 独自クラス
 use App\FumiLib\FumiTools;
-
+use App\FumiLib\AdminConcumedTools;
+use \DateTime; // 追加: PHPのグローバルな名前空間にあるDateTimeクラスを使用することを明示
+use DateTimeZone;
+use Illuminate\Support\Facades\Config; // Configクラスをインポートする
 use Illuminate\Support\Facades\Log;
 
 class TaskOrderController extends Controller
