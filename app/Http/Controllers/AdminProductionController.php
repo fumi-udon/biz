@@ -263,4 +263,24 @@ class AdminProductionController extends Controller
         
         return redirect()->route('admin.index',['action_message' => $action_message]);
     }
+
+    /**
+     * アイシャデータ取得
+     * Log::debug("XXXX:".$XXXX);
+     * 
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function prendre_stock(){
+        Log::debug("prendre_stock:アイシャデータ取得");
+        $stock_ingredients = DB::table('stock_ingredients')
+             ->select(DB::raw("udon_rest_15h as udon, article1_rest as riz, article2_rest as bouillons, DATE_FORMAT(registre_date,'%m月%d日') as registre_date"))
+             ->where('flg1', '<>', 9)
+             ->limit(15)
+             ->orderBy('registre_date', 'desc')
+             ->get();
+        //Log::debug($stock_ingredients);
+        \Session::flash('stock_ingredients', $stock_ingredients);
+        return $stock_ingredients;
+    }
 }
