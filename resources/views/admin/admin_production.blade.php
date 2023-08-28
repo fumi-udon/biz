@@ -44,6 +44,7 @@
 <!-- Udon エリア start -->
 <div class="my-3 p-3 bg-body rounded shadow-sm">
 	<div class=" text-muted pt-3 pb-3">
+		<h3> うどん切り基準値設定 </h3>
 		<form method='POST' action="{{ route('update',['btn' => 'udon']) }}">
             @csrf
 			<p>
@@ -68,6 +69,26 @@
 			<p style="margin:5px;"><input type="submit" name="update_udon" value="udon更新" class="btn btn-primary"/></p>
 		</form>
     </div>
+	<hr/>
+	<!-- [追加2023/08/30] Udon15時水回し指示 エリア -->
+	<div class=" text-muted pt-3 pb-3">
+		<h3> うどん 15時水回し固定値</h3>
+		<form method='POST' action="{{ route('update',['btn' => 'udon_mix_diner']) }}">
+            @csrf
+			<p>
+			月曜:  <input type="number" value="{{ $plan_production_id_five['mon'] }}" name="udon_base_mon" id="udon_base_mon" size="6" maxlength="2" required><br>
+			火曜:  <input type="number" value="{{ $plan_production_id_five['tue'] }}" name="udon_base_tue" id="udon_base_tue" size="6" maxlength="2" required><br>
+			水曜:  <input type="number" value="{{ $plan_production_id_five['wed'] }}" name="udon_base_wed" id="udon_base_wed" size="6" maxlength="2" required><br>
+			木曜:  <input type="number" value="{{ $plan_production_id_five['thu'] }}" name="udon_base_thu" id="udon_base_thu" size="6" maxlength="2" required><br>
+			金曜:  <input type="number" value="{{ $plan_production_id_five['fri'] }}" name="udon_base_fri" id="udon_base_fri" size="6" maxlength="2" required><br>
+			土曜:  <input type="number" value="{{ $plan_production_id_five['sat'] }}" name="udon_base_sat" id="udon_base_sat" size="6" maxlength="2" required><br>
+			日曜:  <input type="number" value="{{ $plan_production_id_five['sun'] }}" name="udon_base_sun" id="udon_base_sun" size="6" maxlength="2" required><br>
+
+			<p style="margin:5px;"><input type="submit" name="udon_mix_diner" value="udon切更新" class="btn btn-dark"/></p>
+		</form>
+    </div>
+	<!-- [追加2023/08/30] Udon15時水回し指示 エリア end -->
+
 </div><!--インライングリッド row end -->
 <!-- Udon エリア end -->
 <hr/>

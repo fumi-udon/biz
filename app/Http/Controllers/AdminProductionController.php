@@ -41,7 +41,7 @@ class AdminProductionController extends Controller
     }
 
     /**
-     * Index. 管理者ページ表示
+     * Index. 管理者ページ表示 
      * 
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -57,10 +57,13 @@ class AdminProductionController extends Controller
 
         // PlanProduction テーブルUDON設定値を取得 AM / PM
         $plan_production_idtwo = PlanProduction::where('id',2)->first()->toArray();
+
+        // PlanProduction テーブルUDON設定値を取得 15時アイシャ指示 Mix用 [ID]
+        $plan_production_id_five = PlanProduction::where('id',6)->first()->toArray();
         
         // Stock データ取得
         $stock_ingredients = $this->prendre_stock();
-        return view('admin/admin_production', compact('plan_production','plan_production_idtwo','action_message', 'stock_ingredients'));
+        return view('admin/admin_production', compact('plan_production','plan_production_id_five' ,'plan_production_idtwo','action_message', 'stock_ingredients'));
     }
     /**
      * finance. 売上財務インデックスページ表示
@@ -248,7 +251,7 @@ class AdminProductionController extends Controller
             ]);
             Log::debug("UDON AM:".$resultat_id);
              // udon id 2
-             $resultat_pmid = PlanProduction::where('id', '2')->update([
+             $resultat_id = PlanProduction::where('id', '2')->update([
                 'udon_base_mon' => $inputs['udon_base_mon2'],
                 'udon_base_tue' => $inputs['udon_base_tue2'],
                 'udon_base_wed' => $inputs['udon_base_wed2'],
@@ -257,10 +260,28 @@ class AdminProductionController extends Controller
                 'udon_base_sat' => $inputs['udon_base_sat2'],
                 'udon_base_sun' => $inputs['udon_base_sun2'],
             ]);
-            Log::debug("UDON PM:".$resultat_pmid);
+            Log::debug("UDON PM:".$resultat_id);
             $action_message = "うどん個数の更新だい！";
         }
-        
+
+        // 15時うどん混ぜ指示 アイシャアンドレア 
+        if($btn_name == "udon_mix_diner"){
+            // udon id 6 六だった..　変数はファイブだけど気にしないでねー
+            Log::debug("UDON 更新:".$btn_name);
+            $resultat_id = PlanProduction::where('id', '6')->update([
+                'mon' => $inputs['udon_base_mon'],
+                'tue' => $inputs['udon_base_tue'],
+                'wed' => $inputs['udon_base_wed'],
+                'thu' => $inputs['udon_base_thu'],
+                'fri' => $inputs['udon_base_fri'],
+                'sat' => $inputs['udon_base_sat'],
+                'sun' => $inputs['udon_base_sun'],
+            ]);
+            Log::debug("UDON 15時 Mix:".$resultat_id);
+            $action_message = "[Mix] 15時うどん混ぜ指示更新。ぽみぃーーーーん。
+                   [URL:preparer_diner / PlanProductionテーブル id=6] Préparation pour le diner ページに固定表示されます。";
+        }
+
         return redirect()->route('admin.index',['action_message' => $action_message]);
     }
 

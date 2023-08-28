@@ -30,7 +30,9 @@
 						&#11093; {!! $sato_record_aicha->override_tx_1 !!}
 				@endif
 			</p>
-			<p>&#127837; Udon: 4 </p>
+			
+			<!-- plan_productionテーブル id=6のデータ表示 -->
+			<p>&#127837; Udon: {{ $plan_production[$daysoftheweek] }} </p>
 			
 			@if($aicha_bouillons <= 5)
 			<p>

@@ -122,6 +122,10 @@ class TestDevController extends Controller
         ->latest('updated_at')
         ->first();
 
+        // udonの切る数を取得
+        // PlanProduction テーブルUDON設定値を取得 15時アイシャ指示 Mix用 [ID] 
+        $plan_production = PlanProduction::where('id',6)->first();
+
         // View
         return view('preparer_diner',compact('daysoftheweek',
             'stock_ingredient', 
@@ -134,7 +138,8 @@ class TestDevController extends Controller
             'mode_inserts',
             'sato_text_mode',
             'sato_record_aicha',
-            'sato_record_andrea'
+            'sato_record_andrea',
+            'plan_production'
         ));
     }
 
