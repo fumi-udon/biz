@@ -53,8 +53,9 @@ class TaskOrderDinerController extends TaskOrderController
             // サトの独自指示がある場合は viewをgetして処理終了
             $yes_sato = true;
         }
+
         /**
-         * 入力データ表示 
+         * 入力データ表示
          * 'flg1' => 5　ディナーオープン前のキッチンスタッフ入力データ18時
          */
         $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14');
@@ -92,7 +93,8 @@ class TaskOrderDinerController extends TaskOrderController
         $sato_text_flg = false;
         $sato_text_mode = 0;
         if(! empty($sato_record)){
-            // 6:上書き
+            //dd($sato_record);
+            // 9
             $sato_text_mode = $sato_record->flg_int;
             //サト指示有の為 表示
             $sato_text_flg = true;
@@ -106,7 +108,7 @@ class TaskOrderDinerController extends TaskOrderController
                     'sato_text_flg', 
                     'sato_record',
                     'sato_text_mode'
-            ));       
+                ));       
             }
         }
 
@@ -143,61 +145,6 @@ class TaskOrderDinerController extends TaskOrderController
             'req_okonomiyakis',
         ));
     } 
-
-    /**
-     * 登録処理してタスクを表示
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function cuisine_diner_regist(Request $request, $id=null, $params=null)    {
-
-        $inputs = $request->all();
-
-        // リクエストデータ取得
-        $oeufs = $inputs['oeufs'];
-        $omlettes = $inputs['omlettes'];
-        $fms = $inputs['fms'];
-        $laitues = $inputs['laitues'];
-        $okonomiyakis = $inputs['okonomiyakis'];
-
-        // StockIngredient テーブル
-        date_default_timezone_set('Africa/Tunis');
-        $stock_ingredient = StockIngredient::updateOrCreate(
-            [
-                'registre_date' => date('Y-m-d'),
-                'flg1' => 5
-            ],
-            [                
-                'article1_rest' => $oeufs,
-                'article2_rest' => $omlettes,
-                'article3_rest' => $fms,
-                'article4_rest' => $laitues,
-                'article5_rest' => $okonomiyakis,
-                // ダミーデータ  55 ディナーオープン前のキッチンスタッフ入力データ18時
-                'udon_rest_15h' => 55,
-                'registre_date' => date('Y-m-d'),
-                'registre_datetime' => now(),
-            ]
-        );
-
-        // session 格納
-        \Session::flash('flash_message', 'MERCI!'.
-            '<br>oeufs:'.$oeufs.
-            '<br>omlette pour mazé:'.$omlettes.
-            '<br>Fruits de mer:'.$fms.
-            '<br>laitues:'.$laitues.
-            '<br>okonomiyaki:'.$okonomiyakis
-        );
-
-        // リダイレクト
-        return redirect()->route('cuisine.diner.task')->with([
-            //画面引継ぎ
-            'oeuf_now' => $oeufs,
-            'omlette_now' => $omlettes,
-            'fm_now' => $fms,
-            'laitue_now' => $laitues,
-            'okonomiyaki_now' => $okonomiyakis,
-            ]);
-    }
 
     /**
      * select values

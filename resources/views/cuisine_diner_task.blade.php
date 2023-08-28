@@ -17,8 +17,8 @@
         $text_etc = "";
     @endphp
 	@if(Session::has('sato_record') && !empty($sato_text_mode) && $sato_text_mode == 9)
-		<div class="alert alert-primary border" role="alert">
-			<b>&#3889;<br> {!! Session::get('sato_record')->override_tx_1 !!} </b>
+		<div class="">
+			<p>{!! Session::get('sato_record')->override_tx_1 !!} </p>
 			<p>{{ $text_etc }}</p>
 		</div>
 	@elseif ( isset($stock_ingredients) )
@@ -96,9 +96,7 @@
             <a href="/cuisine_diner_top" class="text-primary">Retour</a>
         	</div>
 </div>
-	<div style="text-align: right;">
-			<p class="m-2 small"><a href="/addnote_diner_page" id="note_open" style="color: grey;">指示追加</a></p>
-	</div>
+
 </main>
 <!--インライングリッド row end -->
 

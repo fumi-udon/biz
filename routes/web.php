@@ -109,6 +109,9 @@ Route::get('/importCSV', [DevController::class, 'importCSV'])->name('dev.import.
 Route::post('/importCSV2', [DevController::class, 'importCSV2'])->name('dev.import.csv2');
 Route::get('/importCSV3', [DevController::class, 'importCSV3'])->name('dev.import.csv3');
 
+// 共通 
+Route::post('/common_addnote_complete/{flg}/{action_message}', [DevController::class, 'common_addnote_complete'])->name('common.addnote.complete');
+
 // ディナープレパレ Cuisine  [子クラス] 
 use App\Http\Controllers\TaskOrderDinerController;
 Route::get('/cuisine_diner_top', [TaskOrderDinerController::class, 'cuisine_diner_top'])->name('cuisine.diner.top');

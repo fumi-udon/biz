@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 use Illuminate\Support\Collection;
+use \DateTime; // 追加: PHPのグローバルな名前空間にあるDateTimeクラスを使用することを明示
+use DateTimeZone;
+//model
+use App\Models\SatoInstruction;
+use App\Models\PlanProduction;
+use App\Models\StockIngredient;
 
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -193,5 +199,35 @@ class DevController extends Controller
         
         return view('dev/home', compact("filePath"));
     }
-    
+   
+    /**
+     * [共通] ノートを追加.
+     * @return \Illuminate\Contracts\Support\Renderable
+     */ 
+    public static function common_addnote_complete(Request $request, $flg, $action_message)
+    {        
+        // Post データ取得
+        $inputs = $request->all();
+
+        // Sessionにデータ保持
+        \Session::flash('note8h', $inputs['note8h']);
+        \Session::flash('note_date', $inputs['note_date']);
+        \Session::flash('action_message', $action_message);
+
+        /**
+         * サト指示テーブル登録
+         */               
+        $sato_instruction = SatoInstruction::updateOrCreate(
+            [
+                'aply_date' => $inputs['note_date'],
+                'flg_int' => $flg
+            ],
+            [
+                'override_tx_1' => $inputs['note8h'],
+            ]
+         );
+         //dd($sato_instruction);
+        // 処理が完了したら結果を返す
+        return view('complete_addnote');
+    }
 }

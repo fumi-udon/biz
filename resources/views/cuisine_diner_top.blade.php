@@ -134,7 +134,7 @@
 	<!-- sato独自指示 エリア end -->
 	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 80%;">
 		<div class=" text-muted">
-		<form method='POST' action="{{ route('addnote.preparer') }}">
+		<form method='POST' action="{{ route('common.addnote.complete',['flg' => '9', 'action_message' => 'キッチンディナープレパレ登録済']) }}">
 			@csrf
 			<div class="row">
 				<label for="note_date" class="col-form-label">表示日</label>
@@ -157,17 +157,6 @@
 			$stock_ingredients = session('stock_ingredients');
 		@endphp
 		@if ($stock_ingredients)
-			<b>Aicha 米入力データ</b>
-			<ul class="list-group list-group-flush" style="font-size: 14px; border: none; padding: 0;">
-			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 0 - rien</li>
-			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 1 - moins que la moitié</li>
-			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 2 - la moitié</li>
-			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 3 - 1 casserole</li>
-			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 4 - 1 casserole et demi</li>
-			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 5 - 2 casseroles</li>
-			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 6 - 2 casseroles et demi</li>
-			<li class="list-group-item" style="border: none; padding: 0.25rem 0;">&#128207; 7 - plus de 3 casseroles</li>
-			</ul>		
 			<table class="table">
 				<thead>
 					<tr>
