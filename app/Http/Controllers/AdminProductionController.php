@@ -216,7 +216,7 @@ class AdminProductionController extends Controller
     {
         Log::debug("request:".$request);
         $inputs = $request->all();
-
+        $action_message = "";
         // database 値を更新
         // ramen の場合 id 1 ラーメンカラムをupdate
         if($btn_name == "ramen"){
@@ -278,8 +278,7 @@ class AdminProductionController extends Controller
                 'sun' => $inputs['udon_base_sun'],
             ]);
             Log::debug("UDON 15時 Mix:".$resultat_id);
-            $action_message = "[Mix] 15時うどん混ぜ指示更新。ぽみぃーーーーん。
-                   [URL:preparer_diner / PlanProductionテーブル id=6] Préparation pour le diner ページに固定表示されます。";
+            $action_message = "15時指示 UDON混ぜ個数の更新っす！ PlanProductionテーブル ID6 _ [URL]preparer_dinerページに固定表示";
         }
 
         return redirect()->route('admin.index',['action_message' => $action_message]);
