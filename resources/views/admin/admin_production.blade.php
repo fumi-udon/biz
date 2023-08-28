@@ -84,7 +84,7 @@
 			土曜:  <input type="number" value="{{ $plan_production_id_five['sat'] }}" name="udon_base_sat" id="udon_base_sat" size="6" maxlength="2" required><br>
 			日曜:  <input type="number" value="{{ $plan_production_id_five['sun'] }}" name="udon_base_sun" id="udon_base_sun" size="6" maxlength="2" required><br>
 
-			<p style="margin:5px;"><input type="submit" name="udon_mix_diner" value="udon切更新" class="btn btn-dark"/></p>
+			<p style="margin:5px;"><input type="submit" name="udon_mix_diner" value="udon混ぜ更新" class="btn btn-dark"/></p>
 		</form>
     </div>
 	<!-- [追加2023/08/30] Udon15時水回し指示 エリア end -->
