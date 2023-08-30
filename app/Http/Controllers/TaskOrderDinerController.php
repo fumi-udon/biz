@@ -61,7 +61,7 @@ class TaskOrderDinerController extends TaskOrderController
         $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14');
         \Session::flash('stock_ingredients', $stock_ingredients);
         
-        return view('cuisine_diner_top', compact('today','oeufs','omlettes','fms','laitues','okonomiyakis','sato_instruction','yes_sato'));
+        return view('cuisine_diner_top', compact('stock_ingredients','today','oeufs','omlettes','fms','laitues','okonomiyakis','sato_instruction','yes_sato'));
     }
 
     /**
@@ -121,6 +121,27 @@ class TaskOrderDinerController extends TaskOrderController
         $req_fms = intval($inputs['fms']);
         $req_laitues = intval($inputs['laitues']);
         $req_okonomiyakis = intval($inputs['okonomiyakis']);
+
+        // StockIngredientテーブル登録
+        date_default_timezone_set('Africa/Tunis');
+        $stock_ingredient = StockIngredient::updateOrCreate(
+            [
+                'registre_date' => date('Y-m-d'),
+                'flg1' => 5 // ディナープレパレ
+            ],
+            [
+                'article1_rest' => $req_oeufs,
+                'article2_rest' => $req_omlettes,
+                'article3_rest' => $req_fms,
+                'article4_rest' => $req_laitues,
+                'article5_rest' => $req_okonomiyakis,
+
+                'registre_date' => date('Y-m-d'),
+                'registre_datetime' => now(),
+                // Dummy data
+                'udon_rest_15h' => 55,                
+            ]
+        );
 
         /**
          * サト指示 [追加] flg = 10 

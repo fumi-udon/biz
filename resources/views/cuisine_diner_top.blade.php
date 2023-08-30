@@ -87,7 +87,7 @@
 	</div>
 </div>
 	
-	<!-- Note サト指示共通ページへ　-->
+<!-- Note サト指示共通ページへ　-->
 @php
 $flg_oride = 9;
 $flg_add = 10;
@@ -100,11 +100,51 @@ $actionMessage = 'ディナー17h30 シャハルディンプレパレ用';
         </a>
     </p>
 
+<!-- Note 入力エリア ◆通常は非表示 start-->
+<div class="col-md-12">
+	<div style="text-align: right;">
+		<p class="m-2 small"><a href="javascript:void(0)" id="note_open" style="color: grey;">詳細</a></p>
+	</div>
+		<!-- 登録データ -->
+		<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 100%;">
+		@if ( isset($stock_ingredients) )
+		<div class="my-3">
+			<p>登録データStockIngredientテーブル</p>
+			<div class="table-responsive">	
+				<table class="table">
+					<thead>
+						<tr>
+						<th scope="col">registre_datetime</th>
+						<th scope="col">oeuf</th>
+						<th scope="col">omlette émincée</th>
+						<th scope="col">fruits de mer</th>
+						<th scope="col">laitue</th>
+						<th scope="col">okonomiyaki</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach ($stock_ingredients as $stock_ingredient)
+						<tr>
+						<td>{{ $stock_ingredient->registre_datetime }}</td>
+						<td>{{ $stock_ingredient->article1_rest }}</td>
+						<td>{{ $stock_ingredient->article2_rest }}</td>
+						<td>{{ $stock_ingredient->article3_rest }}</td>
+						<td>{{ $stock_ingredient->article4_rest }}</td>
+						<td>{{ $stock_ingredient->article5_rest }}</td>					
+						</tr>
+					@endforeach
+					</tbody>
+				</table>
+			</div>
+		</div>
+		@endif
+		</div>
+	</div>
+<!-- Note 入力エリア end-->
 
 </main>
 
-
-
 @endsection
-
 @extends('layouts.footer')
+<!-- [ADD]FUMI Javascripts  -->
+<script src="{{ asset('js/courses_matin.js') }}"></script>
