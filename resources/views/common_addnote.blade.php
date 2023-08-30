@@ -3,13 +3,15 @@
 <!-- パンくずリスト stock_record sato_record -->
 @section('content')
 <main class="container">
+<div class="my-3 p-3">
 <h4>[共通] 追加上書き</h4>
 <p>{!! $action_message !!}</p>
+</div>
 <!-- Note 入力エリア  start-->
 <div class="col-md-12">
 
 	<!-- sato独自指示 エリア end -->
-	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="width: 80%;">
+	<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="width: 100%;">
 		<div class=" text-muted">
 		<form method='POST' action="{{ route('common.addnote.complete') }}">
 			@csrf
