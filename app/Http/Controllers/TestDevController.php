@@ -316,7 +316,13 @@ class TestDevController extends Controller
         // select ボックス要素作成
         $rizs = $this->get_select_values('rizs');
 
-        return view('stock_close_input', compact('today','paikos','poulet_crus', 'laits', 'rizs'));
+        /**
+         *  ビレル登録データ取得
+         */
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('2', '7'); 
+        \Session::flash('stock_ingredients', $stock_ingredients);
+
+        return view('stock_close_input', compact('today','paikos','poulet_crus', 'laits', 'rizs', 'stock_ingredients'));
     }
 
     /**

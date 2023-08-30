@@ -50,7 +50,7 @@
 			
 			<hr>
 			<!-- アンドレア -->
-			<p><h5>Andrea</h5></p>
+			<p><h5>FIFI</h5></p>
 			<!-- サト追加情報 -->
 			<p>
 				@if(!empty($sato_record_andrea))
