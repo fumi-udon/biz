@@ -31,6 +31,74 @@ class DevController extends Controller
     }
 
     /**
+     * common_addnote.
+     * サト指示共通ページ
+     * @param int $flgs
+     * @param string $action_message
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function common_addnote($flg_oride, $flg_add, $action_message)
+    {
+
+        $mode_inserts = $this->get_select_values('mode_inserts',$flg_oride, $flg_add);
+        return view('common_addnote', compact("action_message", "mode_inserts", "flg_oride", "flg_add"));
+    }
+
+    /**
+     * 
+     * サト指示共通登録完了ページ
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function common_addnote_complete(Request $request)
+    {
+        // Post データ取得
+        $inputs = $request->all();
+        $mode_insert = $inputs['mode_inserts_list'];
+
+        // Sessionにデータ保持
+        \Session::flash('note8h', $inputs['note8h']);
+        \Session::flash('note_date', $inputs['note_date']);
+        \Session::flash('mode_insert_now', $mode_insert);
+        \Session::flash('action_message', $inputs['action_message']);
+
+        /**
+         * Table作るの面倒だからサト指示テーブルを使う
+         * 上書き/追加 登録
+         */               
+        $sato_instruction = SatoInstruction::updateOrCreate(
+            [
+                'aply_date' => $inputs['note_date'],
+                'flg_int' => $mode_insert
+            ],
+            [
+                'override_tx_1' => $inputs['note8h'],
+            ]
+         );
+
+        return view('common_addnote_complete', compact("mode_insert", "sato_instruction"));
+    }
+
+
+    /**
+     * select values
+     * 追加：　　mode_inserts
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function get_select_values($s_id, $id_oride, $id_add){
+
+        if($s_id == 'mode_inserts'){
+            // select ボックス要素作成
+            $mode_inserts = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => $id_oride, 'name' => '上書き更新'],
+                ['id' => $id_add, 'name' => '追加'],
+            ]);
+            return $mode_inserts;
+        }
+}
+
+    /**
      * Execl.
      * 
      * @return \Illuminate\Contracts\Support\Renderable
@@ -198,36 +266,5 @@ class DevController extends Controller
         $filePath = storage_path('app/amecan/' . $fileName);
         
         return view('dev/home', compact("filePath"));
-    }
-   
-    /**
-     * [共通] ノートを追加.
-     * @return \Illuminate\Contracts\Support\Renderable
-     */ 
-    public static function common_addnote_complete(Request $request, $flg, $action_message)
-    {        
-        // Post データ取得
-        $inputs = $request->all();
-
-        // Sessionにデータ保持
-        \Session::flash('note8h', $inputs['note8h']);
-        \Session::flash('note_date', $inputs['note_date']);
-        \Session::flash('action_message', $action_message);
-
-        /**
-         * サト指示テーブル登録
-         */               
-        $sato_instruction = SatoInstruction::updateOrCreate(
-            [
-                'aply_date' => $inputs['note_date'],
-                'flg_int' => $flg
-            ],
-            [
-                'override_tx_1' => $inputs['note8h'],
-            ]
-         );
-         //dd($sato_instruction);
-        // 処理が完了したら結果を返す
-        return view('complete_addnote');
     }
 }

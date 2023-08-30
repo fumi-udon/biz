@@ -82,7 +82,7 @@ class TaskOrderDinerController extends TaskOrderController
 
         /**
          * Satoの手動指示がある場合は優先表示
-         * flg 9:  ディナー オープン前　Cuisinier 17H アレディン   [上書き]
+         * flg 9:  ディナー オープン前　Cuisinier 17H アレディン   [上書き] [追加]
          */
         $date_today = date_create()->format('Y-m-d');   
         $sato_record = SatoInstruction::where('flg_int', 9)
