@@ -298,8 +298,8 @@ class TestDevController extends Controller
         $rizs = $this->get_select_values('rizs');
         $pulldowns = [$chashus, $paikos, $poulet_crus, $laits, $rizs];
         
-        // stock_ingredientテーブルのカラム名
-        $columun_names = ["chashu", "paiko", "poulet_cru", "riz", "lait"];        
+        // stock_ingredientテーブルのカラム名 
+        $columun_names = ["chashu", "paiko", "poulet_cru", "lait", "riz"];        
         $stock_ingredients_display = FumiTools::get_display_datas($stock_ingredients, $pulldowns, $columun_names);
         // 表示用にプルダウンのnameを格納した連想配列を作成 end
 

@@ -150,8 +150,8 @@
 					<th scope="col">chashu</th>
 					<th scope="col">paiko</th>
 					<th scope="col">poulet_cru</th>
-					<th scope="col">riz</th>
 					<th scope="col">lait</th>
+					<th scope="col">riz</th>
 					</tr>
 				</thead>
 				<tbody>
