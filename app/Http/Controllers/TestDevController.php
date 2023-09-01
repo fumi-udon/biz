@@ -280,20 +280,32 @@ class TestDevController extends Controller
     public function stock_close_input()
     {
         $today = (new DateTime())->format('Y-m-d');
+   
+        // 画面表示用にプルダウンのnameを格納した連想配列を作成 start
+        // * [使用法] 
+        // * 1.stock_ingredientsの表示対象のモデルデータを渡す
+        // * 2.プルダウン集にプルダウンデータを追加 
+        // * 3.articles_by_tableの数をプルダウンの数と一致させる
 
-        // select ボックス要素作成
+        // 表示対象モデルデータ
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('2', '7');
+
+        // プルダウン集 select ボックス要素作成
+        $chashus = $this->get_select_values('chashus');
         $paikos = $this->get_select_values('paikos');
         $poulet_crus = $this->get_select_values('poulet_crus');
         $laits = $this->get_select_values('laits');
         $rizs = $this->get_select_values('rizs');
+        $pulldowns = [$chashus, $paikos, $poulet_crus, $laits, $rizs];
+        
+        // stock_ingredientテーブルのカラム名
+        $columun_names = ["chashu", "paiko", "poulet_cru", "riz", "lait"];        
+        $stock_ingredients_display = FumiTools::get_display_datas($stock_ingredients, $pulldowns, $columun_names);
+        // 表示用にプルダウンのnameを格納した連想配列を作成 end
 
-        /**
-         *  ビレル登録データ取得
-         */
-        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('2', '7'); 
         \Session::flash('stock_ingredients', $stock_ingredients);
 
-        return view('stock_close_input', compact('today','paikos','poulet_crus', 'laits', 'rizs', 'stock_ingredients'));
+        return view('stock_close_input', compact('today','paikos','poulet_crus', 'laits', 'rizs', 'stock_ingredients', 'stock_ingredients_display'));
     }
 
     /**

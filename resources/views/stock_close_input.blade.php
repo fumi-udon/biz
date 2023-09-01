@@ -140,32 +140,8 @@
 		@if ( isset($stock_ingredients) )
 		<div class="my-3">
 			<div class="">
-					<B>Bilel登録データ StockIngredientテーブル / flg 2 </B><br>
-					<div class="container">
-						<b>lait :</b>
-						<ul class="list-group">
-							<li class="list-group-item">0 : rien</li>
-							<li class="list-group-item">1 : 1 ～ 3 paquets</li>
-							<li class="list-group-item">4 : plus que 4 paquets</li>
-						</ul>
-						<b>poulet_crus :</b>
-						<ul class="list-group">
-							<li class="list-group-item">0 : rien</li>
-							<li class="list-group-item">1 : moyen</li>
-							<li class="list-group-item">2 : beaucoup</li>
-						</ul>
-						<b>Riz :</b>
-						<ul class="list-group">
-							<li class="list-group-item">0 : rien</li>
-							<li class="list-group-item">1 : moins que la moitié</li>
-							<li class="list-group-item">2 : la moitié</li>
-							<li class="list-group-item">3 : 1 casserole</li>
-							<li class="list-group-item">4 : 1 casserole et demi</li>
-							<li class="list-group-item">5 : 2 casseroles</li>
-							<li class="list-group-item">6 : 2 casseroles et demi</li>
-							<li class="list-group-item">7 : plus de 3 casseroles</li>
-						</ul>
-					</div>
+			<B>Bilel登録データ StockIngredientテーブル / flg 2 </B><br>
+
 			<div class="table-responsive">	
 			<table class="table">
 				<thead>
@@ -179,16 +155,13 @@
 					</tr>
 				</thead>
 				<tbody>
-				@foreach ($stock_ingredients as $stock_ingredient)
-					<tr>
-					<td>{{ $stock_ingredient->registre_datetime }}</td>
-					<td>{{ $stock_ingredient->chashu }}</td>
-					<td>{{ $stock_ingredient->paiko }}</td>
-					<td>{{ $stock_ingredient->poulet_cru }}</td>
-					<td>{{ $stock_ingredient->riz }}</td>
-					<td>{{ $stock_ingredient->lait }}</td>					
-					</tr>
-				@endforeach
+				@foreach ($stock_ingredients_display as $record)
+						<tr>
+							@foreach ($record as $value)
+								<td>{{ $value }}</td>
+							@endforeach
+						</tr>
+					@endforeach
 				</tbody>
 			</table>
 			</div>
