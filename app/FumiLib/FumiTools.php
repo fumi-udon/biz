@@ -167,8 +167,9 @@ class FumiTools
      * 
      * [使用法] 
      * 1.stock_ingredientsの表示対象のモデルデータを渡す
-     * 2.プルダウン集にプルダウンデータを追加 
-     * 3.articles_by_tableの数をプルダウンの数と一致させる
+     * 2.pulldowns プルダウン集にプルダウンデータを追加 
+     * 3.columun_names _ stock_ingredientsテーブルのカラム名を配列で指定
+     * [注意] pulldownsとcolumun_namesのデータ数と順番は必ず一致させること。
      */
     public static function get_display_datas($stock_ingredients, $pulldowns, $columun_names)   {
 
