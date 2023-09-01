@@ -7,8 +7,8 @@
 	<div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">
-		<h1 class="h6 mb-0 text-white lh-1">Bonjour!  Bureaux </h1>
-		<small>check stock data</small>
+		<h1 class="h6 mb-0 text-white lh-1">Bureau stocke gestionaire</h1>
+		<small>vérifier des restes des ingrédients à la fin de travail</small>
 	</div>
 	</div>
 	@if (Session::has('flash_message'))
@@ -26,7 +26,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article1s"><b>&#129372;article1 </b> <br> boîte en inox de paiko
+					<label for="article1s"><b>&#9833;sac du riz</b>
 					<select class="form-select" id="article1s" name="article1s" required>
 						@foreach ($article1s as $article1)
 							<option value="{{ $article1['id'] }}" @if( Session::get('article1_now')  == $article1['id'] ) selected @endif> {{ $article1['name'] }} </option>
@@ -40,7 +40,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article2s"><b>&#129372;article2 </b> <br> boîte en inox de paiko
+					<label for="article2s"><b>&#9833;carton de sauce de soja</b>
 					<select class="form-select" id="article2s" name="article2s" required>
 						@foreach ($article2s as $article2)
 							<option value="{{ $article2['id'] }}" @if( Session::get('article2_now')  == $article2['id'] ) selected @endif> {{ $article2['name'] }} </option>
@@ -54,7 +54,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article3s"><b>&#129372;article3 </b> <br> boîte en inox de paiko
+					<label for="article3s"><b>&#9833;poudre du mais </b>
 					<select class="form-select" id="article3s" name="article3s" required>
 						@foreach ($article3s as $article3)
 							<option value="{{ $article3['id'] }}" @if( Session::get('article3_now')  == $article3['id'] ) selected @endif> {{ $article3['name'] }} </option>
@@ -74,7 +74,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article4s"><b>&#129372;article4 </b> <br> boîte en inox de paiko
+					<label for="article4s"><b>&#9833;Bols de udon</b> <br> compter le aprés descendre 
 					<select class="form-select" id="article4s" name="article4s" required>
 						@foreach ($article4s as $article4)
 							<option value="{{ $article4['id'] }}" @if( Session::get('article4_now')  == $article4['id'] ) selected @endif> {{ $article4['name'] }} </option>
@@ -88,7 +88,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article5s"><b>&#129372;article5 </b> <br> boîte en inox de paiko
+					<label for="article5s"><b>&#9833;gyoza </b> 
 					<select class="form-select" id="article5s" name="article5s" required>
 						@foreach ($article5s as $article5)
 							<option value="{{ $article5['id'] }}" @if( Session::get('article5_now')  == $article5['id'] ) selected @endif> {{ $article5['name'] }} </option>
@@ -127,22 +127,19 @@
 					<thead>
 						<tr>
 						<th scope="col">date</th>
-						<th scope="col">article1</th>
-						<th scope="col">article2</th>
-						<th scope="col">article3</th>
-						<th scope="col">article4</th>
-						<th scope="col">article5</th>
+						<th scope="col">riz</th>
+						<th scope="col">saja</th>
+						<th scope="col">maïs</th>
+						<th scope="col">udon</th>
+						<th scope="col">gyoza</th>
 						</tr>
 					</thead>
 					<tbody>
-					@foreach ($stock_ingredients as $stock_ingredient)
+					@foreach ($stock_ingredients_display as $record)
 						<tr>
-						<td>{{ $stock_ingredient->registre_datetime }}</td>
-						<td>{{ $stock_ingredient->article1_rest }}</td>
-						<td>{{ $stock_ingredient->article2_rest }}</td>
-						<td>{{ $stock_ingredient->article3_rest }}</td>
-						<td>{{ $stock_ingredient->article4_rest }}</td>
-						<td>{{ $stock_ingredient->article5_rest }}</td>					
+							@foreach ($record as $value)
+								<td>{{ $value }}</td>
+							@endforeach
 						</tr>
 					@endforeach
 					</tbody>

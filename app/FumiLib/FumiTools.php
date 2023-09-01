@@ -160,4 +160,49 @@ class FumiTools
         return $collection;
     }
 
+    /**
+     * 画面表示用にプルダウンのnameを格納した連想配列を作成
+     * 
+     * 詳細リンク 登録データの表示をわかり易くする。　例：riz entre 4 ～ 6 sacs とか
+     * 
+     * [使用法] 
+     * 1.stock_ingredientsの表示対象のモデルデータを渡す
+     * 2.プルダウン集にプルダウンデータを追加 
+     * 3.articles_by_tableの数をプルダウンの数と一致させる
+     */
+    public static function get_display_datas($stock_ingredients, $pulldowns, $columun_names)   {
+
+        // 表示用のレコード 入れ子の連想配列
+        $display_datas = [];
+        // レコードをループ
+        foreach ($stock_ingredients as $stock_ingredient) {
+           
+            $articles_by_table = []; // 配列初期化
+            $num_columns = count($columun_names);
+            for ($i = 0; $i < $num_columns; $i++) {
+                $column_name = $columun_names[$i];
+                $article_value = $stock_ingredient->{$column_name};
+                // ここで $article_value を利用する処理を行う
+                $articles_by_table[] = $article_value;
+            }
+
+
+            $matchingName = '';
+            $display_data = [$stock_ingredient->registre_datetime]; // 配列を初期化
+
+            for ($i = 0; $i < count($pulldowns); $i++) {
+                foreach ($pulldowns[$i] as $ellements) {
+                    if ($ellements['id'] === (string)$articles_by_table[$i]) {
+                        $display_data[] = $ellements['name']; //配列に追加
+                        break;
+                    }
+                }
+            }      
+            $display_datas[] = $display_data;
+        }
+        // 表示用にプルダウンのnameを格納した連想配列を作成 end
+
+        return $display_datas;
+    }
+
 }

@@ -22,6 +22,16 @@ class StockIngredient extends Model
         'flg1' => 1,
         'boo1' => 0,
     ];
+
+    // 整数にキャスト
+    protected $casts = [
+        'chashu' => 'integer',
+        'paiko' => 'integer',
+        'poulet_cru' => 'integer',
+        'riz' => 'integer',
+        'lait' => 'integer',
+    ];
+    
     
     /**
      * The primary key for the model.

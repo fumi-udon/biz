@@ -39,18 +39,29 @@ class BureauItemsController extends Controller
     {        
         $today = (new DateTime())->format('Y-m-d');
 
-        // select ボックス要素作成
-        $article1s = $this->get_select_values('article1s');
-        $article2s = $this->get_select_values('article2s');
-        $article3s = $this->get_select_values('article3s');
-        $article4s = $this->get_select_values('article4s');
-        $article5s = $this->get_select_values('article5s');
-        
-        /**
-         * [詳細] 入力データ表示 / flg= 4
-         */
+        // 画面表示用にプルダウンのnameを格納した連想配列を作成 start
+        // * [使用法] 
+        // * 1.stock_ingredientsの表示対象のモデルデータを渡す
+        // * 2.プルダウン集にプルダウンデータを追加 
+        // * 3.articles_by_tableの数をプルダウンの数と一致させる
+
+        // 表示対象モデルデータ
         $stock_ingredients = FumiTools::get_stockIngredient_by_keys('4', '14');
-        return view('bureau_stock_top', compact('today','article1s','article2s','article3s','article4s','article5s','stock_ingredients'));
+
+        // プルダウン集 select ボックス要素作成
+        $article1s = $this->get_select_values('article1s'); // sac de riz
+        $article2s = $this->get_select_values('article2s'); // carton de sauce de soja
+        $article3s = $this->get_select_values('article3s'); // poudre du mais
+        $article4s = $this->get_select_values('article4s'); // udon bols
+        $article5s = $this->get_select_values('article5s'); // gyoza
+        $pulldowns = [$article1s, $article2s, $article3s, $article4s, $article5s];
+        
+        // stock_ingredientテーブルのカラム名
+        $columun_names = ["article1_rest", "article2_rest", "article3_rest", "article4_rest", "article5_rest"];        
+        $stock_ingredients_display = FumiTools::get_display_datas($stock_ingredients, $pulldowns, $columun_names);
+        // 表示用にプルダウンのnameを格納した連想配列を作成 end
+
+        return view('bureau_stock_top', compact('today','article1s','article2s','article3s','article4s','article5s','stock_ingredients','stock_ingredients_display'));
     }
 
     /**
@@ -118,14 +129,10 @@ class BureauItemsController extends Controller
             // select ボックス要素作成
             $article1s = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'rien'],
-                ['id' => '1', 'name' => 'moins que la moitié'],
-                ['id' => '2', 'name' => 'la moitié'],
-                ['id' => '3', 'name' => '1 casserole'],
-                ['id' => '4', 'name' => '1 casserole et demi'],
-                ['id' => '5', 'name' => '2 casserole'],
-                ['id' => '6', 'name' => '2 casseroles et demi'],
-                ['id' => '7', 'name' => 'plus de 3 casseroles'],
+                ['id' => '0', 'name' => 'moins que 3 sacs'],
+                ['id' => '1', 'name' => 'entre 4 ～ 6 sacs'],
+                ['id' => '2', 'name' => 'entre 7 ～ 10 sacs'],
+                ['id' => '3', 'name' => 'plus que 10 sacs'],
             ]);
             return $article1s;
         }
@@ -134,14 +141,10 @@ class BureauItemsController extends Controller
             // select ボックス要素作成
             $article2s = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'rien'],
-                ['id' => '1', 'name' => 'moins que la moitié'],
-                ['id' => '2', 'name' => 'la moitié'],
-                ['id' => '3', 'name' => '1 casserole'],
-                ['id' => '4', 'name' => '1 casserole et demi'],
-                ['id' => '5', 'name' => '2 casserole'],
-                ['id' => '6', 'name' => '2 casseroles et demi'],
-                ['id' => '7', 'name' => 'plus de 3 casseroles'],
+                ['id' => '0', 'name' => 'moins que 2 cartons'],
+                ['id' => '1', 'name' => 'entre 3 ～ 5 cartons'],
+                ['id' => '2', 'name' => 'entre 6 ～ 8 cartons'],
+                ['id' => '3', 'name' => 'plus que 9 cartons'],
             ]);
             return $article2s;
         }
@@ -150,46 +153,37 @@ class BureauItemsController extends Controller
             // select ボックス要素作成
             $article3s = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'rien'],
-                ['id' => '1', 'name' => 'moins que la moitié'],
-                ['id' => '2', 'name' => 'la moitié'],
-                ['id' => '3', 'name' => '1 casserole'],
-                ['id' => '4', 'name' => '1 casserole et demi'],
-                ['id' => '5', 'name' => '2 casserole'],
-                ['id' => '6', 'name' => '2 casseroles et demi'],
-                ['id' => '7', 'name' => 'plus de 3 casseroles'],
+                ['id' => '0', 'name' => 'trés peu'],
+                ['id' => '1', 'name' => 'un peu'],
+                ['id' => '2', 'name' => 'moyen'],
+                ['id' => '3', 'name' => 'beaucoup'],
             ]);
             return $article3s;
         }
         //4
         if($s_id == 'article4s'){
-            // select ボックス要素作成
+            // select ボックス要素作成 UDON
             $article4s = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'rien'],
-                ['id' => '1', 'name' => 'moins que la moitié'],
-                ['id' => '2', 'name' => 'la moitié'],
-                ['id' => '3', 'name' => '1 casserole'],
-                ['id' => '4', 'name' => '1 casserole et demi'],
-                ['id' => '5', 'name' => '2 casserole'],
-                ['id' => '6', 'name' => '2 casseroles et demi'],
-                ['id' => '7', 'name' => 'plus de 3 casseroles'],
+                ['id' => '0', 'name' => '0'],
+                ['id' => '1', 'name' => 'demi bol'],
+                ['id' => '2', 'name' => '1 bol et demi'],
+                ['id' => '3', 'name' => '2 bol'],
+                ['id' => '4', 'name' => '2 bols et demi'],
+                ['id' => '5', 'name' => '3 bols'],
+                ['id' => '6', 'name' => '3 bols et demi'],
             ]);
             return $article4s;
         }
         //5
         if($s_id == 'article5s'){
-            // select ボックス要素作成
+            // select ボックス要素作成 Gyoza
             $article5s = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'rien'],
+                ['id' => '0', 'name' => 'moins que 10 sachets'],
                 ['id' => '1', 'name' => 'moins que la moitié'],
-                ['id' => '2', 'name' => 'la moitié'],
-                ['id' => '3', 'name' => '1 casserole'],
-                ['id' => '4', 'name' => '1 casserole et demi'],
-                ['id' => '5', 'name' => '2 casserole'],
-                ['id' => '6', 'name' => '2 casseroles et demi'],
-                ['id' => '7', 'name' => 'plus de 3 casseroles'],
+                ['id' => '2', 'name' => 'présque la moitié'],
+                ['id' => '3', 'name' => 'présque plein'],
             ]);
             return $article5s;
         }

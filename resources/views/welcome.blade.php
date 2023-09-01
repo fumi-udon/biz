@@ -49,7 +49,7 @@
         </a>
           <p class="pb-3 mb-0 small lh-sm border-bottom">
             <strong class="d-block text-gray-dark">bureau stock</strong>
-            bureau stock
+              saisir des restes de article deux fois par semaine
           </p>
         </div>
       </div>

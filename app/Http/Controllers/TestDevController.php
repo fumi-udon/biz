@@ -282,38 +282,9 @@ class TestDevController extends Controller
         $today = (new DateTime())->format('Y-m-d');
 
         // select ボックス要素作成
-        $paikos = collect([
-            ['id' => '', 'name' => ''],
-            ['id' => '0', 'name' => '0'],
-            ['id' => '1', 'name' => '1'],
-            ['id' => '1.5', 'name' => '1.5'],
-            ['id' => '2', 'name' => '2'],
-            ['id' => '2.5', 'name' => '2.5'],
-            ['id' => '3', 'name' => '3'],
-            ['id' => '3.5', 'name' => '3.5'],
-            ['id' => '4', 'name' => '4'],
-            ['id' => '4.5', 'name' => '4.5'],
-            ['id' => '5', 'name' => '5'],
-            ['id' => '5.5', 'name' => '5.5'],
-            ['id' => '6', 'name' => '6'],
-            ['id' => '6.5', 'name' => '6.5'],
-            ['id' => '7', 'name' => '7'],
-        ]);
-        $poulet_crus = collect([
-            ['id' => '', 'name' => ''],
-            ['id' => '0', 'name' => 'rien'],
-            ['id' => '1', 'name' => 'moyen'],
-            ['id' => '2', 'name' => 'beaucoup'],
-        ]);
-
-        $laits = collect([
-            ['id' => '', 'name' => ''],
-            ['id' => '0', 'name' => 'rien'],
-            ['id' => '1', 'name' => '1 ～ 3 paquets'],
-            ['id' => '4', 'name' => 'plus que 4 paquets'],
-        ]);
-
-        // select ボックス要素作成
+        $paikos = $this->get_select_values('paikos');
+        $poulet_crus = $this->get_select_values('poulet_crus');
+        $laits = $this->get_select_values('laits');
         $rizs = $this->get_select_values('rizs');
 
         /**
@@ -570,8 +541,32 @@ class TestDevController extends Controller
         // [牛乳] 入力データが2以下の場合は4pac購入依頼
         // bladeテンプレートで巻き取る
 
+        // 画面表示用にプルダウンのnameを格納した連想配列を作成 start
+        // * [使用法] 
+        // * 1.stock_ingredientsの表示対象のモデルデータを渡す
+        // * 2.プルダウン集にプルダウンデータを追加 
+        // * 3.articles_by_tableの数をプルダウンの数と一致させる
+
+        // 表示対象モデルデータ
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('2', '14');
+
+        // プルダウン集 select ボックス要素作成
+        // select ボックス要素作成
+        $chashus = $this->get_select_values('chashus');
+        $paikos = $this->get_select_values('paikos');
+        $poulet_crus = $this->get_select_values('poulet_crus');
+        $laits = $this->get_select_values('laits');
+        $rizs = $this->get_select_values('rizs');
+        $pulldowns = [$chashus, $paikos, $poulet_crus, $laits, $rizs];
+        
+        // stock_ingredientテーブルのカラム名
+        $columun_names = ["chashu", "paiko", "poulet_cru", "lait", "riz"];     
+        $stock_ingredients_display = FumiTools::get_display_datas($stock_ingredients, $pulldowns, $columun_names);
+        // 表示用にプルダウンのnameを格納した連想配列を作成 end
+
+
         // 表示ステータス 通常指示表示
-        return view('courses_matin',compact('stock_record','courses_poulet','bilel_lait', 'stock_ingredients'))->with(['表示ステータス: ' => 0]);
+        return view('courses_matin',compact('stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
     }
     /**
      * 朝 こと付け登録
@@ -661,16 +656,76 @@ class TestDevController extends Controller
                 return $rizs;
             }
 
-            if($s_id == 'mode_inserts'){
-                // select ボックス要素作成
-                $mode_inserts = collect([
-                    ['id' => '', 'name' => ''],
-                    ['id' => '6', 'name' => '上書き更新'],
-                    ['id' => '7', 'name' => '追加_TO_Aicha'],
-                    ['id' => '8', 'name' => '追加_TO_アンドレア'],
-                ]);
-                return $mode_inserts;
-            }
+        if($s_id == 'chashus'){
+            // select ボックス要素作成
+            $chashus = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => '0'],
+                ['id' => '1', 'name' => '1'],
+                ['id' => '2', 'name' => '2'],
+                ['id' => '3', 'name' => '3'],
+                ['id' => '4', 'name' => '4'],
+                ['id' => '5', 'name' => '5'],
+                ['id' => '6', 'name' => '6'],
+                ['id' => '7', 'name' => '7'],
+            ]);
+            return $chashus;
+        }
+
+        if($s_id == 'paikos'){
+            // select ボックス要素作成
+            $paikos = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => '0'],
+                ['id' => '1', 'name' => '1 paquet'],
+                ['id' => '2', 'name' => '1 paquet et demi'],
+                ['id' => '3', 'name' => '2 paquets'],
+                ['id' => '4', 'name' => '2 paquets et demi'],
+                ['id' => '5', 'name' => '3 paquets'],
+                ['id' => '6', 'name' => '3 paquets et demi'],
+                ['id' => '7', 'name' => '4 paquets'],
+                ['id' => '8', 'name' => '4 paquets et demi'],
+                ['id' => '9', 'name' => '5 paquets'],
+                ['id' => '10', 'name' => '5 paquets et demi'],
+                ['id' => '11', 'name' => '6 paquets'],
+                ['id' => '12', 'name' => '6 paquets et demi'],
+                ['id' => '13', 'name' => '7 paquets'],
+            ]);
+            return $paikos;
+        }
+
+        if($s_id == 'poulet_crus'){
+            // select ボックス要素作成
+            $poulet_crus = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => 'rien'],
+                ['id' => '1', 'name' => 'moyen'],
+                ['id' => '2', 'name' => 'beaucoup'],
+            ]);
+            return $poulet_crus;
+        }
+
+        if($s_id == 'laits'){
+            // select ボックス要素作成
+            $laits = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => 'rien'],
+                ['id' => '1', 'name' => '1 ～ 3 paquets'],
+                ['id' => '4', 'name' => 'plus que 4 paquets'],
+            ]);
+            return $laits;
+        }
+
+        if($s_id == 'mode_inserts'){
+            // select ボックス要素作成
+            $mode_inserts = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '6', 'name' => '上書き更新'],
+                ['id' => '7', 'name' => '追加_TO_Aicha'],
+                ['id' => '8', 'name' => '追加_TO_アンドレア'],
+            ]);
+            return $mode_inserts;
+        }
     }
 
 }
