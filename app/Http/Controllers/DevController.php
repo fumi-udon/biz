@@ -45,6 +45,15 @@ class DevController extends Controller
     }
 
     /**
+     * シフトページ Google スプレッドシートをフレームで表示.
+     */
+    public function shift_google()
+    {
+        $action_message = 'シフトページ Google スプレッドシートをフレームで表示';
+        return view('shift_google', compact("action_message"));
+    }
+
+    /**
      * 
      * サト指示共通登録完了ページ
      * @return \Illuminate\Contracts\Support\Renderable

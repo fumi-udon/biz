@@ -108,6 +108,7 @@ Route::get('/dev_home', [DevController::class, 'index'])->name('dev.index');
 Route::get('/importCSV', [DevController::class, 'importCSV'])->name('dev.import.csv');
 Route::post('/importCSV2', [DevController::class, 'importCSV2'])->name('dev.import.csv2');
 Route::get('/importCSV3', [DevController::class, 'importCSV3'])->name('dev.import.csv3');
+Route::get('/shift_google', [DevController::class, 'shift_google'])->name('shift.google');
 
 // [共通] 上書き追加ページ
 Route::post('/common_addnote_complete', [DevController::class, 'common_addnote_complete'])->name('common.addnote.complete');
