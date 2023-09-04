@@ -468,6 +468,10 @@ class TestDevController extends Controller
         $fumi_tools =new FumiTools();
         $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
 
+        // 画面表示用にプルダウンのnameを格納した連想配列を作成 start
+        $stock_ingredients_display = $this->get_stock_display_flg2();
+        // 表示用にプルダウンのnameを格納した連想配列を作成 end
+
         /**
          * Bilel入力データ表示
          */
@@ -492,13 +496,13 @@ class TestDevController extends Controller
             //サト指示有の為 表示
             $sato_text_flg = 1;
             \Session::flash('sato_record', $sato_record);
-            return view('courses_matin',compact('stock_ingredients','sato_text_flg', 'sato_record'));
+            return view('courses_matin',compact('stock_ingredients','sato_text_flg', 'sato_record', 'stock_ingredients_display'));
         }
 
         // ビレル入力データ取得 flg = 2
         // 14時間以内の最新レコード取得 (月曜日の場合は日曜日を考慮)
         $hour_minus = 14;
-        if($daysoftheweek = 'mon'){$hour_minus = $hour_minus + 24;}
+        if($daysoftheweek = 'mon'){$hour_minus = $hour_minus + 30;}
         $stock_record = StockIngredient::where('flg1', 2)
             ->where('registre_datetime', '>=', Carbon::now()->subHours($hour_minus))
             ->orderBy('registre_datetime', 'desc')
@@ -508,7 +512,7 @@ class TestDevController extends Controller
         if(empty($stock_record)){
             //ビレルがデータ登録忘れの為エラーメッセージ表示
             $st_flg = 2;
-            return view('courses_matin',compact('stock_ingredients'))->with(['表示ステータス: ' => $st_flg]);
+            return view('courses_matin',compact('stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => $st_flg]);
         }
 
         // PlanProduction テーブルから基準データ取得 (パイコー、チャーシュー、生の鶏肉)
@@ -537,10 +541,11 @@ class TestDevController extends Controller
         /**
          * 鶏肉購入枚数
          */
-        // paiko
+        // paiko        
         $paiko_base = $paiko_plan_production->$daysoftheweek;
         $inox_requis = (int)$paiko_base - $bilel_paiko;
         $result_paiko = $inox_requis * 4;  // inoxボックス1個は鶏肉4枚相当
+        // dd($bilel_paiko, $paiko_plan_production, $daysoftheweek);
         // chashu
         $chashu_base = $chashu_plan_production->$daysoftheweek;
         $result_chashu = (int)$chashu_base - $bilel_chashu;
@@ -553,6 +558,17 @@ class TestDevController extends Controller
         // [牛乳] 入力データが2以下の場合は4pac購入依頼
         // bladeテンプレートで巻き取る
 
+        // 表示ステータス 通常指示表示
+        return view('courses_matin',compact('stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
+    }
+
+    /**
+     * ディスプレイ用データ取得
+     * 
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function get_stock_display_flg2(){
         // 画面表示用にプルダウンのnameを格納した連想配列を作成 start
         // * [使用法] 
         // * 1.stock_ingredientsの表示対象のモデルデータを渡す
@@ -576,10 +592,9 @@ class TestDevController extends Controller
         $stock_ingredients_display = FumiTools::get_display_datas($stock_ingredients, $pulldowns, $columun_names);
         // 表示用にプルダウンのnameを格納した連想配列を作成 end
 
-
-        // 表示ステータス 通常指示表示
-        return view('courses_matin',compact('stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
+        return $stock_ingredients_display;
     }
+
     /**
      * 朝 こと付け登録
      * 
