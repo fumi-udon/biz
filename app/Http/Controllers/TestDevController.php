@@ -539,13 +539,16 @@ class TestDevController extends Controller
         $bilel_lait = (int)$stock_record->lait;
 
         /**
-         * 鶏肉購入枚数
-         */
+         * 鶏肉購入枚数 
+         */ 
         // paiko        
         $paiko_base = $paiko_plan_production->$daysoftheweek;
-        $inox_requis = (int)$paiko_base - $bilel_paiko;
+        // Bilelパイコーの数字を計算用に変換（プルダウンのIDを変えたので残量と一致しない）
+        $paikos_for_calc = $this->get_select_values('paikos_for_calc');
+        $rest_paiko = $paikos_for_calc->where('id', $bilel_paiko)->pluck('name')->first();
+        $inox_requis = (int)$paiko_base - $rest_paiko;
         $result_paiko = $inox_requis * 4;  // inoxボックス1個は鶏肉4枚相当
-        // dd($bilel_paiko, $paiko_plan_production, $daysoftheweek);
+
         // chashu
         $chashu_base = $chashu_plan_production->$daysoftheweek;
         $result_chashu = (int)$chashu_base - $bilel_chashu;
@@ -717,6 +720,28 @@ class TestDevController extends Controller
                 ['id' => '11', 'name' => '6 paquets'],
                 ['id' => '12', 'name' => '6 paquets et demi'],
                 ['id' => '13', 'name' => '7 paquets'],
+            ]);
+            return $paikos;
+        }
+
+        if($s_id == 'paikos_for_calc'){
+            // select ボックス要素作成
+            $paikos = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => '0'],
+                ['id' => '1', 'name' => '1'],
+                ['id' => '2', 'name' => '1.5'],
+                ['id' => '3', 'name' => '2'],
+                ['id' => '4', 'name' => '2.5'],
+                ['id' => '5', 'name' => '3'],
+                ['id' => '6', 'name' => '3.5'],
+                ['id' => '7', 'name' => '4'],
+                ['id' => '8', 'name' => '4.5'],
+                ['id' => '9', 'name' => '5'],
+                ['id' => '10', 'name' => '5.5'],
+                ['id' => '11', 'name' => '6'],
+                ['id' => '12', 'name' => '6.5'],
+                ['id' => '13', 'name' => '7'],
             ]);
             return $paikos;
         }
