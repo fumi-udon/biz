@@ -59,9 +59,12 @@ class TaskOrderDinerController extends TaskOrderController
          * 'flg1' => 5　ディナーオープン前のキッチンスタッフ入力データ18時
          */
         $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14');
+        // 画面表示用にプルダウンのnameを格納した連想配列を作成
+        $stock_ingredients_display = $this->get_stock_display_flg5();
+
         \Session::flash('stock_ingredients', $stock_ingredients);
         
-        return view('cuisine_diner_top', compact('stock_ingredients','today','oeufs','omlettes','fms','laitues','okonomiyakis','sato_instruction','yes_sato'));
+        return view('cuisine_diner_top', compact('stock_ingredients_display', 'stock_ingredients','today','oeufs','omlettes','fms','laitues','okonomiyakis','sato_instruction','yes_sato'));
     }
 
     /**
@@ -77,7 +80,10 @@ class TaskOrderDinerController extends TaskOrderController
         $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
 
         // きゅいじにえー入力データ取得 / flg= 5 / 2週間 14
-        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14'); 
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14');
+        // 画面表示用にプルダウンのnameを格納した連想配列を作成
+        $stock_ingredients_display = $this->get_stock_display_flg5();
+
         \Session::flash('stock_ingredients', $stock_ingredients);
 
         /**
@@ -107,7 +113,8 @@ class TaskOrderDinerController extends TaskOrderController
                 return view('cuisine_diner_task',compact('daysoftheweek',
                     'sato_text_flg', 
                     'sato_record',
-                    'sato_text_mode'
+                    'sato_text_mode',
+                    'stock_ingredients_display'
                 ));       
             }
         }
@@ -155,6 +162,7 @@ class TaskOrderDinerController extends TaskOrderController
         // View
         return view('cuisine_diner_task',compact('daysoftheweek',
             'stock_ingredients', 
+            'stock_ingredients_display',
             'sato_text_flg', 
             'sato_record',
             'sato_text_mode',
@@ -166,6 +174,39 @@ class TaskOrderDinerController extends TaskOrderController
             'req_okonomiyakis',
         ));
     } 
+
+    /**
+     * ディスプレイ用データ取得
+     * 
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function get_stock_display_flg5(){
+        // 画面表示用にプルダウンのnameを格納した連想配列を作成 start
+        // * [使用法] 
+        // * 1.stock_ingredientsの表示対象のモデルデータを渡す
+        // * 2.プルダウン集にプルダウンデータを追加 
+        // * 3.articles_by_tableの数をプルダウンの数と一致させる
+
+        // 表示対象モデルデータ
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14');
+
+        // プルダウン集 select ボックス要素作成
+        // select ボックス要素作成
+        $oeufs = $this->get_select_values('oeufs');
+        $omlettes = $this->get_select_values('omlettes');        
+        $fms = $this->get_select_values('fms');
+        $laitues = $this->get_select_values('laitues');
+        $okonomiyakis = $this->get_select_values('okonomiyakis');
+        $pulldowns = [$oeufs, $omlettes, $fms, $laitues, $okonomiyakis];
+
+        // stock_ingredientテーブルのカラム名 oeufs / omlettes / laitues / fms / okonomiyakis
+        $columun_names = ["article1_rest", "article2_rest", "article3_rest", "article4_rest", "article5_rest"];     
+        $stock_ingredients_display = FumiTools::get_display_datas($stock_ingredients, $pulldowns, $columun_names);
+        // 表示用にプルダウンのnameを格納した連想配列を作成 end
+
+        return $stock_ingredients_display;
+    }
 
     /**
      * select values

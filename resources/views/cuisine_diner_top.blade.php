@@ -123,14 +123,11 @@ $actionMessage = 'ディナー17h30 シャハルディンプレパレ用';
 						</tr>
 					</thead>
 					<tbody>
-					@foreach ($stock_ingredients as $stock_ingredient)
+					@foreach ($stock_ingredients_display as $record)
 						<tr>
-						<td>{{ $stock_ingredient->registre_datetime }}</td>
-						<td>{{ $stock_ingredient->article1_rest }}</td>
-						<td>{{ $stock_ingredient->article2_rest }}</td>
-						<td>{{ $stock_ingredient->article3_rest }}</td>
-						<td>{{ $stock_ingredient->article4_rest }}</td>
-						<td>{{ $stock_ingredient->article5_rest }}</td>					
+							@foreach ($record as $value)
+								<td>{{ $value }}</td>
+							@endforeach
 						</tr>
 					@endforeach
 					</tbody>
