@@ -13,8 +13,9 @@ use Illuminate\Support\Collection;
 // Mail 送信用
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendinBlueDemoEmail;
-//Fumi 独自クラス
+//Fumi 独自クラス 
 use App\FumiLib\FumiTools;
+use App\FumiLib\FumiValidation;
 use App\FumiLib\AdminConcumedTools;
 use \DateTime; // 追加: PHPのグローバルな名前空間にあるDateTimeクラスを使用することを明示
 use DateTimeZone;
@@ -537,6 +538,8 @@ class TestDevController extends Controller
         $bilel_poulet_cru = $stock_record->poulet_cru;
         $bilel_riz = $stock_record->riz;
         $bilel_lait = (int)$stock_record->lait;
+        // validation
+        FumiValidation::checkInteger($bilel_paiko, 'bilel_paiko'.': '.$bilel_paiko);
 
         /**
          * 鶏肉購入枚数 
@@ -547,15 +550,23 @@ class TestDevController extends Controller
         $paikos_for_calc = $this->get_select_values('paikos_for_calc');
         $rest_paiko = $paikos_for_calc->where('id', $bilel_paiko)->pluck('name')->first();
         $inox_requis = (int)$paiko_base - $rest_paiko;
+        // 負の場合は0に設定
+        $inox_requis = ($inox_requis < 0) ? 0 : $inox_requis;
         $result_paiko = $inox_requis * 4;  // inoxボックス1個は鶏肉4枚相当
 
         // chashu
         $chashu_base = $chashu_plan_production->$daysoftheweek;
         $result_chashu = (int)$chashu_base - $bilel_chashu;
+        // 負の場合は0に設定
+        $result_chashu = ($result_chashu < 0) ? 0 : $result_chashu;
+
         // poulet cru
         $poulet_cru_base = $poulet_cru_plan_production->$daysoftheweek;
         $result_poulet_cru = (int)$poulet_cru_base - $bilel_poulet_cru;
-        // 鶏の購入枚数を計算        
+        // 負の場合は0に設定
+        $result_poulet_cru = ($result_poulet_cru < 0) ? 0 : $result_poulet_cru;
+
+        // 鶏の購入枚数を計算
         $courses_poulet = $result_paiko + $result_chashu + $result_poulet_cru;
 
         // [牛乳] 入力データが2以下の場合は4pac購入依頼
@@ -720,30 +731,32 @@ class TestDevController extends Controller
                 ['id' => '11', 'name' => '6 paquets'],
                 ['id' => '12', 'name' => '6 paquets et demi'],
                 ['id' => '13', 'name' => '7 paquets'],
+                ['id' => '99', 'name' => 'plus que 7 paquets'],
             ]);
             return $paikos;
         }
 
         if($s_id == 'paikos_for_calc'){
             // select ボックス要素作成
-            $paikos = collect([
-                ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => '0'],
-                ['id' => '1', 'name' => '1'],
-                ['id' => '2', 'name' => '1.5'],
-                ['id' => '3', 'name' => '2'],
-                ['id' => '4', 'name' => '2.5'],
-                ['id' => '5', 'name' => '3'],
-                ['id' => '6', 'name' => '3.5'],
-                ['id' => '7', 'name' => '4'],
-                ['id' => '8', 'name' => '4.5'],
-                ['id' => '9', 'name' => '5'],
-                ['id' => '10', 'name' => '5.5'],
-                ['id' => '11', 'name' => '6'],
-                ['id' => '12', 'name' => '6.5'],
-                ['id' => '13', 'name' => '7'],
+            $paikos_for_calc = collect([
+                ['id' => 'No DATA', 'name' => 'No DATA'],
+                ['id' => 0, 'name' => 0],
+                ['id' => 1, 'name' => 1],
+                ['id' => 2, 'name' => 1.5],
+                ['id' => 3, 'name' => 2],
+                ['id' => 4, 'name' => 2.5],
+                ['id' => 5, 'name' => 3],
+                ['id' => 6, 'name' => 3.5],
+                ['id' => 7, 'name' => 4],
+                ['id' => 8, 'name' => 4.5],
+                ['id' => 9, 'name' => 5],
+                ['id' => 10, 'name' => 5.5],
+                ['id' => 11, 'name' => 6],
+                ['id' => 12, 'name' => 6.5],
+                ['id' => 13, 'name' => 7],
+                ['id' => 99, 'name' => 99],
             ]);
-            return $paikos;
+            return $paikos_for_calc;
         }
 
         if($s_id == 'poulet_crus'){
