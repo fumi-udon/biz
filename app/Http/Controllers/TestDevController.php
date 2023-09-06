@@ -549,7 +549,6 @@ class TestDevController extends Controller
         // Bilelパイコーの数字を計算用に変換（プルダウンのIDを変えたので残量と一致しない）        
         $paikos_for_calc = $this->get_select_values('paikos_for_calc');
         $rest_paiko = $paikos_for_calc->where('id', $bilel_paiko)->pluck('name')->first();
-        FumiValidation::checkInteger($rest_paiko, 'rest_paiko'.': '.$rest_paiko);
         $inox_requis = (int)$paiko_base - $rest_paiko;
         // 負の場合は0に設定
         $inox_requis = ($inox_requis < 0) ? 0 : $inox_requis;
