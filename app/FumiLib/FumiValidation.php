@@ -20,11 +20,6 @@ use Carbon\Carbon;
 
 class FumiValidation
 {
-    public function hello()
-    {
-        return 'Hello world';
-    }
-
     /**
      * Int チェッカー
      */ 
@@ -33,4 +28,18 @@ class FumiValidation
             die("エラー: $variableName は整数型 (INT) ではありません。");
         }
     }
+
+    /**
+     * 数字 チェッカー
+     */ 
+    public static function checkNumerique($variable, $variableName) {
+        if ($variable === null || $variable === '' ||  empty($variable) ) {
+            die("エラー: $variableName は値が指定されていません。");
+        }
+    
+        if (!is_numeric($variable)) {
+            die("エラー: $variableName は数字ではありません。");
+        }
+    }
+
 }
