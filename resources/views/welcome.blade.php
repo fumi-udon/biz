@@ -134,8 +134,12 @@
           </p>
         </div>
       </div> -->
-       
+
     </main>
+
+<div style="text-align: right;">
+			<p class="m-2 small"><a href="/dev_send_email" id="note_open" style="color: grey;">史 開発</a></p>
+</div>
     @endsection
 <!-- メインエリア表示　END-->
 

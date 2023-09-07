@@ -102,13 +102,16 @@ Route::post('/close_step2', [CheckListController::class, 'close_step2'])->name('
 Route::post('/close_step3', [CheckListController::class, 'close_step3'])->name('close.step3');
 Route::post('/close_garantie', [CheckListController::class, 'close_garantie'])->name('close.garantie');
 
-//開発遊び用d
-use App\Http\Controllers\DevController;
+//開発遊び用
+use App\Http\Controllers\DevController; 
 Route::get('/dev_home', [DevController::class, 'index'])->name('dev.index');
 Route::get('/importCSV', [DevController::class, 'importCSV'])->name('dev.import.csv');
 Route::post('/importCSV2', [DevController::class, 'importCSV2'])->name('dev.import.csv2');
 Route::get('/importCSV3', [DevController::class, 'importCSV3'])->name('dev.import.csv3');
 Route::get('/shift_google', [DevController::class, 'shift_google'])->name('shift.google');
+
+// [dev]メール
+Route::get('/dev_send_email', [TestDevController::class, 'dev_send_email']);
 
 // [共通] 上書き追加ページ
 Route::post('/common_addnote_complete', [DevController::class, 'common_addnote_complete'])->name('common.addnote.complete');

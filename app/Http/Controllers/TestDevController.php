@@ -792,4 +792,20 @@ class TestDevController extends Controller
         }
     }
 
+    /**
+     * [開発].
+     * send mail
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function dev_send_email(){
+            // Mail 送信 処理
+            $subject ='TEST FUMI : Mail';
+            $body = 'できんじゃーーん';
+            Mail::to('admin@bistronippon.tn')
+                ->cc(['fumi.0000000@gmail.com'])
+                ->send(new SendinBlueDemoEmail($subject, $body));
+                 logger()->info('[FUMI dev] メール送信しました。');
+
+                // Mail送信 済/未 判定レコードを作成
+    }
 }
