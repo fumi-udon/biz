@@ -117,8 +117,21 @@ Route::get('/dev_send_email', [TestDevController::class, 'dev_send_email']);
 Route::post('/common_addnote_complete', [DevController::class, 'common_addnote_complete'])->name('common.addnote.complete');
 Route::get('/common_addnote/{flg_oride}/{flg_add}/{actionMessage}', [DevController::class, 'common_addnote'])->name('common.addnote');
 
-
 // ディナープレパレ Cuisine  [子クラス]  
 use App\Http\Controllers\TaskOrderDinerController;
 Route::get('/cuisine_diner_top', [TaskOrderDinerController::class, 'cuisine_diner_top'])->name('cuisine.diner.top');
 Route::post('/cuisine_diner_task', [TaskOrderDinerController::class, 'cuisine_diner_task'])->name('cuisine.diner.task');
+
+// ジヘン管理
+use App\Http\Controllers\JihenController;
+Route::get('/jihen_top', [JihenController::class, 'jihen_top'])->name('jihen.top');
+Route::post('/jihen_store', [JihenController::class, 'jihen_store'])->name('jihen.store');
+
+// ジェイセル管理 
+use App\Http\Controllers\JesserController;
+Route::get('/jesser_top', [JesserController::class, 'jesser_top'])->name('jesser.top');
+Route::get('/jesser_close_recettes', [JesserController::class, 'jesser_close_recettes'])->name('jesser.close.recettes');
+Route::post('/jesser_close_recettes_store', [JesserController::class, 'jesser_close_recettes_store'])->name('jesser.close.recettes.store');
+Route::post('/jesser_close_updatemontan', [JesserController::class, 'jesser_close_updatemontan'])->name('jesser.close.updatemontan');
+Route::get('/jesser_gestion_stock', [JesserController::class, 'jesser_gestion_stock'])->name('jesser.gestion.stock');
+Route::post('/jesser_gestion_stock_store', [JesserController::class, 'jesser_gestion_stock_store'])->name('jesser.gestion.stock.store');

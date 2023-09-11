@@ -138,7 +138,10 @@
     </main>
 
 <div style="text-align: right;">
-			<p class="m-2 small"><a href="/dev_send_email" id="note_open" style="color: grey;">史 開発</a></p>
+			<p class="m-2 small"><a href="/dev_send_email" id="note_open" style="color: grey;">史 開発 mail</a></p>
+</div>
+<div style="text-align: right;">
+			<p class="m-2 small"><a href="/jesser_top" id="note_open" style="color: grey;">史 開発 jesser_top</a></p>
 </div>
     @endsection
 <!-- メインエリア表示　END-->

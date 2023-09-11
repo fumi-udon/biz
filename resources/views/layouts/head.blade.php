@@ -36,7 +36,7 @@
       </div>
     </nav>
 
-    <div class="nav-scroller bg-body shadow-sm">
+    <!-- <div class="nav-scroller bg-body shadow-sm">
       <nav class="nav nav-underline" aria-label="Secondary navigation">
         <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
         <a class="nav-link" href="#">
@@ -48,5 +48,5 @@
           <span class="badge bg-light text-dark rounded-pill align-text-bottom">00</span>
         </a>
       </nav>
-    </div>
+    </div> -->
 @endsection
