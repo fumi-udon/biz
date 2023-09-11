@@ -19,6 +19,7 @@ use DateTimeZone;
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
+use App\Models\Finance;
 use Carbon\Carbon;
 
 class JesserController extends Controller
@@ -127,6 +128,29 @@ class JesserController extends Controller
         // montant_initial
         \Session::flash('montant_initial', $montant_initial);        
         \Session::flash('resultat_message', $resultat_message);
+
+        // db登録
+        // $cash + $cheque + $carte  $recettes_soir + $montant_initial + $chips
+        $finance = Finance::create([
+            'shop' => 'bn',
+            'name' => 'jesser',
+            'zone' => 'pm',
+            'recettes_main' => $recettes_soir,
+            'recettes_sub' => $recettes_and_init, // 売上と初期金額とチップの合計
+            'montant_init' => $montant_initial,
+            'montant_1' => $resultat,
+            'chips' => $chips,
+            'caisse' => $compte_in_caisse,
+            'cash' => $cash,
+            'cheque' => $cheque,
+            'card' => $carte,
+            'flg' => 2, // soirレジ締め
+            'cat' => 1,
+            'bravo' => $bravo,
+            'registre_date' => date('Y-m-d'),
+            'registre_datetime' => now(),
+        ]);
+        
 
         // 画面表示
         return view('jesser_close_recettes', compact('montant_initial','bravo', 
