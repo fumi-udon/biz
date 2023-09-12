@@ -25,7 +25,10 @@
 				<p>
 				<b>caisse &#x1f39e; </b> cash:{!! $cash !!} + cheque:{!! $cheque !!} + carte:{!! $carte !!}  = {!! $compte_in_caisse !!}dt
 				</p>			
-				<p  class='p-2'><span style='color: red;'>RESULTAT :  {!! $resultat !!} dt</span></p>
+				<p  class=''>
+					<span style='color: blue;'>RESULTAT :  {!! $resultat_no_chips !!} dt</span>
+					<p>&#9559; Pourboires saisis: {{ Session::get('chips') }} dt</p>
+				</p>
 			@endif
 		</div>
 		<div class="alert my-element {{ $bravo ? 'alert-info' : 'alert-warning' }}" role="alert">

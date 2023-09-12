@@ -141,11 +141,11 @@ class JesserController extends Controller
         $compte_in_caisse = round(($cash + $cheque + $carte), 1);
         //$recettes_and_init = round(($recettes_soir + $montant_initial + $chips), 1);
         $recettes_and_init = round(($recettes_soir + $montant_initial), 1);
-        $resultat = round($compte_in_caisse - $recettes_and_init , 1);
+        $resultat_no_chips = round($compte_in_caisse - $recettes_and_init , 1);
         // $resultat が $chips 以上の場合
         $bravo = false;
         // 集計結果とチップを突き合わせ
-        $resultat = $resultat - $chips;
+        $resultat = $resultat_no_chips - $chips;
         if ($resultat >= 0) {
             // メッセージを変数に格納
             $resultat_message = "Fuseau horaires: ".$fuseau_horaires_display."<br><br>Bravo " .$close_name_now. "! <br> Vous avez fait un excellent travail";
@@ -174,6 +174,7 @@ class JesserController extends Controller
                 'cheque' => $cheque,
                 'compte_in_caisse' => $compte_in_caisse,
                 'resultat' => $resultat,
+                'resultat_no_chips' => $resultat_no_chips,                
                 'bravo' => $bravo,
                 'fuseau_horaires_display' => $fuseau_horaires_display
             ]);
@@ -189,6 +190,8 @@ class JesserController extends Controller
         \Session::flash('carte', $inputs['carte']);
         \Session::flash('chips', $inputs['chips']);
         \Session::flash('resultat', $resultat);
+        \Session::flash('resultat_no_chips', $resultat_no_chips);
+        
         \Session::flash('compte_in_caisse', $compte_in_caisse);
         \Session::flash('recettes_and_init', $recettes_and_init);
         \Session::flash('bravo', $bravo);
@@ -228,7 +231,7 @@ class JesserController extends Controller
             'recettes_and_init','compte_in_caisse',
             'resultat_message', 'resultat','recettes_soir',
             'cash','cheque','carte','chips', 'close_name_now', 'auth_flg', 
-            'close_names','fuseau_horaires', 'fuseau_horaires_display'
+            'close_names','fuseau_horaires', 'fuseau_horaires_display','resultat_no_chips'
          ));  
     }
 
