@@ -17,7 +17,10 @@
         <h2>Finance error</h2>
         <p>担当：{{ $body['close_name_now'] }}</p>
     </p>
-    <p>売上データ(init + chips)</p>
+    <hr>
+    <p style="padding: 5px">入力Chips: {{ $body['chips'] }}</p>
+    <hr>
+    <p>売上データ( +init)</p>
     <table style="border: 1px solid #000;">
         <tbody>
             <tr>
@@ -27,10 +30,6 @@
             <tr>
                 <td>initial</td>
                 <td>{{ $body['montant_initial'] }}</td>
-            </tr>
-            <tr>
-                <td>chips</td>
-                <td>{{ $body['chips'] }}</td>
             </tr>
             <tr>
                 <td><b>合計</b></td>
