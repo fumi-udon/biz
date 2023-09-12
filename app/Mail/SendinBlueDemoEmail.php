@@ -24,7 +24,7 @@ class SendinBlueDemoEmail extends Mailable
     {
 
         
-    return $this->view('emails.example')
+    return $this->view('emails.finance')
                 ->with([
                     'subject' => $this->subject,
                     'body' => $this->body,

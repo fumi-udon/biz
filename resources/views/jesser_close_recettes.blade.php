@@ -11,20 +11,28 @@
 		<small>finance</small>
 	</div>
 	</div>
-
-	@if(Request::is('jesser_close_recettes_store'))
+	@if (Session::has('action_message') && !$auth_flg)
+	<div class="my-3 p-3 bg-body rounded shadow-sm">
+		<div class="alert alert-danger" role="alert">
+			<p>{!! session('action_message') !!}</p>	
+		</div>
+	</div>	
+	@elseif(Request::is('jesser_close_recettes_store'))
 	 <div class="my-1 p-1">
 		<div>
-			<p><b>recettes &#x1f30a; </b> {!! $recettes_soir !!}dt ( initial+50dt  / chips+{!! $chips !!}dt) =  {!! $recettes_and_init !!}dt </b></p>
-			<p>
-			<b>caisse &#x1f39e; </b> cash:{!! $cash !!} + cheque:{!! $cheque !!} + carte:{!! $carte !!}  = {!! $compte_in_caisse !!}dt
-			</p>
 			@if ( ! $bravo )
+				<p><b>recettes &#x1f30a; </b> {!! $recettes_soir !!}dt ( initial+50dt  / chips+{!! $chips !!}dt) =  {!! $recettes_and_init !!}dt </b></p>
+				<p>
+				<b>caisse &#x1f39e; </b> cash:{!! $cash !!} + cheque:{!! $cheque !!} + carte:{!! $carte !!}  = {!! $compte_in_caisse !!}dt
+				</p>			
 				<p  class='p-2'><span style='color: red;'>RESULTAT :  {!! $resultat !!} dt</span></p>
 			@endif
 		</div>
 		<div class="alert my-element {{ $bravo ? 'alert-info' : 'alert-warning' }}" role="alert">
 			<p>{!! session('resultat_message') !!}</p>
+			@if ( $bravo )
+				<b>Pourboire: {!! $chips !!}dt &#x1f388;</b>
+			@endif
 		</div>
 	</div>
 	@endif
@@ -34,17 +42,28 @@
 	  <form method='POST' action="{{ route('jesser.close.recettes.store',['id' => 'jesser_fin','params' => 'bistronippon']) }}">
 		@csrf
 		<div class="row gx-1">
-			<div class="col-md-4">
-			<div class="p-3 border bg-light">
-				<div class="p-1">
-					<h5><u>Le montant initial :  {!! $montant_initial !!}dt</u></h5>
-				</div>				
+			<div class="col-md-8">
+			<div class="p-3 border bg-light">			
+				<div class="p-1">					
+					<label for="fuseau_horaires_list"><b>&#9551;fuseaux horaires </b>
+					<select class="form-select" id="fuseau_horaires_list" name="fuseau_horaires_list" required>
+						@foreach ($fuseau_horaires as $fuseau_horaire)
+							<option value="{{ $fuseau_horaire['id'] }}" @if( Session::get('fuseau_horaires_now')  == $fuseau_horaire['id'] ) selected @endif> {{ $fuseau_horaire['name'] }} </option>
+						@endforeach
+					</select>				
+					</label>
+				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label><b>&#9559; chips</b></label>
 						<input type="number" id="chips" name="chips" value="{{ Session::get('chips') }}" class="form-control" step="0.1" required>
 					</div>
 				</div>
+				<hr>
+				<div class="p-1">
+					<h5><u>Le montant initial :  {!! $montant_initial !!}dt</u></h5>
+				</div>
+
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="udon_rest_8h"><b>&#9849; Les recettes pour le soir</b></label>
@@ -59,9 +78,24 @@
 					chèque<input type="number" id="cheque" name="cheque" value="{{ Session::get('cheque') }}" class="form-control" step="0.1" required>
 					carte (tickets)<input type="number" id="carte" name="carte" value="{{ Session::get('carte') }}" class="form-control" step="0.1" required>
 				</div>
+
+				<!-- 認証エリア -->
+				<div class="form-group p-3">
+				<label for="close_names_list"><b>&#9851;Responsable </b>
+				<select class="form-select" id="close_names_list" name="close_names_list" required>
+					@foreach ($close_names as $close_name)
+						<option value="{{ $close_name['id'] }}" @if( Session::get('close_name_now')  == $close_name['id'] ) selected @endif> {{ $close_name['name'] }} </option>
+					@endforeach
+				</select>				
+				</label>
+				<label for="input_pass">password
+					<input type="password" value="" name="input_pass" id="input_pass" required>
+				</label>
+			</div>
 			</div>
 			</div>
 		</div><!--row end-->
+
 		<div class="row p-2">
 				<div class="col-md-12">
 					<input type="submit" value="envoyer" name="btn_jsser_env" id='btn_jsser_env' class="btn btn-primary btn-round">

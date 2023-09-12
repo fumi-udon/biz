@@ -3,6 +3,13 @@
 namespace App\FumiLib;
 
 use Illuminate\Http\Request;
+// Mail 送信用
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendinBlueDemoEmail;
+use \DateTime; // 追加: PHPのグローバルな名前空間にあるDateTimeクラスを使用することを明示
+use DateTimeZone;
+use App\Models\ConditionType;
+
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
@@ -206,4 +213,34 @@ class FumiTools
         return $display_datas;
     }
 
+    /**
+     * メール送信とDB登録処理
+     * @pram subject,body,log,type,color
+     * 
+     */
+    public static function send_mail_db_reg($flg, $to, $cc, $subject, $body, $datas)
+    {
+        if($flg){
+            // Mail 送信 処理
+            $log = $datas['log'];
+            $type = (int)$datas['type']; // 10代: finance
+            $color = $datas['color']; // blue: finance
+
+            Mail::to($to)
+                ->cc($cc)
+                ->send(new SendinBlueDemoEmail($subject, $body));
+                 logger()->info($log);
+
+                // Mail送信 済/未 判定レコードを作成
+                $data = [
+                    'type' => $type, //
+                    'kubun' => $type,
+                    'numero' => $type,
+                    'color' => $color,
+                    'sub1' => $type,
+                    'sub2' => $type,
+                ]; 
+                ConditionType::create($data);
+        }
+    }
 }

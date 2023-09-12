@@ -20,6 +20,9 @@ use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
 use App\Models\Finance;
+use App\Models\AuthHanabishi;
+use App\Models\Responsable;
+
 use Carbon\Carbon;
 
 class JesserController extends Controller
@@ -50,11 +53,15 @@ class JesserController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function jesser_close_recettes(){
+        // プルダウン 
+        $close_names = $this->get_select_values('close_names');
+        $fuseau_horaires = $this->get_select_values('fuseau_horaires');
+
         // 初期金額 id=7 sunカラムを流用
         $montant_initial = PlanProduction::where('id', '=', '7')->value('sun');
         \Session::flash('montant_initial', $montant_initial);
         
-        return view('jesser_close_recettes', compact('montant_initial'));   
+        return view('jesser_close_recettes', compact('montant_initial', 'close_names', 'fuseau_horaires'));   
     }
 
 
@@ -65,6 +72,7 @@ class JesserController extends Controller
         // Post データ取得
         $inputs = $request->all();
         $update_montant_initial = $inputs['update_montant_initial'];
+
         // 初期金額 id=7 sunカラムを流用
         $plan_production = PlanProduction::updateOrCreate(
             [
@@ -88,9 +96,12 @@ class JesserController extends Controller
 
     /**
      * finace envoyer ボタンから 売上査証
-     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function jesser_close_recettes_store(Request $request, $id=null, $params=null){
+        // プルダウン 
+        $close_names = $this->get_select_values('close_names');
+        $fuseau_horaires = $this->get_select_values('fuseau_horaires');
+
         // Post データ取得
         $inputs = $request->all();
         $recettes_soir = $inputs['recettes_soir'];
@@ -98,22 +109,78 @@ class JesserController extends Controller
         $cheque = $inputs['cheque'];
         $carte = $inputs['carte'];
         $chips = $inputs['chips'];
-        // 計算を実行し、小数点第一位までの精度を保持する
+        $close_name_now = $inputs['close_names_list']; // 
+        $fuseau_horaires_now = (int)$inputs['fuseau_horaires_list'];
+        $fuseau_horaires_display = $fuseau_horaires->where('id', $fuseau_horaires_now)->pluck('name')->first();
+        $input_pass = $inputs['input_pass'];        
+
+        // [認証] 責任者
+        $res = $this->chk_responsable($input_pass, $close_name_now, 'pm');
+        $auth_flg = $res['auth_flg'];
+        // $action_message = $res['action_message'];
+
+        if($auth_flg){
+            // 成功
+            // データベースに挿入
+            $result_1 = Responsable::create(
+                [
+                    'name' => $close_name_now,
+                    'type' => 'finance',
+                    'charge' => 'recettes',
+                    'fuseau_horaire' => $fuseau_horaires_now, // 11 am or 12 pm
+                ]
+            );
+            
+        }else{
+            //認証失敗
+            //exit;
+        }
 
         // 初期金額 id=7 sunカラムを流用
         $montant_initial = PlanProduction::where('id', '=', '7')->value('sun');
         $compte_in_caisse = round(($cash + $cheque + $carte), 1);
-        $recettes_and_init = round(($recettes_soir + $montant_initial + $chips), 1);
+        //$recettes_and_init = round(($recettes_soir + $montant_initial + $chips), 1);
+        $recettes_and_init = round(($recettes_soir + $montant_initial), 1);
         $resultat = round($compte_in_caisse - $recettes_and_init , 1);
         // $resultat が $chips 以上の場合
         $bravo = false;
+        // 集計結果とチップを突き合わせ
+        $resultat = $resultat - $chips;
         if ($resultat >= 0) {
             // メッセージを変数に格納
-            $resultat_message = "Bravo ! Vous avez fait un excellent travail";
+            $resultat_message = "Fuseau horaires: ".$fuseau_horaires_display."<br><br>Bravo " .$close_name_now. "! <br> Vous avez fait un excellent travail";
             $bravo = true;
         } else {
-            $resultat_message = "<span style='color: red;'><b>Manque  : ".$resultat."dt </b></span><br>"
-                                ."<ul>Check:<li>&#9841; recompter le chips</li><li>&#9841; des reçus de la carte sont échappées </li><li>&#9841; chèque se cache en bas de la caisse </li></ul>";
+            // 金額エラー
+            $resultat_message = "<span style='color: red;'><b>Manque de pourboire  : ".$resultat."dt </b></span><br>"
+                        ."<ul>Check:<li>&#9841; recompter le chips</li><li>&#9841; des reçus de la carte sont échappées </li>
+                        <li>&#9841; chèque se cache en bas de la caisse </li></ul>";
+            // Mail 送信
+            $datas = [
+                'log' => '[BN: finance panic]'.'Name:'.$close_name_now.'_'.$fuseau_horaires_display.' [resultat] '.$resultat,
+                'type' => 10, // 10代: finance
+                'color' => 'blue', // blue: finance
+            ];
+            $subject = 'BN: finance panic '.$fuseau_horaires_display;
+            // コレクションを作成し、変数を設定します
+            $body = new Collection([
+                'close_name_now' => $close_name_now,
+                'recettes_soir' => $recettes_soir,
+                'montant_initial' => $montant_initial,
+                'chips' => $chips,
+                'recettes_and_init' => $recettes_and_init,
+                'cash' => $cash,
+                'carte' => $carte,
+                'cheque' => $cheque,
+                'compte_in_caisse' => $compte_in_caisse,
+                'resultat' => $resultat,
+                'bravo' => $bravo,
+                'fuseau_horaires_display' => $fuseau_horaires_display
+            ]);
+            //$bodys = 'BN: finance panic '.$fuseau_horaires_display;xxxxxxxxxx TODO :コレクションクラス使おう viewで取得できるようにする　finance.mail.blade
+            $to = ['fumi.0000000@gmail.com', 'admin@bistronippon.tn'];
+            $cc = ['fumi.0000000@gmail.com']; // カーボンコピーの場合
+            FumiTools::send_mail_db_reg(true, $to, $cc, $subject, $body, $datas);
         }
         // Sessionにデータ保持
         \Session::flash('recettes_soir', $inputs['recettes_soir']);
@@ -129,12 +196,17 @@ class JesserController extends Controller
         \Session::flash('montant_initial', $montant_initial);        
         \Session::flash('resultat_message', $resultat_message);
 
+        \Session::flash('close_name_now', $close_name_now);
+        \Session::flash('fuseau_horaires_now', $fuseau_horaires_now);
+        \Session::flash('fuseau_horaires_display', $fuseau_horaires_display);
+        \Session::flash('auth_flg', $auth_flg);
+
         // db登録
         // $cash + $cheque + $carte  $recettes_soir + $montant_initial + $chips
         $finance = Finance::create([
             'shop' => 'bn',
-            'name' => 'jesser',
-            'zone' => 'pm',
+            'name' => $close_name_now,
+            'zone' => $fuseau_horaires_display,
             'recettes_main' => $recettes_soir,
             'recettes_sub' => $recettes_and_init, // 売上と初期金額とチップの合計
             'montant_init' => $montant_initial,
@@ -144,22 +216,50 @@ class JesserController extends Controller
             'cash' => $cash,
             'cheque' => $cheque,
             'card' => $carte,
-            'flg' => 2, // soirレジ締め
+            'flg' => $fuseau_horaires_now, // AM:11 _ PM:12 _ Journal:13
             'cat' => 1,
             'bravo' => $bravo,
             'registre_date' => date('Y-m-d'),
             'registre_datetime' => now(),
-        ]);
-        
+        ]);        
 
         // 画面表示
         return view('jesser_close_recettes', compact('montant_initial','bravo', 
             'recettes_and_init','compte_in_caisse',
             'resultat_message', 'resultat','recettes_soir',
-            'cash','cheque','carte','chips'
+            'cash','cheque','carte','chips', 'close_name_now', 'auth_flg', 
+            'close_names','fuseau_horaires', 'fuseau_horaires_display'
          ));  
     }
-    
+
+    /**
+     * 責任者 認証チェック
+     */
+    public function chk_responsable($input_pass, $close_name, $zone){
+        // パスワード認証 
+        $adminpass = AuthHanabishi::where('user_name', '=', $close_name)->value('password');
+        // 認証チェック
+        $auth_flg = false;
+        if($adminpass === $input_pass){
+            //パスワード認証OK
+            $auth_flg = true;
+        }else {
+            //管理者認証エラー
+            $action_message = "[ERROR] Password is not correct ";
+            \Session::flash('action_message', $action_message);
+        }
+
+        //セッションに認証OKフラグ立てる
+        \Session::flash('auth_flg', $auth_flg);
+        \Session::flash('close_name_now', $close_name);        
+        
+        $data = [
+            'auth_flg' => $auth_flg,
+            'close_name' => $close_name
+        ];
+        return $data;
+    }
+
     /**
      * 
      * Gestion de stock リンクから 在庫入力
@@ -279,15 +379,29 @@ class JesserController extends Controller
             return $laits;
         }
 
-        if($s_id == 'mode_inserts'){
+        //時間帯
+        if($s_id == 'fuseau_horaires'){
             // select ボックス要素作成
-            $mode_inserts = collect([
+            $fuseau_horaires = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '6', 'name' => '上書き更新'],
-                ['id' => '7', 'name' => '追加_TO_Aicha'],
-                ['id' => '8', 'name' => '追加_TO_アンドレア'],
+                ['id' => '11', 'name' => 'am'],
+                ['id' => '12', 'name' => 'pm'],
+                ['id' => '13', 'name' => 'journal'],
             ]);
-            return $mode_inserts;
+            return $fuseau_horaires;
+        }
+        // close_names
+        if($s_id == 'close_names'){
+            // select ボックス要素作成
+            $datas = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => 'jesser', 'name' => 'jesser'],
+                ['id' => 'jihen', 'name' => 'jihen'],
+                ['id' => 'fumi', 'name' => 'fumi'],
+                ['id' => 'sato', 'name' => 'sato'],
+                ['id' => 'guest', 'name' => 'guest'],
+            ]);
+            return $datas;
         }
     }
 }
