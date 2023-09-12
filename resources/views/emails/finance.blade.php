@@ -14,7 +14,7 @@
 
 <body>
     <p>
-        <h2>Finance error</h2>
+        <h4>Finance error - {{ $body['fuseau_horaires_display'] }}</h4>
         <p>担当：{{ $body['close_name_now'] }}</p>
     </p>
     <hr>
