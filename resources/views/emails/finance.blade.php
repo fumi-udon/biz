@@ -14,11 +14,11 @@
 
 <body>
     <p>
-        <h4>Finance error - {{ $body['fuseau_horaires_display'] }}</h4>
+        <h4>Finance error  {{ $body['fuseau_horaires_display'] }}</h4>
         <p>担当：{{ $body['close_name_now'] }}</p>
     </p>
     <hr>
-    <p style="padding: 5px">入力Chips: {{ $body['chips'] }}</p>
+    <p style="padding: 5px">入力 chips: {{ $body['chips'] }}</p>
     <hr>
     <p>売上データ( +init)</p>
     <table style="border: 1px solid #000;">
