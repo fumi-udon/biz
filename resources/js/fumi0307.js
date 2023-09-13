@@ -14,4 +14,13 @@ $(function(){
     $("#elem_update_montant").css('display', 'inline-block');
   });
 
+  // 登録データ表示非表示
+  $("#note_open").on("click", function() {
+    $("#note_record").css('display', 'inline-block');
+  });
+  $("#note_close").on("click", function() {
+    $("#note_record").css('display', 'none');
+  }); 
+
+
 });

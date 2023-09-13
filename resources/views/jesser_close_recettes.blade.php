@@ -112,14 +112,33 @@
 		<a href="/jesser_top" class="text-primary">Retour</a>
 	</div>
 
+	<!--初期金額変更-->
+	<form method='POST' action="{{ route('jesser.close.updatemontan',['id' => 'jesser_up_montan','params' => 'bistronippon']) }}">
+	@csrf
+	<div style="text-align: right;padding:30px;">
+			<p class="m-2 small"><a href="javascript:void(0)" id="up_montan_open" style="color: grey;">changer le montant initial</a></p>
+			<div id='elem_update_montant' style='display:none;'>
+				<p class="m-2 small"><input type="number" id="update_montant_initial" name="update_montant_initial" value="{{ Session::get('update_montant_initial') }}" step="0.1" required></p>
+				<input type="submit" value="update" name="btn_update_mi" id='btn_update_mi' class="btn btn-primary btn-round">
+			</div>									
+	</div>
+	</form>
+
+<!-- このエリア ◆通常は非表示 start-->
+<div class="col-md-12">
+	<div style="text-align: right;">
+		<p class="m-2 small"><a href="javascript:void(0)" id="note_open" style="color: grey;">詳細</a></p>
+		<p class="m-2 small"><a href="javascript:void(0)" id="note_close" style="color: grey;">close</a></p>
+	</div>
+
 	@if(!empty($finance_records))
-	<div class="table-responsive">
+	<div class="table-responsive" id="note_record" style="display:none; width: 100%;">
 	&#11093; finance
 	<table class="table table-striped" sytle ="min-width: 800px;">
 		<thead>
 			<tr>
 				<th>Name</th>
-				<th>AM / PM</th>
+				<th>AM/PM</th>
 				<th>[Resultat]</th>
 				<th>Recettes data</th>
 				<th>Recettes(+init)</th>
@@ -154,17 +173,9 @@
 	</div>
 	@endif
 
-	<!--初期金額変更-->
-	<form method='POST' action="{{ route('jesser.close.updatemontan',['id' => 'jesser_up_montan','params' => 'bistronippon']) }}">
-	@csrf
-	<div style="text-align: right;padding:30px;">
-			<p class="m-2 small"><a href="javascript:void(0)" id="up_montan_open" style="color: grey;">changer le montant initial</a></p>
-			<div id='elem_update_montant' style='display:none;'>
-				<p class="m-2 small"><input type="number" id="update_montant_initial" name="update_montant_initial" value="{{ Session::get('update_montant_initial') }}" step="0.1" required></p>
-				<input type="submit" value="update" name="btn_update_mi" id='btn_update_mi' class="btn btn-primary btn-round">
-			</div>									
-	</div>
-	</form>
+</div>
+<!-- Note 入力エリア end-->
+
 <!-- [ADD]FUMI Javascripts  -->
 <script src="{{ asset('js/fumi0307.js') }}"></script>
 
