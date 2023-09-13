@@ -127,8 +127,10 @@
 <!-- このエリア ◆通常は非表示 start-->
 <div class="col-md-12">
 	<div style="text-align: right;">
-		<p class="m-2 small"><a href="javascript:void(0)" id="note_open" style="color: grey;">詳細</a></p>
-		<p class="m-2 small"><a href="javascript:void(0)" id="note_close" style="color: grey;">close</a></p>
+		<p class="m-2 small">
+			<input type="text" id="password_record" name="password_record" value="" required></p>
+			<input type="submit" value="send" name="btn_password_record" id='btn_password_record' class="btn btn-primary btn-round">
+		</p>
 	</div>
 
 	@if(!empty($finance_records))
@@ -148,7 +150,7 @@
 				<th> _ cash</th>
 				<th> _ cheque</th>
 				<th> _ card</th>
-				<th>Registre Datetime</th>
+				<th>Date time</th>
 			</tr>
 		</thead>
 		<tbody>
