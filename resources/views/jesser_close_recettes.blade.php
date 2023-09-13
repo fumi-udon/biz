@@ -25,9 +25,9 @@
 				<p>
 				<b>caisse &#x1f39e; </b> cash:{!! $cash !!} + cheque:{!! $cheque !!} + carte:{!! $carte !!}  = {!! $compte_in_caisse !!}dt
 				</p>			
-				<p  class=''>
+				<p>
 					<span style='color: blue;'>RESULTAT :  {!! $resultat_no_chips !!} dt</span>
-					<p>&#9559; Pourboires saisis: {{ Session::get('chips') }} dt</p>
+					<p>&#9559; Pourboires reçus: {{ Session::get('chips') }} dt</p>
 				</p>
 			@endif
 		</div>
@@ -69,7 +69,7 @@
 
 				<div class="col-md-6">
 					<div class="form-group">
-						<label for="udon_rest_8h"><b>&#9849; Les recettes pour le soir</b></label>
+						<label for="recettes_soir"><b>&#9849; Les recettes pour le soir</b></label>
 						<input type="number" id="recettes_soir" name="recettes_soir" value="{{ Session::get('recettes_soir') }}" class="form-control" step="0.1" required>
 					</div>
 				</div>
@@ -111,6 +111,48 @@
 	<div class="container mt-5 p-3">
 		<a href="/jesser_top" class="text-primary">Retour</a>
 	</div>
+
+	@if(!empty($finance_records))
+	<div class="table-responsive">
+	&#11093; finance
+	<table class="table table-striped" sytle ="min-width: 800px;">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>AM / PM</th>
+				<th>[Resultat]</th>
+				<th>Recettes data</th>
+				<th>Recettes(+init)</th>
+				<th> _ init</th>
+				<th>Chips</th>
+				<th>Caisse Total</th>
+				<th> _ cash</th>
+				<th> _ cheque</th>
+				<th> _ card</th>
+				<th>Registre Datetime</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach($finance_records as $record)
+				<tr>
+					<td>{{ $record->name }}</td>
+					<td>{{ $record->zone }}</td>
+					<td>{{ $record->montant_1 }}</td>
+					<td>{{ $record->recettes_main }}</td>
+					<td>{{ $record->recettes_sub }}</td>
+					<td>{{ $record->montant_init }}</td>
+					<td>{{ $record->chips }}</td>
+					<td>{{ $record->caisse }}</td>
+					<td>{{ $record->cash }}</td>
+					<td>{{ $record->cheque }}</td>
+					<td>{{ $record->card }}</td>
+					<td>{{ $record->registre_datetime }}</td>
+				</tr>
+			@endforeach
+		</tbody>
+	</table>
+	</div>
+	@endif
 
 	<!--初期金額変更-->
 	<form method='POST' action="{{ route('jesser.close.updatemontan',['id' => 'jesser_up_montan','params' => 'bistronippon']) }}">

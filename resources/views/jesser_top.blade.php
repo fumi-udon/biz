@@ -18,11 +18,11 @@
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Finance 
-                <a href="jesser_close_recettes" class="btn btn-primary">link</a>
+                <a href="jesser_close_recettes" class="btn btn-primary">click</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Gestion de stock
-                <a href="jesser_gestion_stock" class="btn btn-primary">link</a>
+                <a href="jesser_gestion_stock" class="btn btn-primary">click</a>
             </li>
         </ul>
     </div>

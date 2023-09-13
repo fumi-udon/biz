@@ -22,6 +22,7 @@ use App\Models\StockIngredient;
 use App\Models\Finance;
 use App\Models\AuthHanabishi;
 use App\Models\Responsable;
+use App\Models\StockAccessoire;
 
 use Carbon\Carbon;
 
@@ -59,9 +60,15 @@ class JesserController extends Controller
 
         // 初期金額 id=7 sunカラムを流用
         $montant_initial = PlanProduction::where('id', '=', '7')->value('sun');
+        
+        // 登録データ取得 最新の20行のみ取得
+        $finance_records = Finance::whereIn('flg', [11, 12, 13])
+            ->orderBy('registre_datetime', 'desc')
+            ->take(20)->get();
+
         \Session::flash('montant_initial', $montant_initial);
         
-        return view('jesser_close_recettes', compact('montant_initial', 'close_names', 'fuseau_horaires'));   
+        return view('jesser_close_recettes', compact('montant_initial', 'close_names', 'fuseau_horaires', 'finance_records'));   
     }
 
 
@@ -155,34 +162,50 @@ class JesserController extends Controller
             $resultat_message = "<span style='color: red;'><b>Manque de pourboire  : ".$resultat."dt </b></span><br>"
                         ."<ul>Check:<li>&#9841; recompter le chips</li><li>&#9841; des reçus de la carte sont échappées </li>
                         <li>&#9841; chèque se cache en bas de la caisse </li></ul>";
-            // Mail 送信
-            $datas = [
-                'log' => '[BN: finance panic]'.'Name:'.$close_name_now.'_'.$fuseau_horaires_display.' [resultat] '.$resultat,
-                'type' => 10, // 10代: finance
-                'color' => 'blue', // blue: finance
-            ];
-            $subject = 'BN: finance panic '.$fuseau_horaires_display;
-            // コレクションを作成し、変数を設定します
-            $body = new Collection([
-                'close_name_now' => $close_name_now,
-                'recettes_soir' => $recettes_soir,
-                'montant_initial' => $montant_initial,
-                'chips' => $chips,
-                'recettes_and_init' => $recettes_and_init,
-                'cash' => $cash,
-                'carte' => $carte,
-                'cheque' => $cheque,
-                'compte_in_caisse' => $compte_in_caisse,
-                'resultat' => $resultat,
-                'resultat_no_chips' => $resultat_no_chips,                
-                'bravo' => $bravo,
-                'fuseau_horaires_display' => $fuseau_horaires_display
-            ]);
-            //$bodys = 'BN: finance panic '.$fuseau_horaires_display;xxxxxxxxxx TODO :コレクションクラス使おう viewで取得できるようにする　finance.mail.blade
-            $to = ['fumi.0000000@gmail.com', 'admin@bistronippon.tn'];
-            $cc = ['fumi.0000000@gmail.com']; // カーボンコピーの場合
-            FumiTools::send_mail_db_reg(true, $to, $cc, $subject, $body, $datas);
         }
+
+        // Mail 送信
+        if($bravo){
+            $to = ['fumi.0000000@gmail.com'];
+            $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
+            $log_text = "[BN: finance success★] ";
+        }else{
+            // error
+            $to = ['fumi.0000000@gmail.com','admin@bistronippon.tn'];
+            $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
+            $log_text = "[BN: finance panic] ";
+        }
+
+        $datas = [
+            'log' => $log_text.'Name:'.$close_name_now.'_'.$fuseau_horaires_display.' [resultat] '.$resultat,
+            'type' => 10, // 10代: finance
+            'color' => 'blue', // blue: finance
+        ];
+        $subject = $log_text.$fuseau_horaires_display;
+        // コレクションを作成し、変数を設定します
+        $body = new Collection([
+            'close_name_now' => $close_name_now,
+            'recettes_soir' => $recettes_soir,
+            'montant_initial' => $montant_initial,
+            'chips' => $chips,
+            'recettes_and_init' => $recettes_and_init,
+            'cash' => $cash,
+            'carte' => $carte,
+            'cheque' => $cheque,
+            'compte_in_caisse' => $compte_in_caisse,
+            'resultat' => $resultat,
+            'resultat_no_chips' => $resultat_no_chips,                
+            'bravo' => $bravo,
+            'fuseau_horaires_display' => $fuseau_horaires_display
+        ]);
+
+        if (env('APP_ENV') == 'production') {
+            // 本番環境の場合のみメール送信
+            FumiTools::send_mail_db_reg(true, $to, $cc, $subject, $body, $datas);
+        }else{
+            Log::debug("[メール送信_send_mail_db_reg] 本番環境のみ");
+        }
+
         // Sessionにデータ保持
         \Session::flash('recettes_soir', $inputs['recettes_soir']);
         \Session::flash('cash', $inputs['cash']);
@@ -226,12 +249,18 @@ class JesserController extends Controller
             'registre_datetime' => now(),
         ]);        
 
+        // 登録データ取得 最新の20行のみ取得
+        $finance_records = Finance::whereIn('flg', [11, 12, 13])
+            ->orderBy('registre_datetime', 'desc')
+            ->take(20)->get();
+
         // 画面表示
         return view('jesser_close_recettes', compact('montant_initial','bravo', 
             'recettes_and_init','compte_in_caisse',
             'resultat_message', 'resultat','recettes_soir',
             'cash','cheque','carte','chips', 'close_name_now', 'auth_flg', 
-            'close_names','fuseau_horaires', 'fuseau_horaires_display','resultat_no_chips'
+            'close_names','fuseau_horaires', 'fuseau_horaires_display','resultat_no_chips',
+            'finance_records'
          ));  
     }
 
@@ -270,11 +299,50 @@ class JesserController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function jesser_gestion_stock(){
-        $val = '';
-        // \Session::flash('stock_ingredients', $stock_ingredients);
         
-        return view('jesser_gestion_stock', compact('val'));   
+        return view('jesser_gestion_stock');   
     }
+
+    /**
+     * stock データをdb登録
+     */
+    public function jesser_gestion_stock_store(Request $request, $id=null, $params=null){
+        // フォームからのデータを取得
+        $data = $request->only([
+            'essuie_jmb',
+            'papier_toilettes',
+            'plastique_chaud_750ml',
+            'plastique_froide_500ml',
+            'plastique_froide_1000ml',
+            'papier_serviette',
+            'aluminium_901',
+            'aluminium_701',
+            'aluminium_401',
+            'pot_de_sauce_30cc',
+            'bol_carton_rond',
+            'sac_transparant',
+            'sac_petit',
+            'sac_grand',
+            'sac_poubelle',
+            'bicarbonate',
+            'tahina_pate_du_sesame',
+            'viande_hachee_poulet_congele',
+            'viande_hachee_boeuf_congele',
+            'tantan_boeuf',
+        ]);
+
+        // 他のカラムのデータを設定
+        // $data['column1'] = '値を設定する'; // 例: '値を設定する'
+        // $data['column2'] = '値を設定する'; // 例: '値を設定する'
+
+        // フォームデータをStockモデルを使用してインサート
+        StockAccessoire::create($data);
+
+        // インサート後の処理を追加することもできます
+            
+        return view('jesser_gestion_stock');   
+    }    
+
     /**
      * select values
      * 
