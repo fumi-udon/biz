@@ -33,103 +33,139 @@
             <tbody>
 			<tr>
 				<td>essuie jumbo</td>
-				<td><input type="number" id="essuie_jmb" name="essuie_jmb" class="form-control"></td>
+				<td><input type="number" id="essuie_jmb" name="essuie_jmb" class="form-control" value="{{ Session::get('essuie_jmb') }}" required></td>
 				<td>pieces</td>
 			</tr>
 			<tr>
 				<td>papier toilettes</td>
-				<td><input type="number" id="papier_toilettes" name="papier_toilettes" class="form-control"></td>
+				<td>
+					<select class="form-select" id="papier_toilettes" name="papier_toilettes" required>
+						@foreach ($papier_toilettes as $papier_toilette)
+							<option value="{{ $papier_toilette['id'] }}" @if( Session::get('papier_toilettes_now')  == $papier_toilette['id'] ) selected @endif> {{ $papier_toilette['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>plastique chaud 750ml</td>
-				<td><input type="number" id="plastique_chaud_750ml" name="plastique_chaud_750ml" class="form-control"></td>
+				<td><input type="number" id="plastique_chaud_750ml" name="plastique_chaud_750ml" class="form-control" value="{{ Session::get('plastique_chaud_750ml') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>plastique froide 500ml</td>
-				<td><input type="number" id="plastique_froide_500ml" name="plastique_froide_500ml" class="form-control"></td>
+				<td><input type="number" id="plastique_froide_500ml" name="plastique_froide_500ml" class="form-control" value="{{ Session::get('plastique_froide_500ml') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>plastique froide 1000ml</td>
-				<td><input type="number" id="plastique_froide_1000ml" name="plastique_froide_1000ml" class="form-control"></td>
+				<td><input type="number" id="plastique_froide_1000ml" name="plastique_froide_1000ml" class="form-control" value="{{ Session::get('plastique_froide_1000ml') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>Papier serviette pour les clients</td>
-				<td><input type="number" id="papier_serviette" name="papier_serviette" class="form-control"></td>
-				<td>paquet</td>
+				<td>
+					<select class="form-select" id="papier_serviette" name="papier_serviette" required>
+						@foreach ($papier_serviette as $papier_serv)
+							<option value="{{ $papier_serv['id'] }}" @if( Session::get('papier_serviette_now')  == $papier_serv['id'] ) selected @endif> {{ $papier_serv['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>Barquettes aluminium 901</td>
-				<td><input type="number" id="aluminium_901" name="aluminium_901" class="form-control"></td>
+				<td><input type="number" id="aluminium_901" name="aluminium_901" class="form-control" value="{{ Session::get('aluminium_901') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>Barquettes aluminium 701</td>
-				<td><input type="number" id="aluminium_701" name="aluminium_701" class="form-control"></td>
+				<td><input type="number" id="aluminium_701" name="aluminium_701" class="form-control" value="{{ Session::get('aluminium_701') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>Barquettes aluminium 401</td>
-				<td><input type="number" id="aluminium_401" name="aluminium_401" class="form-control"></td>
+				<td><input type="number" id="aluminium_401" name="aluminium_401" class="form-control" value="{{ Session::get('aluminium_401') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>Pot de sauce 30cc</td>
-				<td><input type="number" id="pot_de_sauce_30cc" name="pot_de_sauce_30cc" class="form-control"></td>
+				<td><input type="number" id="pot_de_sauce_30cc" name="pot_de_sauce_30cc" class="form-control" value="{{ Session::get('pot_de_sauce_30cc') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>bol carton rond</td>
-				<td><input type="number" id="bol_carton_rond" name="bol_carton_rond" class="form-control"></td>
+				<td><input type="number" id="bol_carton_rond" name="bol_carton_rond" class="form-control"  value="{{ Session::get('bol_carton_rond') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>sac transparant</td>
-				<td><input type="number" id="sac_transparant" name="sac_transparant" class="form-control"></td>
+				<td><input type="number" id="sac_transparant" name="sac_transparant" class="form-control" value="{{ Session::get('sac_transparant') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>sac petit</td>
-				<td><input type="number" id="sac_petit" name="sac_petit" class="form-control"></td>
-				<td>paquet</td>
+				<td>
+					<select class="form-select" id="sac_petit" name="sac_petit" required>
+						@foreach ($sac_petit as $item)
+							<option value="{{ $item['id'] }}" @if( Session::get('sac_petit_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>sac grand</td>
-				<td><input type="number" id="sac_grand" name="sac_grand" class="form-control"></td>
-				<td>paquet</td>
+				<td>
+				<select class="form-select" id="sac_grand" name="sac_grand" required>
+					@foreach ($sac_grand as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('sac_grand_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+					@endforeach
+				</select>
+				</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>sac poubelle</td>
-				<td><input type="number" id="sac_poubelle" name="sac_poubelle" class="form-control"></td>
-				<td>paquet</td>
+				<td>
+				<select class="form-select" id="sac_poubelle" name="sac_poubelle" required>
+					@foreach ($sac_poubelle as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('sac_poubelle_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+					@endforeach
+				</select>
+				</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>bicarbonate</td>
-				<td><input type="number" id="bicarbonate" name="bicarbonate" class="form-control"></td>
+				<td><input type="number" id="bicarbonate" name="bicarbonate" class="form-control" value="{{ Session::get('bicarbonate') }}" required></td>
 				<td>boite</td>
 			</tr>
 			<tr>
 				<td>tahina pâte du sésame</td>
-				<td><input type="number" id="tahina_pate_du_sesame" name="tahina_pate_du_sesame" class="form-control"></td>
+				<td><input type="number" id="tahina_pate_du_sesame" name="tahina_pate_du_sesame" class="form-control" value="{{ Session::get('tahina_pate_du_sesame') }}" required></td>
 				<td>pieces</td>
 			</tr>
 			<tr>
 				<td>viande hachée de poulet en congelé (bureau)</td>
-				<td><input type="number" id="viande_hachee_poulet_congele" name="viande_hachee_poulet_congele" class="form-control"></td>
+				<td><input type="number" id="viande_hachee_poulet_congele" name="viande_hachee_poulet_congele" class="form-control" value="{{ Session::get('viande_hachee_poulet_congele') }}" required></td>
 				<td>sachet</td>
 			</tr>
 			<tr>
 				<td>viande hachée de boeuf en congelé (bureau)</td>
-				<td><input type="number" id="viande_hachee_boeuf_congele" name="viande_hachee_boeuf_congele" class="form-control"></td>
+				<td><input type="number" id="viande_hachee_boeuf_congele" name="viande_hachee_boeuf_congele" class="form-control" value="{{ Session::get('viande_hachee_boeuf_congele') }}" required></td>
 				<td>sachet</td>
 			</tr>
 			<tr>
 				<td>tantan boeuf (bureau)</td>
-				<td><input type="number" id="tantan_boeuf" name="tantan_boeuf" class="form-control"></td>
-				<td>pieces</td>
+				<td>
+				<select class="form-select" id="tantan_boeuf" name="tantan_boeuf" required>
+					@foreach ($tantan as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('tantan_boeuf_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+					@endforeach
+				</select>
+				</td>
+				<td></td>
 			</tr>
             </tbody>
         </table>

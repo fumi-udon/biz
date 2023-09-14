@@ -299,8 +299,19 @@ class JesserController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function jesser_gestion_stock(){
+        // プルダウン 
+        $papier_toilettes = $this->get_select_values('papier_toilettes');
+        $papier_serviette = $this->get_select_values('papier_clients');
+        $sac_petit = $this->get_select_values('sac_petit');
+        $sac_grand = $this->get_select_values('sac_grand');
+        $sac_poubelle = $this->get_select_values('sac_poubelle');
+        $tantan = $this->get_select_values('tantan');
         
-        return view('jesser_gestion_stock');   
+        return view('jesser_gestion_stock', compact( 
+            'papier_toilettes','papier_serviette',
+            'sac_petit','sac_grand',
+            'sac_poubelle','tantan',
+         ));  
     }
 
     /**
@@ -308,7 +319,7 @@ class JesserController extends Controller
      */
     public function jesser_gestion_stock_store(Request $request, $id=null, $params=null){
         // フォームからのデータを取得
-        $data = $request->only([
+        $inputs = $request->only([
             'essuie_jmb',
             'papier_toilettes',
             'plastique_chaud_750ml',
@@ -330,125 +341,115 @@ class JesserController extends Controller
             'viande_hachee_boeuf_congele',
             'tantan_boeuf',
         ]);
-
         // 他のカラムのデータを設定
         // $data['column1'] = '値を設定する'; // 例: '値を設定する'
         // $data['column2'] = '値を設定する'; // 例: '値を設定する'
+       
+        // now データ設定
+        $this->set_session_datas(true ,$inputs);
 
         // フォームデータをStockモデルを使用してインサート
-        StockAccessoire::create($data);
+        StockAccessoire::create($inputs);
 
-        // インサート後の処理を追加することもできます
-            
-        return view('jesser_gestion_stock');   
+         return redirect()->route('jesser.gestion.stock')->with([
+            //画面引継ぎsession格納
+            'inputs' => $inputs,
+            ]);
     }    
 
     /**
+     * Now用セッションデータ設定
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function set_session_datas($flg ,$inputs){
+        // now データ設定
+        // select box
+        \Session::flash('papier_toilettes_now', $inputs['papier_toilettes']);
+        \Session::flash('papier_serviette_now', $inputs['papier_serviette']);
+        \Session::flash('sac_petit_now', $inputs['sac_petit']);
+        \Session::flash('sac_grand_now', $inputs['sac_grand']);
+        \Session::flash('sac_poubelle_now', $inputs['sac_poubelle']);
+        \Session::flash('tantan_boeuf_now', $inputs['tantan_boeuf']);
+        // input number
+        \Session::flash('essuie_jmb', $inputs['essuie_jmb']);
+        \Session::flash('plastique_chaud_750ml', $inputs['plastique_chaud_750ml']);
+        \Session::flash('plastique_froide_500ml', $inputs['plastique_froide_500ml']);
+        \Session::flash('plastique_froide_1000ml', $inputs['plastique_froide_1000ml']);
+        \Session::flash('aluminium_901', $inputs['aluminium_901']);
+        \Session::flash('aluminium_701', $inputs['aluminium_701']);
+        \Session::flash('aluminium_401', $inputs['aluminium_401']);
+        \Session::flash('pot_de_sauce_30cc', $inputs['pot_de_sauce_30cc']);
+        \Session::flash('bol_carton_rond', $inputs['bol_carton_rond']);
+        \Session::flash('sac_transparant', $inputs['sac_transparant']);
+        \Session::flash('bicarbonate', $inputs['bicarbonate']);
+        \Session::flash('tahina_pate_du_sesame', $inputs['tahina_pate_du_sesame']);
+        \Session::flash('viande_hachee_poulet_congele', $inputs['viande_hachee_poulet_congele']);
+        \Session::flash('viande_hachee_boeuf_congele', $inputs['viande_hachee_boeuf_congele']);
+        
+    }
+
+    /**
      * select values
-     * 
-     *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function get_select_values($s_id){
 
-            if($s_id == 'rizs'){
-                // select ボックス要素作成
-                $rizs = collect([
-                    ['id' => '', 'name' => ''],
-                    ['id' => '0', 'name' => 'rien'],
-                    ['id' => '1', 'name' => 'moins que la moitié'],
-                    ['id' => '2', 'name' => 'la moitié'],
-                    ['id' => '3', 'name' => '1 casserole'],
-                    ['id' => '4', 'name' => '1 casserole et demi'],
-                    ['id' => '5', 'name' => '2 casserole'],
-                    ['id' => '6', 'name' => '2 casseroles et demi'],
-                    ['id' => '7', 'name' => 'plus de 3 casseroles'],
-                ]);
-                return $rizs;
-            }
-
-        if($s_id == 'chashus'){
+        if($s_id == 'papier_toilettes'){
             // select ボックス要素作成
-            $chashus = collect([
+            $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => '0'],
-                ['id' => '1', 'name' => '1'],
-                ['id' => '2', 'name' => '2'],
-                ['id' => '3', 'name' => '3'],
-                ['id' => '4', 'name' => '4'],
-                ['id' => '5', 'name' => '5'],
-                ['id' => '6', 'name' => '6'],
-                ['id' => '7', 'name' => '7'],
+                ['id' => '0', 'name' => 'moins que 10 pièces'],
+                ['id' => '1', 'name' => 'beaucoup'],
             ]);
-            return $chashus;
+            return $cols;
         }
-
-        if($s_id == 'paikos'){
+        if($s_id == 'papier_clients'){
             // select ボックス要素作成
-            $paikos = collect([
+            $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => '0'],
-                ['id' => '1', 'name' => '1 paquet'],
-                ['id' => '2', 'name' => '1 paquet et demi'],
-                ['id' => '3', 'name' => '2 paquets'],
-                ['id' => '4', 'name' => '2 paquets et demi'],
-                ['id' => '5', 'name' => '3 paquets'],
-                ['id' => '6', 'name' => '3 paquets et demi'],
-                ['id' => '7', 'name' => '4 paquets'],
-                ['id' => '8', 'name' => '4 paquets et demi'],
-                ['id' => '9', 'name' => '5 paquets'],
-                ['id' => '10', 'name' => '5 paquets et demi'],
-                ['id' => '11', 'name' => '6 paquets'],
-                ['id' => '12', 'name' => '6 paquets et demi'],
-                ['id' => '13', 'name' => '7 paquets'],
-                ['id' => '99', 'name' => 'plus que 7 paquets'],
+                ['id' => '0', 'name' => 'moins que 10 pièces'],
+                ['id' => '1', 'name' => 'beaucoup'],
             ]);
-            return $paikos;
+            return $cols;
         }
-
-        if($s_id == 'paikos_for_calc'){
+        if($s_id == 'sac_petit'){
             // select ボックス要素作成
-            $paikos_for_calc = collect([
-                ['id' => 0, 'name' => 0],
-                ['id' => 1, 'name' => 1],
-                ['id' => 2, 'name' => 1.5],
-                ['id' => 3, 'name' => 2],
-                ['id' => 4, 'name' => 2.5],
-                ['id' => 5, 'name' => 3],
-                ['id' => 6, 'name' => 3.5],
-                ['id' => 7, 'name' => 4],
-                ['id' => 8, 'name' => 4.5],
-                ['id' => 9, 'name' => 5],
-                ['id' => 10, 'name' => 5.5],
-                ['id' => 11, 'name' => 6],
-                ['id' => 12, 'name' => 6.5],
-                ['id' => 13, 'name' => 7],
-                ['id' => 99, 'name' => 99],
-            ]);
-            return $paikos_for_calc;
-        }
-
-        if($s_id == 'poulet_crus'){
-            // select ボックス要素作成
-            $poulet_crus = collect([
+            $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'rien'],
+                ['id' => '0', 'name' => 'moins que 10 pièces'],
+                ['id' => '1', 'name' => 'beaucoup'],
+            ]);
+            return $cols;
+        }
+        if($s_id == 'sac_grand'){
+            // select ボックス要素作成
+            $cols = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => 'moins que 10 pièces'],
+                ['id' => '1', 'name' => 'beaucoup'],
+            ]);
+            return $cols;
+        }
+        if($s_id == 'sac_poubelle'){
+            // select ボックス要素作成
+            $cols = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => 'un peu'],
                 ['id' => '1', 'name' => 'moyen'],
                 ['id' => '2', 'name' => 'beaucoup'],
             ]);
-            return $poulet_crus;
+            return $cols;
+        }
+        if($s_id == 'tantan'){
+            // select ボックス要素作成
+            $cols = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '0', 'name' => 'moins que 10 pièces'],
+                ['id' => '1', 'name' => 'beaucoup'],
+            ]);
+            return $cols;
         }
 
-        if($s_id == 'laits'){
-            // select ボックス要素作成
-            $laits = collect([
-                ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'rien'],
-                ['id' => '1', 'name' => '1 ～ 3 paquets'],
-                ['id' => '4', 'name' => 'plus que 4 paquets'],
-            ]);
-            return $laits;
-        }
 
         //時間帯
         if($s_id == 'fuseau_horaires'){
