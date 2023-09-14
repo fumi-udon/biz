@@ -306,11 +306,35 @@ class JesserController extends Controller
         $sac_grand = $this->get_select_values('sac_grand');
         $sac_poubelle = $this->get_select_values('sac_poubelle');
         $tantan = $this->get_select_values('tantan');
+
+        $columns = [
+            'created_at',
+            'essuie_jmb',
+            'plastique_chaud_750ml',
+            'plastique_froide_500ml',
+            'plastique_froide_1000ml',
+            'aluminium_901',
+            'aluminium_701',
+            'aluminium_401',
+            'pot_de_sauce_30cc',
+            'bol_carton_rond',
+            'sac_transparant',
+            'bicarbonate',
+            'tahina_pate_du_sesame',
+            'viande_hachee_poulet_congele',
+            'viande_hachee_boeuf_congele',
+            'tantan_boeuf',
+        ];
         
+        $accessoires = StockAccessoire::select($columns)
+        ->orderBy('created_at', 'desc') // 'created_at' カラムを降順にソート
+        ->limit(5) // 最新の5行を取得
+        ->get();
+
         return view('jesser_gestion_stock', compact( 
             'papier_toilettes','papier_serviette',
             'sac_petit','sac_grand',
-            'sac_poubelle','tantan',
+            'sac_poubelle','tantan', 'accessoires', 'columns'
          ));  
     }
 

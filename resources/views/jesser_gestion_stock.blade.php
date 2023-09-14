@@ -181,8 +181,42 @@
 	<div class="container mt-5">
 		<a href="/jesser_top" class="text-primary">Retour</a>
 	</div>
-<!-- [ADD]FUMI Javascripts  -->
-<script src="{{ asset('js/courses_matin.js') }}"></script>
+
+	@if(!empty($accessoires))
+	<div class="table-responsive" id="records" style="width: 100%;">
+	&#11093; accessoiresテーブル
+	<table class="table table-striped" style="min-width: 800px;">
+		<thead>
+			<tr>			
+				@foreach ($columns as $column)
+					@if ($column === 'created_at')
+						<th>Date</th>
+					@elseif ($column === 'tahina_pate_du_sesame')
+						<th>tahina</th>
+					@elseif ($column === 'viande_hachee_poulet_congele')
+					<th>hachée poulet congelé</th>
+					@elseif ($column === 'viande_hachee_boeuf_congele')
+					<th>hachée boeuf congelé</th>
+					@elseif ($column === 'tahina_pate_du_sesame')
+						<th>tahina</th>
+					@else
+						<th>{{ $column }}</th>
+					@endif					
+				@endforeach
+			</tr>
+		</thead>
+		<tbody>
+			@foreach ($accessoires as $accessoire)
+				<tr>
+					@foreach ($columns as $column)
+						<td>{{ $accessoire->$column }}</td>
+					@endforeach
+				</tr>
+			@endforeach
+		</tbody>
+	</table>
+	</div>
+	@endif
 
 </main>
 <!-- FUMI end -->
@@ -190,3 +224,5 @@
 @endsection
 
 @extends('layouts.footer')
+<!-- [ADD]FUMI Javascripts  -->
+<script src="{{ asset('js/courses_matin.js') }}"></script>

@@ -20,6 +20,9 @@
             <li class="nav-item">
               <a class="nav-link" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS6lt16gnKW-JH1ED3Vm6fqPWhRyjTxwhqDnQN2yu0EW4BlsX0H1lcvWrOPx-jVFFvYpu-9cfwtBIjb/pubhtml?gid=0&single=true"  target="_blank">Shift</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://docs.google.com/document/d/1Mut-8_P-islhKel0PlYEULjw3jUgndNPtJDSzn9hnFk/edit?usp=sharing"  target="_blank">Plan de ménage</a>
+            </li>
             @if(session('auth_flg'))
             <li class="nav-item">
               <a class="nav-link" href="/index_finance">財務</a>
