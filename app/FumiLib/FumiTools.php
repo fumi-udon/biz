@@ -13,6 +13,8 @@ use App\Models\ConditionType;
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
+use App\Models\StockAccessoire;
+
 use Carbon\Carbon;
 
 class FumiTools
@@ -39,6 +41,18 @@ class FumiTools
         return $stock_ingredients;
     }
 
+    /**
+     * StockAccessoire テーブルデータ取得.
+     */
+    public static function get_stock_accessoire_by_keys($flg, $sub_days)
+    {
+        $stock_accessoire = StockAccessoire::where('flg', $flg)
+        ->where('created_at', '>=', Carbon::now()->subDays($sub_days))
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        return $stock_accessoire;
+    }
     /**
      * FUMI
      *  曜日をdbカラムに適合した文字列で返す 例 mon,tue...
@@ -197,6 +211,52 @@ class FumiTools
 
             $matchingName = '';
             $display_data = [$stock_ingredient->registre_datetime]; // 配列を初期化
+
+            for ($i = 0; $i < count($pulldowns); $i++) {
+                foreach ($pulldowns[$i] as $ellements) {
+                    if ($ellements['id'] === (string)$articles_by_table[$i]) {
+                        $display_data[] = $ellements['name']; //配列に追加
+                        break;
+                    }
+                }
+            }      
+            $display_datas[] = $display_data;
+        }
+        // 表示用にプルダウンのnameを格納した連想配列を作成 end
+
+        return $display_datas;
+    }
+
+    /**
+     * 画面表示用にプルダウンのnameを格納した連想配列を作成
+     * 
+     * 詳細リンク 登録データの表示をわかり易くする。　例：riz entre 4 ～ 6 sacs とか
+     * 
+     * [使用法] 
+     * 1.stock_ingredientsの表示対象のモデルデータを渡す
+     * 2.pulldowns プルダウン集にプルダウンデータを追加 
+     * 3.columun_names _ stock_ingredientsテーブルのカラム名を配列で指定
+     * [注意] pulldownsとcolumun_namesのデータ数と順番は必ず一致させること。
+     */
+    public static function get_display_datas_stock_accessoires($stock_accessoires, $pulldowns, $columun_names)   {
+
+        // 表示用のレコード 入れ子の連想配列
+        $display_datas = [];
+        // レコードをループ
+        foreach ($stock_accessoires as $stock_accessoire) {
+           
+            $articles_by_table = []; // 配列初期化
+            $num_columns = count($columun_names);
+            for ($i = 0; $i < $num_columns; $i++) {
+                $column_name = $columun_names[$i];
+                $article_value = $stock_accessoire->{$column_name};
+                // ここで $article_value を利用する処理を行う
+                $articles_by_table[] = $article_value;
+            }
+
+
+            $matchingName = '';
+            $display_data = [$stock_accessoire->created_at]; // 配列を初期化
 
             for ($i = 0; $i < count($pulldowns); $i++) {
                 foreach ($pulldowns[$i] as $ellements) {

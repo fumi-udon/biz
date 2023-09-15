@@ -310,23 +310,28 @@ class JesserController extends Controller
         $columns = [
             'created_at',
             'essuie_jmb',
+            'papier_toilettes',
             'plastique_chaud_750ml',
             'plastique_froide_500ml',
             'plastique_froide_1000ml',
+            'papier_serviette',
             'aluminium_901',
             'aluminium_701',
             'aluminium_401',
             'pot_de_sauce_30cc',
             'bol_carton_rond',
             'sac_transparant',
+            'sac_petit',
+            'sac_grand',
+            'sac_poubelle',
             'bicarbonate',
             'tahina_pate_du_sesame',
             'viande_hachee_poulet_congele',
             'viande_hachee_boeuf_congele',
             'tantan_boeuf',
         ];
-        
-        $accessoires = StockAccessoire::select($columns)
+
+        $stock_accessoire = StockAccessoire::select($columns)
         ->orderBy('created_at', 'desc') // 'created_at' カラムを降順にソート
         ->limit(5) // 最新の5行を取得
         ->get();
@@ -334,7 +339,8 @@ class JesserController extends Controller
         return view('jesser_gestion_stock', compact( 
             'papier_toilettes','papier_serviette',
             'sac_petit','sac_grand',
-            'sac_poubelle','tantan', 'accessoires', 'columns'
+            'sac_poubelle','tantan', 'columns',
+            'stock_accessoire',
          ));  
     }
 
@@ -366,8 +372,7 @@ class JesserController extends Controller
             'tantan_boeuf',
         ]);
         // 他のカラムのデータを設定
-        // $data['column1'] = '値を設定する'; // 例: '値を設定する'
-        // $data['column2'] = '値を設定する'; // 例: '値を設定する'
+        $inputs['flg'] = 1;
        
         // now データ設定
         $this->set_session_datas(true ,$inputs);
@@ -413,6 +418,48 @@ class JesserController extends Controller
     }
 
     /**
+     * ディスプレイ用データ取得
+     * 
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function get_stock_display(){
+        // 画面表示用にプルダウンのnameを格納した連想配列を作成 start
+        // * [使用法] 
+        // * 1.stock_ingredientsの表示対象のモデルデータを渡す
+        // * 2.プルダウン集にプルダウンデータを追加 
+        // * 3.articles_by_tableの数をプルダウンの数と一致させる
+
+        // 表示対象モデルデータ
+        $stock_accessoire = FumiTools::get_stock_accessoire_by_keys(1, '14');
+        // プルダウン集 select ボックス要素作成
+        // select ボックス要素作成
+        $papier_toilettes = $this->get_select_values('papier_toilettes');
+        $papier_clients = $this->get_select_values('papier_clients');
+        $sac_petit = $this->get_select_values('sac_petit');
+        $sac_grand = $this->get_select_values('sac_grand');
+        $sac_poubelle = $this->get_select_values('sac_poubelle');
+        $tantan = $this->get_select_values('tantan');
+
+        $pulldowns = [$papier_toilettes, $papier_clients, $sac_petit, $sac_grand, $sac_poubelle, $tantan];
+
+        // テーブルのカラム名 を設定
+        $columun_names = ["papier_toilettes", "papier_serviette", "sac_petit", "sac_grand", "sac_poubelle", "tantan_boeuf"];     
+        $stock_accessoire_display = FumiTools::get_display_datas_stock_accessoires($stock_accessoire, $pulldowns, $columun_names);
+
+        //$newArray = array_combine($columun_names, $stock_accessoire_display);
+        $displays = []; 
+        foreach($stock_accessoire_display as $display){
+            array_shift($display);
+            $newArray[] = array_combine($columun_names, $display);
+        }
+        //dd($columun_names, $newArray);
+        // 表示用にプルダウンのnameを格納した連想配列を作成 end
+
+        return $displays;
+    }
+
+    /**
      * select values
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -422,54 +469,60 @@ class JesserController extends Controller
             // select ボックス要素作成
             $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'moins que 10 pièces'],
-                ['id' => '1', 'name' => 'beaucoup'],
+                ['id' => 1, 'name' => 'moins que 10 pièces'],
+                ['id' => 2, 'name' => 'moyenne'],
+                ['id' => 3, 'name' => 'beaucoup'],
             ]);
             return $cols;
         }
+
         if($s_id == 'papier_clients'){
             // select ボックス要素作成
             $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'moins que 10 pièces'],
-                ['id' => '1', 'name' => 'beaucoup'],
-            ]);
-            return $cols;
-        }
-        if($s_id == 'sac_petit'){
-            // select ボックス要素作成
-            $cols = collect([
-                ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'moins que 10 pièces'],
-                ['id' => '1', 'name' => 'beaucoup'],
-            ]);
-            return $cols;
-        }
-        if($s_id == 'sac_grand'){
-            // select ボックス要素作成
-            $cols = collect([
-                ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'moins que 10 pièces'],
-                ['id' => '1', 'name' => 'beaucoup'],
-            ]);
-            return $cols;
-        }
-        if($s_id == 'sac_poubelle'){
-            // select ボックス要素作成
-            $cols = collect([
-                ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'un peu'],
-                ['id' => '1', 'name' => 'moyen'],
+                ['id' => '1', 'name' => 'moins que 10 pièces'],
                 ['id' => '2', 'name' => 'beaucoup'],
             ]);
             return $cols;
         }
+
+        if($s_id == 'sac_petit'){
+            // select ボックス要素作成
+            $cols = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '1', 'name' => 'moins que 10 pièces'],
+                ['id' => '2', 'name' => 'beaucoup'],
+            ]);
+            return $cols;
+        }
+
+        if($s_id == 'sac_grand'){
+            // select ボックス要素作成
+            $cols = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '1', 'name' => 'moins que 10 pièces'],
+                ['id' => '2', 'name' => 'beaucoup'],
+            ]);
+            return $cols;
+        }
+
+        if($s_id == 'sac_poubelle'){
+            // select ボックス要素作成
+            $cols = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => '1', 'name' => 'un peu'],
+                ['id' => '2', 'name' => 'moyen'],
+                ['id' => '3', 'name' => 'beaucoup'],
+            ]);
+            return $cols;
+        }
+
         if($s_id == 'tantan'){
             // select ボックス要素作成
             $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'moins que 10 pièces'],
-                ['id' => '1', 'name' => 'beaucoup'],
+                ['id' => '1', 'name' => 'moins que 10 pièces'],
+                ['id' => '2', 'name' => 'beaucoup'],
             ]);
             return $cols;
         }

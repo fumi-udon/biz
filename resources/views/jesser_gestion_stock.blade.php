@@ -182,7 +182,7 @@
 		<a href="/jesser_top" class="text-primary">Retour</a>
 	</div>
 
-	@if(!empty($accessoires))
+	@if(!empty($stock_accessoire))
 	<div class="table-responsive" id="records" style="width: 100%;">
 	&#11093; accessoiresテーブル
 	<table class="table table-striped" style="min-width: 800px;">
@@ -206,10 +206,52 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($accessoires as $accessoire)
+			@foreach ($stock_accessoire as $accessoire)
 				<tr>
 					@foreach ($columns as $column)
-						<td>{{ $accessoire->$column }}</td>
+					<td>
+						@if($column === 'papier_toilettes')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $papier_toilettes->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'papier_serviette')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $papier_serviette->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'sac_petit')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $sac_petit->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'sac_grand')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $sac_grand->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'sac_poubelle')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $sac_poubelle->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'tantan_boeuf')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $tantan->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+
+						@else
+							<!-- プルダウン以外 -->
+							{{ $accessoire->$column }}
+						@endif
+					</td>
 					@endforeach
 				</tr>
 			@endforeach
