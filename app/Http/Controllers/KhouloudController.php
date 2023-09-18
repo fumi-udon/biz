@@ -15,6 +15,8 @@ use \DateTime; // 追加: PHPのグローバルな名前空間にあるDateTime�
 use DateTimeZone;
 use App\Models\PlanProduction;
 use App\Models\SatoInstruction;
+use App\Models\StockCuisineMain;
+
 use Carbon\Carbon;
 
 class KhouloudController extends Controller
@@ -56,6 +58,7 @@ class KhouloudController extends Controller
         $laitue = $this->get_select_values('line_2piece');
         $choux = $this->get_select_values('line_2piece');
         $apple = $this->get_select_values('line_2piece');
+        $citron = $this->get_select_values('line_5piece');        
 
         /**
          * Satoの手動指示がある場合は優先表示
@@ -100,6 +103,7 @@ class KhouloudController extends Controller
             'laitue',
             'choux',
             'apple',
+            'citron',
         ));
     }
 
@@ -127,6 +131,7 @@ class KhouloudController extends Controller
         \Session::flash('laitue_now', $inputs['laitue']);
         \Session::flash('choux_now', $inputs['choux']);
         \Session::flash('apple_now', $inputs['apple']);
+        \Session::flash('citron_now', $inputs['citron']);
 
         // PlanProduction テーブルからカレー作り取得 (id=8)
         $plan_production = PlanProduction::where([
@@ -137,8 +142,16 @@ class KhouloudController extends Controller
         $column = $fumi_tools->fumi_get_youbi_for_table(date('w'));
         $curry = $plan_production->$column;
 
+        // StockMainsテーブルに登録
+        $inputs['shop'] = 'bn';
+        $inputs['page_id'] = 'khouloud_commence_input';
+        $inputs['fuseaux'] = 'am';
+        $inputs['staff'] = 'khouloud';        
+        StockCuisineMain::create($inputs);
+
         // method_name
         $method_name = 'store';
+        
         // リダイレクト
         return redirect()->route('khouloud.commence.input')->with([
             //画面引継ぎsession格納

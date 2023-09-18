@@ -224,7 +224,17 @@
 				</td>
 				<td>pièces</td>
 			</tr>
-
+			<tr>
+				<td>citron</td>
+				<td>
+					<select class="form-select" id="citron" name="citron" required>
+						@foreach ($citron as $item)
+							<option value="{{ $item['id'] }}" @if( Session::get('citron_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td>pièces</td>
+			</tr>
             </tbody>
         </table>
 		<div class="row p-2">
