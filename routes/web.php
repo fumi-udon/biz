@@ -135,3 +135,9 @@ Route::post('/jesser_close_recettes_store', [JesserController::class, 'jesser_cl
 Route::post('/jesser_close_updatemontan', [JesserController::class, 'jesser_close_updatemontan'])->name('jesser.close.updatemontan');
 Route::get('/jesser_gestion_stock', [JesserController::class, 'jesser_gestion_stock'])->name('jesser.gestion.stock');
 Route::post('/jesser_gestion_stock_store', [JesserController::class, 'jesser_gestion_stock_store'])->name('jesser.gestion.stock.store');
+
+// Khouloud 管理 
+use App\Http\Controllers\KhouloudController;
+Route::get('/khouloud_top', [KhouloudController::class, 'khouloud_top']);
+Route::get('/khouloud_commence_input', [KhouloudController::class, 'khouloud_commence_input'])->name('khouloud.commence.input');
+Route::post('/khouloud_commence_store', [KhouloudController::class, 'khouloud_commence_store'])->name('khouloud.commence.store');

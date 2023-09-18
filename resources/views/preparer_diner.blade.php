@@ -24,7 +24,12 @@
 	@elseif ( isset($stock_ingredient) )
 		<div>
 			<p><h5>Aicha</h5></p>
-			<!-- サト追加情報 -->
+			<!-- 追加情報 -->
+			<p>
+				@if($daysoftheweek == 'wed')
+						&#11091; Friteuse et étagère de friteuse et sous la friteuse (responsable: aïcha et fifi (matin ou après 15h))
+				@endif
+			</p>
 			<p>
 				@if(!empty($sato_record_aicha))
 						&#11093; {!! $sato_record_aicha->override_tx_1 !!}
@@ -51,12 +56,17 @@
 			<hr>
 			<!-- アンドレア -->
 			<p><h5>FIFI</h5></p>
-			<!-- サト追加情報 -->
+			<!-- 追加情報 -->
 			<p>
-				@if(!empty($sato_record_andrea))
-						&#11093; {!! $sato_record_andrea->override_tx_1 !!}
+				@if($daysoftheweek == 'fri')
+						&#11093; Plan de nettoyage : réfrigérateur Wirpool (intérieur et extérieur)
 				@endif
 			</p>
+			@if(!empty($sato_record_andrea))
+			<p>
+				&#11094; {!! $sato_record_andrea->override_tx_1 !!}				
+			</p>
+			@endif
 			<p>
 				&#127833; RIZ:
 				@if($aicha_riz == 0 || $aicha_riz == 1)

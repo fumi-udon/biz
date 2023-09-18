@@ -112,7 +112,16 @@
         </div>
       </div>
       <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Cuisinier</h6>
+        <h6 class="border-bottom pb-2 mb-0">Cuisine</h6>
+        <div class="d-flex text-muted pt-3">
+         <a href="/khouloud_top">
+         <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>gestion</title><rect width="100%" height="100%" fill="#88ff00"/><text x="70%" y="50%" fill="#2133dd" dy="">khou</text></svg>
+        </a>
+          <p class="pb-3 mb-0 small lh-sm border-bottom">
+            <strong class="d-block text-gray-dark">khouloud</strong>
+              8h!  good morning 
+          </p>
+        </div>
         <div class="d-flex text-muted pt-3">
          <a href="/cuisine_diner_top">
          <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="" preserveAspectRatio="xMidYMid slice" focusable="false"><title>gestion</title><rect width="100%" height="100%" fill="#ff0000"/><text x="70%" y="60%" fill="#21aadd" dy="">diner</text></svg>

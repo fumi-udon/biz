@@ -105,7 +105,7 @@ class DevController extends Controller
             ]);
             return $mode_inserts;
         }
-}
+    }
 
     /**
      * Execl.
