@@ -17,7 +17,7 @@
 		<div class="" role="">
 		<p><h5>Bonjour Jesser!</h5></p>
 		@php
-			$text_etc = "➡ Rappelez-vous au légumerie si nous avons la commandé sur Whatsapp : TEL: 21 733 668 ";
+			$text_etc = "";
 		@endphp
 
 		<!-- サト上書き -->
@@ -30,25 +30,33 @@
 			<div>
 				<!-- 月曜：  プラン -->
 				@if($daysoftheweek == 'mon')
-					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
-					<p> &#x1f680; Achat: monoprix et ゼフィール</p>
+					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
 				@endif
 				<!-- 火曜： チェック銀行へ プラン -->
 				@if($daysoftheweek == 'tue')
-					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
-					<p> &#x1f680; Achat: monoprix et ゼフィール</p>
+					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
+					<p> &#x1f5c3; Si vous avez des chèques à encaisser, veuillez les déposer à la banque Attijari.</p>
+					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
 				@endif
 				<!-- 水曜 チェック銀行へ プラン -->
 				@if($daysoftheweek == 'wed')
-					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
+					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
+					<p> &#x1f5c3; Vérifier le stock de boissons et de thé et passer les commandes nécessaires.</p>
 				@endif
 				<!-- 木曜  プラン -->
 				@if($daysoftheweek == 'thu')
-					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
+					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
+					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
 				@endif
 				<!-- 金曜  プラン -->
 				@if($daysoftheweek == 'fri')
-					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
+					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
+					<p> &#x1f5c3; </p>
+				@endif
+
+				<!-- Steg Sonet 月初め -->
+				@if($daysoftheweek == 'mon' && ( $le_date == '01' || $le_date == '02' || $le_date == '03' || $le_date == '04' || $le_date == '05' || $le_date == '06' || $le_date == '07' || $le_date == '08'))
+					<p> &#x1f6ce; Si vous n'avez pas encore réglé vos factures STEG/SONET/etc du mois dernier, veuillez les payer cette semaine. N'oubliez pas apporter des photos</p>
 				@endif
 			</div>
 			<!-- サト追加 -->

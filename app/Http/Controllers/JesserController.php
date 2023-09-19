@@ -59,7 +59,9 @@ class JesserController extends Controller
         // 曜日を取得 Fumi 独自クラスインスタンス化 
         $fumi_tools =new FumiTools();
         $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
-        
+        $now = Carbon::now();
+        $le_date = $now->format('d');
+
         /**
          * Satoの手動指示がある場合は優先表示
          * flg 13 [上書き]
@@ -90,6 +92,7 @@ class JesserController extends Controller
             'sato_record_override',
             'sato_record_add',
             'daysoftheweek',
+            'le_date'
         ));   
     }    
 
