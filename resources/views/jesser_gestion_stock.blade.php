@@ -74,20 +74,21 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>Barquettes aluminium 901</td>
-				<td><input type="number" id="aluminium_901" name="aluminium_901" class="form-control" value="{{ Session::get('aluminium_901') }}" required></td>
+				<td>Barquettes aluminium S</td>
+				<td><input type="number" id="aluminium_401" name="aluminium_401" class="form-control" value="{{ Session::get('aluminium_401') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
-				<td>Barquettes aluminium 701</td>
+				<td>Barquettes aluminium M</td>
 				<td><input type="number" id="aluminium_701" name="aluminium_701" class="form-control" value="{{ Session::get('aluminium_701') }}" required></td>
 				<td>paquet</td>
 			</tr>
 			<tr>
-				<td>Barquettes aluminium 401</td>
-				<td><input type="number" id="aluminium_401" name="aluminium_401" class="form-control" value="{{ Session::get('aluminium_401') }}" required></td>
+				<td>Barquettes aluminium L</td>
+				<td><input type="number" id="aluminium_901" name="aluminium_901" class="form-control" value="{{ Session::get('aluminium_901') }}" required></td>
 				<td>paquet</td>
 			</tr>
+
 			<tr>
 				<td>Pot de sauce 30cc</td>
 				<td><input type="number" id="pot_de_sauce_30cc" name="pot_de_sauce_30cc" class="form-control" value="{{ Session::get('pot_de_sauce_30cc') }}" required></td>
@@ -104,7 +105,7 @@
 				<td>paquet</td>
 			</tr>
 			<tr>
-				<td>sac petit</td>
+				<td>sac petit poignet</td>
 				<td>
 					<select class="form-select" id="sac_petit" name="sac_petit" required>
 						@foreach ($sac_petit as $item)
@@ -115,7 +116,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td>sac grand</td>
+				<td>sac grand poignet</td>
 				<td>
 				<select class="form-select" id="sac_grand" name="sac_grand" required>
 					@foreach ($sac_grand as $item)

@@ -17,6 +17,10 @@
     <div class="container">
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
+                Work's 
+                <a href="jesser_works" class="btn btn-primary">click</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
                 Finance 
                 <a href="jesser_close_recettes" class="btn btn-primary">click</a>
             </li>

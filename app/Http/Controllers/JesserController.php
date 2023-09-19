@@ -47,6 +47,30 @@ class JesserController extends Controller
         
         return view('jesser_top', compact('stock_ingredients'));   
     }
+
+    /**
+     * 
+     * works 本日のタスク
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function jesser_works(){
+
+        // 曜日を取得 Fumi 独自クラスインスタンス化 
+        $fumi_tools =new FumiTools();
+        $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
+        /**
+         * 入力データ表示
+         * 'flg1' => xxxx TODO
+         */
+        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14');
+
+        \Session::flash('stock_ingredients', $stock_ingredients);
+        
+        return view('jesser_works', compact('daysoftheweek'));   
+    }    
+
+
     /**
      * 
      * finace リンクから 売上

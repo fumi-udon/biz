@@ -130,6 +130,7 @@ Route::post('/jihen_store', [JihenController::class, 'jihen_store'])->name('jihe
 // ジェイセル管理 
 use App\Http\Controllers\JesserController;
 Route::get('/jesser_top', [JesserController::class, 'jesser_top'])->name('jesser.top');
+Route::get('/jesser_works', [JesserController::class, 'jesser_works'])->name('jesser.works');
 Route::get('/jesser_close_recettes', [JesserController::class, 'jesser_close_recettes'])->name('jesser.close.recettes');
 Route::post('/jesser_close_recettes_store', [JesserController::class, 'jesser_close_recettes_store'])->name('jesser.close.recettes.store');
 Route::post('/jesser_close_updatemontan', [JesserController::class, 'jesser_close_updatemontan'])->name('jesser.close.updatemontan');
