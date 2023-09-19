@@ -13,7 +13,7 @@
 	</div>
 	@if (Session::has('method_name') && Session::get('method_name') == 'store')
 		<div class="alert alert-primary border" role="alert">
-		<p><h5>Bonjour Khouloud! Voilà c'est les tâches d'aujourd'hui</h5></p>
+		<p><h5>Bonjour Khouloud!</h5></p>
 		@php
 			$text_etc = "➡ Rappelez-vous au légumerie si nous avons la commandé sur Whatsapp : TEL: 21 733 668 ";
 		@endphp
@@ -32,14 +32,18 @@
 				@else
 					&#x1f538;  <span style="color: red;">Ne pas</span> faire le curry ce matin alors nettoyez-vous l'hôte avec aicha
 				@endif
+				<!-- 掃除プラン -->
+				@if(Session::get('daysoftheweek') == 'tue')
+					<p> &#x1f529; Plan de nettoyage:  table au milieu de la cuisine _ khouloud (après 15h)</p>
+				@endif
 			</div>
 			<!-- サト追加 -->
 			@if(Session::has('sato_record_add'))
 			<div>
-				<p> &#x1f538; {!! Session::get('sato_record_add')->override_tx_1 !!} </p>
-				<p>{{ $text_etc }}</p>
-			</div>
+				<p> &#x1f538; {!! Session::get('sato_record_add')->override_tx_1 !!} </p>				
+			</div>			
 			@endif
+			<p class="p-3">{{ $text_etc }}</p>
 		@endif
 		</div>
 	@endif

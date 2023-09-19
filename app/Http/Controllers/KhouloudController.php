@@ -114,7 +114,9 @@ class KhouloudController extends Controller
     {
         $inputs = $request->all();
         $today = (new DateTime())->format('Y-m-d');
-
+        // 曜日を取得 Fumi 独自クラスインスタンス化 
+        $fumi_tools =new FumiTools();
+        $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
         // session 格納
         \Session::flash('flash_message', 'MERCI<br>Les données sont envoyées correctement');
         \Session::flash('patecurry_now', $inputs['patecurry']);
@@ -132,6 +134,7 @@ class KhouloudController extends Controller
         \Session::flash('choux_now', $inputs['choux']);
         \Session::flash('apple_now', $inputs['apple']);
         \Session::flash('citron_now', $inputs['citron']);
+        \Session::flash('daysoftheweek', $daysoftheweek);
 
         // PlanProduction テーブルからカレー作り取得 (id=8)
         $plan_production = PlanProduction::where([
@@ -146,18 +149,19 @@ class KhouloudController extends Controller
         $inputs['shop'] = 'bn';
         $inputs['page_id'] = 'khouloud_commence_input';
         $inputs['fuseaux'] = 'am';
-        $inputs['staff'] = 'khouloud';        
+        $inputs['staff'] = 'khouloud';   
         StockCuisineMain::create($inputs);
 
         // method_name
         $method_name = 'store';
-        
+
         // リダイレクト
         return redirect()->route('khouloud.commence.input')->with([
             //画面引継ぎsession格納
             'today' => $today,
             'method_name' => $method_name,
             'curry' => $curry,
+            'daysoftheweek' => $daysoftheweek,
             ]);
     }
 

@@ -14,7 +14,8 @@
 <div class="my-3 p-3 bg-body rounded">
 	<div class="row gx-3">
     @php
-        $text_etc = "➡ Si c'est peu : oeuf, chips, namuru, pudding, salade, légumes etc... ";
+        $text_etc = "➡ Si c'est peu : oeuf, chips, namuru, pudding etc... ";
+		$text_kitchen = "&#x1f5fe; Si c'est peu : <span style='color: red;'>des légumes mixtes émincées et des choux émincées et de la laitue</span> ";
     @endphp
 	@if(Session::has('sato_record') && !empty($sato_text_mode) && $sato_text_mode == 6)
 		<div class="alert alert-primary border" role="alert">
@@ -50,9 +51,13 @@
 				<!-- 平日 -->
 					{{ 7 - $aicha_bouillons }} L
 				@endif
-			</p>	
-			@endif			
-			
+			@endif
+			</p>
+			@if($daysoftheweek == 'tue' || $daysoftheweek == 'fri')	
+			<p>					
+				{!! $text_kitchen !!} 
+			</p>
+			@endif
 			<hr>
 			<!-- アンドレア -->
 			<p><h5>FIFI</h5></p>
@@ -85,6 +90,11 @@
 						non
 				@endif
 			</p>
+			@if($daysoftheweek == 'mon' || $daysoftheweek == 'wed'  || $daysoftheweek == 'thu' || $daysoftheweek == 'sat')	
+			<p>					
+				{!! $text_kitchen !!}
+			</p>
+			@endif
 		</div>
 		<p class="my-3 p-3">
 			{{ $text_etc }}
