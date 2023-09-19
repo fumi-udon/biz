@@ -13,54 +13,67 @@
 
 <div class="my-3 p-3 bg-body rounded">
 	<div class="row gx-3">
-    @php
-        $text_etc = "";
-    @endphp
-	@if(Session::has('sato_record') && !empty($sato_text_mode) && $sato_text_mode == 9)
-		<div class="">
-			<p>{!! Session::get('sato_record')->override_tx_1 !!} </p>
-			<p>{{ $text_etc }}</p>
-		</div>
-	@elseif ( isset($stock_ingredients) )
-		<div>
-			<p><h5><u>Mise en place</u></h5></p>
-			<!-- サト追加情報 -->
-			<p>
-				@if(!empty($sato_record))
-						&#11093; {!! $sato_record->override_tx_1 !!}
+
+		<div class="" role="">
+		<p><h5>Bonjour Jesser!</h5></p>
+		@php
+			$text_etc = "➡ Rappelez-vous au légumerie si nous avons la commandé sur Whatsapp : TEL: 21 733 668 ";
+		@endphp
+
+		<!-- サト上書き -->
+		@if(Session::has('sato_record_override'))
+			<div>
+				<p>&#x1f538;<br> {!! Session::get('sato_record_override')->override_tx_1 !!} </p>
+				<p>{{ $text_etc }}</p>
+			</div>
+		@else 
+			<div>
+				<!-- 月曜：  プラン -->
+				@if($daysoftheweek == 'mon')
+					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
+					<p> &#x1f680; Achat: monoprix et ゼフィール</p>
 				@endif
-			</p>
-			<p> &#127833; Onigiri 4 pièces (total)</p>
-			<p> &#129367; Salade 1 grand bol (total)</p>
-			<p> &#129367; Salade 1 petit bol (total)</p>
-			<p> &#129382; Placer les choux en bas le comptoir</p>
-
-			<hr>
-			<p><h6><u>Vérification et mise en place</u></h6></p>
-			<p>
-				<ul class=“list-group”> 
-					<li class=“list-group-item”>laitue (remplir)</li> 
-					<li class=“list-group-item”>salades (tmt/carottes/concombre)</li> 
-					<li class=“list-group-item”>citron</li> 
-					<li class=“list-group-item”>onion en julienne</li>
-					<li class=“list-group-item”>moutarde</li> 
-					<li class=“list-group-item”>mayonnaise</li> 
-					<li class=“list-group-item”>cha-shu</li> 
-					<li class=“list-group-item”>choux émincée</li> 
-					<li class=“list-group-item”>légumes émincées</li> 
-				</ul>
-			</p>
+				<!-- 火曜： チェック銀行へ プラン -->
+				@if($daysoftheweek == 'tue')
+					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
+					<p> &#x1f680; Achat: monoprix et ゼフィール</p>
+				@endif
+				<!-- 水曜 チェック銀行へ プラン -->
+				@if($daysoftheweek == 'wed')
+					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
+				@endif
+				<!-- 木曜  プラン -->
+				@if($daysoftheweek == 'thu')
+					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
+				@endif
+				<!-- 金曜  プラン -->
+				@if($daysoftheweek == 'fri')
+					<p> &#x1f5c3; Banque attijari:  si il y a des chéque à enciasser</p>
+				@endif
+			</div>
+			<!-- サト追加 -->
+			@if(Session::has('sato_record_add'))
+			<div>
+				<p> &#x1f538; {!! Session::get('sato_record_add')->override_tx_1 !!} </p>				
+			</div>			
+			@endif
+			<p class="p-3">{{ $text_etc }}</p>
+		@endif
 		</div>
-		<p class="my-3 p-3">
-			{{ $text_etc }}
-		</p>
-
-	</div>
-	@endif
-	        <!--aicha_works_topに戻るリンク-->
+	        <!--works_topに戻るリンク-->
 			<div class="container mt-5">
             <a href="/jesser_top" class="text-primary">Retour</a>
         	</div>
+		@php
+			$flg_oride = 13;
+			$flg_add = 14;
+			$actionMessage = 'Jesser works 用';
+		@endphp
+    	<p class="m-2 small" style ="padding:50px;">
+			<a href="{{ route('common.addnote', ['flg_oride' => $flg_oride,'flg_add' => $flg_add, 'actionMessage' => $actionMessage]) }}" style="color: grey;">
+				指示追加 
+			</a>
+   		</p>
 </div>
 
 </main>

@@ -11,13 +11,15 @@
 		<small>check stock data</small>
 	</div>
 	</div>
+
 	@if (Session::has('flash_message'))
 	<div class="my-3 p-3 bg-body rounded shadow-sm">
 		<div class="alert alert-success" role="alert">
-			<p>{!! session('flash_message') !!}</p>	
+			<p>&#x1f618; Nous vous remercions. Les données d'entrée ont été enregistrées avec succès.</p>	
 		</div>
 	</div>
 	@endif
+
     <div class="my-3 p-3 bg-body rounded shadow-sm">
 	  <div class="container px-1">
 		<form method='POST' action="{{ route('jesser.gestion.stock.store',['id' => 'stock_emballage','params' => 'bistronippon']) }}">
@@ -31,6 +33,7 @@
                 </tr>
             </thead>
             <tbody>
+		@if ($daysoftheweek == 'tue')
 			<tr>
 				<td>essuie jumbo</td>
 				<td><input type="number" id="essuie_jmb" name="essuie_jmb" class="form-control" value="{{ Session::get('essuie_jmb') }}" required></td>
@@ -48,18 +51,39 @@
 				<td>paquet</td>
 			</tr>
 			<tr>
-				<td>plastique chaud 750ml</td>
-				<td><input type="number" id="plastique_chaud_750ml" name="plastique_chaud_750ml" class="form-control" value="{{ Session::get('plastique_chaud_750ml') }}" required></td>
+				<td>plastique froide 500ml</td>
+				<!-- <td><input type="number" id="plastique_froide_500ml" name="plastique_froide_500ml" class="form-control" value="{{ Session::get('plastique_froide_500ml') }}" required></td> -->
+				<td>
+					<select class="form-select" id="plastique_froide_500ml" name="plastique_froide_500ml" required>
+						@foreach ($plastique_froide_500ml as $elem)
+							<option value="{{ $elem['id'] }}" @if( Session::get('plastique_froide_500ml_now')  == $elem['id'] ) selected @endif> {{ $elem['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
 				<td>paquet</td>
 			</tr>
 			<tr>
-				<td>plastique froide 500ml</td>
-				<td><input type="number" id="plastique_froide_500ml" name="plastique_froide_500ml" class="form-control" value="{{ Session::get('plastique_froide_500ml') }}" required></td>
+				<td>plastique chaud 750ml</td>
+				<!-- <td><input type="number" id="plastique_chaud_750ml" name="plastique_chaud_750ml" class="form-control" value="{{ Session::get('plastique_chaud_750ml') }}" required></td> -->
+				<td>
+					<select class="form-select" id="plastique_chaud_750ml" name="plastique_chaud_750ml" required>
+						@foreach ($plastique_chaud_750ml as $elem)
+							<option value="{{ $elem['id'] }}" @if( Session::get('plastique_chaud_750ml_now')  == $elem['id'] ) selected @endif> {{ $elem['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>plastique froide 1000ml</td>
-				<td><input type="number" id="plastique_froide_1000ml" name="plastique_froide_1000ml" class="form-control" value="{{ Session::get('plastique_froide_1000ml') }}" required></td>
+				<!-- <td><input type="number" id="plastique_froide_1000ml" name="plastique_froide_1000ml" class="form-control" value="{{ Session::get('plastique_froide_1000ml') }}" required></td> -->
+				<td>
+					<select class="form-select" id="plastique_froide_1000ml" name="plastique_froide_1000ml" required>
+						@foreach ($plastique_froide_1000ml as $elem)
+							<option value="{{ $elem['id'] }}" @if( Session::get('plastique_froide_1000ml_now')  == $elem['id'] ) selected @endif> {{ $elem['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
 				<td>paquet</td>
 			</tr>
 			<tr>
@@ -75,33 +99,75 @@
 			</tr>
 			<tr>
 				<td>Barquettes aluminium S</td>
-				<td><input type="number" id="aluminium_401" name="aluminium_401" class="form-control" value="{{ Session::get('aluminium_401') }}" required></td>
+				<!-- <td><input type="number" id="aluminium_401" name="aluminium_401" class="form-control" value="{{ Session::get('aluminium_401') }}" required></td> -->
+				<td>
+					<select class="form-select" id="aluminium_401" name="aluminium_401" required>
+						@foreach ($aluminium_401 as $elem)
+							<option value="{{ $elem['id'] }}" @if( Session::get('aluminium_401_now')  == $elem['id'] ) selected @endif> {{ $elem['name'] }} </option>
+						@endforeach
+					</select>
+				</td>			
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>Barquettes aluminium M</td>
-				<td><input type="number" id="aluminium_701" name="aluminium_701" class="form-control" value="{{ Session::get('aluminium_701') }}" required></td>
+				<!-- <td><input type="number" id="aluminium_701" name="aluminium_701" class="form-control" value="{{ Session::get('aluminium_701') }}" required></td> -->
+				<td>
+					<select class="form-select" id="aluminium_701" name="aluminium_701" required>
+						@foreach ($aluminium_701 as $elem)
+							<option value="{{ $elem['id'] }}" @if( Session::get('aluminium_701_now')  == $elem['id'] ) selected @endif> {{ $elem['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>Barquettes aluminium L</td>
-				<td><input type="number" id="aluminium_901" name="aluminium_901" class="form-control" value="{{ Session::get('aluminium_901') }}" required></td>
+				<!-- <td><input type="number" id="aluminium_901" name="aluminium_901" class="form-control" value="{{ Session::get('aluminium_901') }}" required></td> -->
+				<td>
+					<select class="form-select" id="aluminium_901" name="aluminium_901" required>
+						@foreach ($aluminium_901 as $elem)
+							<option value="{{ $elem['id'] }}" @if( Session::get('aluminium_901_now')  == $elem['id'] ) selected @endif> {{ $elem['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
 				<td>paquet</td>
 			</tr>
 
 			<tr>
 				<td>Pot de sauce 30cc</td>
-				<td><input type="number" id="pot_de_sauce_30cc" name="pot_de_sauce_30cc" class="form-control" value="{{ Session::get('pot_de_sauce_30cc') }}" required></td>
+				<!-- <td><input type="number" id="pot_de_sauce_30cc" name="pot_de_sauce_30cc" class="form-control" value="{{ Session::get('pot_de_sauce_30cc') }}" required></td> -->
+				<td>
+					<select class="form-select" id="pot_de_sauce_30cc" name="pot_de_sauce_30cc" required>
+						@foreach ($pot_de_sauce_30cc as $elem)
+							<option value="{{ $elem['id'] }}" @if( Session::get('pot_de_sauce_30cc_now')  == $elem['id'] ) selected @endif> {{ $elem['name'] }} </option>
+						@endforeach
+					</select>
+				</td>			
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>bol carton rond</td>
-				<td><input type="number" id="bol_carton_rond" name="bol_carton_rond" class="form-control"  value="{{ Session::get('bol_carton_rond') }}" required></td>
+				<!-- <td><input type="number" id="bol_carton_rond" name="bol_carton_rond" class="form-control"  value="{{ Session::get('bol_carton_rond') }}" required></td> -->
+				<td>
+					<select class="form-select" id="bol_carton_rond" name="bol_carton_rond" required>
+						@foreach ($bol_carton_rond as $elem)
+							<option value="{{ $elem['id'] }}" @if( Session::get('bol_carton_rond_now')  == $elem['id'] ) selected @endif> {{ $elem['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
 				<td>paquet</td>
 			</tr>
 			<tr>
 				<td>sac transparant</td>
-				<td><input type="number" id="sac_transparant" name="sac_transparant" class="form-control" value="{{ Session::get('sac_transparant') }}" required></td>
+				<!-- <td><input type="number" id="sac_transparant" name="sac_transparant" class="form-control" value="{{ Session::get('sac_transparant') }}" required></td> -->
+				<td>
+					<select class="form-select" id="sac_transparant" name="sac_transparant" required>
+						@foreach ($sac_transparant as $item)
+							<option value="{{ $item['id'] }}" @if( Session::get('sac_transparant_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
 				<td>paquet</td>
 			</tr>
 			<tr>
@@ -147,6 +213,7 @@
 				<td><input type="number" id="tahina_pate_du_sesame" name="tahina_pate_du_sesame" class="form-control" value="{{ Session::get('tahina_pate_du_sesame') }}" required></td>
 				<td>pieces</td>
 			</tr>
+		@elseif ($daysoftheweek == 'tue')
 			<tr>
 				<td>viande hachée de poulet en congelé (bureau)</td>
 				<td><input type="number" id="viande_hachee_poulet_congele" name="viande_hachee_poulet_congele" class="form-control" value="{{ Session::get('viande_hachee_poulet_congele') }}" required></td>
@@ -168,6 +235,7 @@
 				</td>
 				<td></td>
 			</tr>
+		@endif
             </tbody>
         </table>
 		<div class="row p-2">
@@ -179,13 +247,12 @@
 	  </div><!--コンテナー end -->
     </div>
 	<!--戻るリンク-->
-	<div class="container mt-5">
+	<div class="container mt-5  p-3">
 		<a href="/jesser_top" class="text-primary">Retour</a>
 	</div>
 
 	@if(!empty($stock_accessoire))
 	<div class="table-responsive" id="records" style="width: 100%;">
-	&#11093; accessoiresテーブル
 	<table class="table table-striped" style="min-width: 800px;">
 		<thead>
 			<tr>			
@@ -245,6 +312,61 @@
 							@php
 								$id = $accessoire->$column;
 								$matchingName = $tantan->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+
+						@elseif($column === 'plastique_chaud_750ml')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $plastique_chaud_750ml->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'plastique_froide_500ml')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $plastique_froide_500ml->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'plastique_froide_1000ml')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $plastique_froide_1000ml->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'bol_carton_rond')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $bol_carton_rond->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'aluminium_401')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $aluminium_401->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'aluminium_701')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $aluminium_701->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'aluminium_901')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $aluminium_901->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'pot_de_sauce_30cc')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $pot_de_sauce_30cc->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'sac_transparant')
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $sac_transparant->where('id', $id)->first()['name'] ?? '';
 							@endphp
 							{{ $matchingName }}
 

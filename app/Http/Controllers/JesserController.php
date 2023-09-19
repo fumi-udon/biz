@@ -59,15 +59,38 @@ class JesserController extends Controller
         // 曜日を取得 Fumi 独自クラスインスタンス化 
         $fumi_tools =new FumiTools();
         $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
-        /**
-         * 入力データ表示
-         * 'flg1' => xxxx TODO
-         */
-        $stock_ingredients = FumiTools::get_stockIngredient_by_keys('5', '14');
-
-        \Session::flash('stock_ingredients', $stock_ingredients);
         
-        return view('jesser_works', compact('daysoftheweek'));   
+        /**
+         * Satoの手動指示がある場合は優先表示
+         * flg 13 [上書き]
+         */
+        $date_today = date_create()->format('Y-m-d');   
+        $sato_record_override = SatoInstruction::where('flg_int', 13)
+            ->where('aply_date', $date_today)
+            ->latest('updated_at')
+            ->first();
+        if(! empty($sato_record_override)){
+            //[上書き]サト指示有の為 表示
+            \Session::flash('sato_record_override', $sato_record_override);
+        }
+        
+        /**
+         * Satoの手動指示がある場合は優先表示
+         * flg 14 [追加]
+         */
+        $sato_record_add = SatoInstruction::where('flg_int', 14)
+            ->where('aply_date', $date_today)
+            ->latest('updated_at')
+            ->first();
+        if(! empty($sato_record_add)){
+            //[上書き]サト指示有の為 表示
+            \Session::flash('sato_record_add', $sato_record_add);
+        }     
+        return view('jesser_works', compact('daysoftheweek',
+            'sato_record_override',
+            'sato_record_add',
+            'daysoftheweek',
+        ));   
     }    
 
 
@@ -323,12 +346,31 @@ class JesserController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function jesser_gestion_stock(){
+
+        // 曜日を取得 Fumi 独自クラスインスタンス化 
+        $fumi_tools =new FumiTools();
+        $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
+    
         // プルダウン 
         $papier_toilettes = $this->get_select_values('papier_toilettes');
         $papier_serviette = $this->get_select_values('papier_clients');
+
+        // 50 pieces
+        $plastique_chaud_750ml = $this->get_select_values('50_plus');
+        $plastique_froide_500ml = $this->get_select_values('50_plus');
+        $plastique_froide_1000ml = $this->get_select_values('50_plus');
+        $bol_carton_rond = $this->get_select_values('50_plus');
+        // 100 pieces
+        $aluminium_401 = $this->get_select_values('100_plus');
+        $aluminium_701 = $this->get_select_values('100_plus');
+        $aluminium_901 = $this->get_select_values('100_plus');
+        $pot_de_sauce_30cc = $this->get_select_values('100_plus');
+
         $sac_petit = $this->get_select_values('sac_petit');
         $sac_grand = $this->get_select_values('sac_grand');
         $sac_poubelle = $this->get_select_values('sac_poubelle');
+        $sac_transparant = $this->get_select_values('sac_transparant');
+        
         $tantan = $this->get_select_values('tantan');
 
         $columns = [
@@ -364,7 +406,17 @@ class JesserController extends Controller
             'papier_toilettes','papier_serviette',
             'sac_petit','sac_grand',
             'sac_poubelle','tantan', 'columns',
-            'stock_accessoire',
+            'plastique_chaud_750ml',
+            'plastique_froide_500ml',
+            'plastique_froide_1000ml',
+            'aluminium_901',
+            'aluminium_701',
+            'aluminium_401',
+            'pot_de_sauce_30cc',
+            'bol_carton_rond',
+            'sac_transparant',
+            'stock_accessoire', 
+            'daysoftheweek'
          ));  
     }
 
@@ -404,6 +456,9 @@ class JesserController extends Controller
         // フォームデータをStockモデルを使用してインサート
         StockAccessoire::create($inputs);
 
+        // store 
+        \Session::flash("flash_message", true);
+
          return redirect()->route('jesser.gestion.stock')->with([
             //画面引継ぎsession格納
             'inputs' => $inputs,
@@ -414,30 +469,46 @@ class JesserController extends Controller
      * Now用セッションデータ設定
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function set_session_datas($flg ,$inputs){
-        // now データ設定
+    public function set_session_datas($flg ,$inputs){        
+        
         // select box
-        \Session::flash('papier_toilettes_now', $inputs['papier_toilettes']);
-        \Session::flash('papier_serviette_now', $inputs['papier_serviette']);
-        \Session::flash('sac_petit_now', $inputs['sac_petit']);
-        \Session::flash('sac_grand_now', $inputs['sac_grand']);
-        \Session::flash('sac_poubelle_now', $inputs['sac_poubelle']);
-        \Session::flash('tantan_boeuf_now', $inputs['tantan_boeuf']);
+        $keys_select_box = [
+            'papier_toilettes',
+            'papier_serviette',
+            'plastique_chaud_750ml',
+            'plastique_froide_500ml',
+            'plastique_froide_1000ml',
+            'aluminium_901',
+            'aluminium_701',
+            'aluminium_401',
+            'pot_de_sauce_30cc',
+            'bol_carton_rond',
+            'sac_petit',
+            'sac_grand',
+            'sac_poubelle',
+            'sac_transparant',
+            'tantan_boeuf',
+        ];        
+        foreach ($keys_select_box as $key) {
+            $nowKey = $key . '_now';
+            if (isset($inputs[$key])) {
+                \Session::flash($nowKey, $inputs[$key]);
+            }
+        }        
+        
         // input number
-        \Session::flash('essuie_jmb', $inputs['essuie_jmb']);
-        \Session::flash('plastique_chaud_750ml', $inputs['plastique_chaud_750ml']);
-        \Session::flash('plastique_froide_500ml', $inputs['plastique_froide_500ml']);
-        \Session::flash('plastique_froide_1000ml', $inputs['plastique_froide_1000ml']);
-        \Session::flash('aluminium_901', $inputs['aluminium_901']);
-        \Session::flash('aluminium_701', $inputs['aluminium_701']);
-        \Session::flash('aluminium_401', $inputs['aluminium_401']);
-        \Session::flash('pot_de_sauce_30cc', $inputs['pot_de_sauce_30cc']);
-        \Session::flash('bol_carton_rond', $inputs['bol_carton_rond']);
-        \Session::flash('sac_transparant', $inputs['sac_transparant']);
-        \Session::flash('bicarbonate', $inputs['bicarbonate']);
-        \Session::flash('tahina_pate_du_sesame', $inputs['tahina_pate_du_sesame']);
-        \Session::flash('viande_hachee_poulet_congele', $inputs['viande_hachee_poulet_congele']);
-        \Session::flash('viande_hachee_boeuf_congele', $inputs['viande_hachee_boeuf_congele']);
+        $keys = [
+            'essuie_jmb',
+            'bicarbonate',
+            'tahina_pate_du_sesame',
+            'viande_hachee_poulet_congele',
+            'viande_hachee_boeuf_congele',
+        ];        
+        foreach ($keys as $key) {
+            if (isset($inputs[$key])) {
+                \Session::flash($key, $inputs[$key]);
+            }
+        }       
         
     }
 
@@ -463,12 +534,29 @@ class JesserController extends Controller
         $sac_petit = $this->get_select_values('sac_petit');
         $sac_grand = $this->get_select_values('sac_grand');
         $sac_poubelle = $this->get_select_values('sac_poubelle');
+        $sac_transparant = $this->get_select_values('sac_transparant');
         $tantan = $this->get_select_values('tantan');
+        // 50 pieces
+        $plastique_chaud_750ml = $this->get_select_values('50_plus');
+        $plastique_froide_500ml = $this->get_select_values('50_plus');
+        $plastique_froide_1000ml = $this->get_select_values('50_plus');
+        $bol_carton_rond = $this->get_select_values('50_plus');
+        // 100 pieces
+        $aluminium_401 = $this->get_select_values('100_plus');
+        $aluminium_701 = $this->get_select_values('100_plus');
+        $aluminium_901 = $this->get_select_values('100_plus');
+        $pot_de_sauce_30cc = $this->get_select_values('100_plus');
 
-        $pulldowns = [$papier_toilettes, $papier_clients, $sac_petit, $sac_grand, $sac_poubelle, $tantan];
+        $pulldowns = [$papier_toilettes, $papier_clients, $sac_petit, $sac_grand, $sac_poubelle, $tantan, 
+                            $plastique_chaud_750ml, $plastique_froide_500ml, $plastique_froide_1000ml, $bol_carton_rond, 
+                            $aluminium_401, $aluminium_701,$aluminium_901, $pot_de_sauce_30cc, $sac_transparant
+                    ];
 
         // テーブルのカラム名 を設定
-        $columun_names = ["papier_toilettes", "papier_serviette", "sac_petit", "sac_grand", "sac_poubelle", "tantan_boeuf"];     
+        $columun_names = ["papier_toilettes", "papier_serviette", "sac_petit", "sac_grand", "sac_poubelle", "tantan_boeuf", 
+        "plastique_chaud_750ml", "plastique_froide_500ml", "plastique_froide_1000ml", "bol_carton_rond", 
+        "aluminium_401","aluminium_701","aluminium_901", "pot_de_sauce_30cc", "sac_transparant"];
+
         $stock_accessoire_display = FumiTools::get_display_datas_stock_accessoires($stock_accessoire, $pulldowns, $columun_names);
 
         //$newArray = array_combine($columun_names, $stock_accessoire_display);
@@ -488,6 +576,25 @@ class JesserController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function get_select_values($s_id){
+
+        if($s_id == '50_plus'){
+            // select ボックス要素作成
+            $cols = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => 1, 'name' => 'moins que 50 pièces'],
+                ['id' => 2, 'name' => 'beaucoup'],
+            ]);
+            return $cols;
+        }
+        if($s_id == '100_plus'){
+            // select ボックス要素作成
+            $cols = collect([
+                ['id' => '', 'name' => ''],
+                ['id' => 1, 'name' => 'moins que 100 pièces'],
+                ['id' => 2, 'name' => 'beaucoup'],
+            ]);
+            return $cols;
+        }
 
         if($s_id == 'papier_toilettes'){
             // select ボックス要素作成
@@ -510,21 +617,11 @@ class JesserController extends Controller
             return $cols;
         }
 
-        if($s_id == 'sac_petit'){
+        if($s_id == 'sac_petit'|| $s_id == 'sac_grand' || $s_id == 'sac_transparant'){
             // select ボックス要素作成
             $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '1', 'name' => 'moins que 10 pièces'],
-                ['id' => '2', 'name' => 'beaucoup'],
-            ]);
-            return $cols;
-        }
-
-        if($s_id == 'sac_grand'){
-            // select ボックス要素作成
-            $cols = collect([
-                ['id' => '', 'name' => ''],
-                ['id' => '1', 'name' => 'moins que 10 pièces'],
+                ['id' => '1', 'name' => 'moins que 200 pièces'],
                 ['id' => '2', 'name' => 'beaucoup'],
             ]);
             return $cols;
@@ -534,9 +631,8 @@ class JesserController extends Controller
             // select ボックス要素作成
             $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '1', 'name' => 'un peu'],
-                ['id' => '2', 'name' => 'moyen'],
-                ['id' => '3', 'name' => 'beaucoup'],
+                ['id' => 1, 'name' => 'moins que 100 pièces'],
+                ['id' => 2, 'name' => 'beaucoup'],
             ]);
             return $cols;
         }
