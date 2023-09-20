@@ -217,7 +217,7 @@
 				<td>pieces</td>
 			</tr>
 <!-- 事務所の肉系のやつ -->
-@elseif ($daysoftheweek == 'tue')
+@elseif ($daysoftheweek == 'wed')
 			<tr>
 				<td>viande hachée de poulet en congelé (bureau)</td>
 				<td><input type="number" id="viande_hachee_poulet_congele" name="viande_hachee_poulet_congele" class="form-control" value="{{ Session::get('viande_hachee_poulet_congele') }}" required></td>
@@ -240,7 +240,7 @@
 				<td></td>
 			</tr>
 <!-- アジア食材系のやーーつぅー -->
-@elseif ($daysoftheweek == 'wed')
+@elseif ($daysoftheweek == 'thu')
 			<!-- sauce_poisson -->
 			<tr>
 				<td>sauce_poisson</td>
