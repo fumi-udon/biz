@@ -18,17 +18,9 @@
         <ul class="list-group">
             <li class="list-group-item">
             <div class="row align-items-center">
-                <div class="col">commence</div>
+                <div class="col">Commencer</div>
                 <div class="col-auto">
                 <a href="khouloud_commence_input" class="btn btn-primary">select</a>
-                </div>
-            </div>
-            </li>
-            <li class="list-group-item">
-            <div class="row align-items-center">
-                <div class="col">Préparation pour le matin</div>
-                <div class="col-auto">
-                <a href="preparer_matin" class="btn btn-primary">select</a>
                 </div>
             </div>
             </li>

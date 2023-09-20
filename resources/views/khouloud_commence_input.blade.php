@@ -70,81 +70,8 @@
             @endforeach
         </select>
     </td>
-    <td>pièces</td>
+    <td></td>
 			</tr>
-
-			<tr>
-				<td>tomate</td>
-				<td>
-					<select class="form-select" id="tomate" name="tomate" required>
-						@foreach ($tomate as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('tomate_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>onion</td>
-				<td>
-					<select class="form-select" id="onion" name="onion" required>
-						@foreach ($onion as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('onion_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>carottes</td>
-				<td>
-					<select class="form-select" id="carottes" name="carottes" required>
-						@foreach ($carottes as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('carottes_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>piment doux</td>
-				<td>
-					<select class="form-select" id="piment" name="piment" required>
-						@foreach ($piment as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('piment_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>aubergine</td>
-				<td>
-					<select class="form-select" id="aubergine" name="aubergine" required>
-						@foreach ($aubergine as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('aubergine_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>courgette</td>
-				<td>
-					<select class="form-select" id="courgette" name="courgette" required>
-						@foreach ($courgette as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('courgette_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
 			<tr>
 				<td>pomme du terre</td>
 				<td>
@@ -156,43 +83,6 @@
 				</td>
 				<td>pièces</td>
 			</tr>
-
-			<tr>
-				<td>coreandre</td>
-				<td>
-					<select class="form-select" id="coreandre" name="coreandre" required>
-						@foreach ($coreandre as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('coreandre_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>laitue</td>
-				<td>
-					<select class="form-select" id="laitue" name="laitue" required>
-						@foreach ($laitue as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('laitue_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>choux</td>
-				<td>
-					<select class="form-select" id="choux" name="choux" required>
-						@foreach ($choux as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('choux_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
 			<tr>
 				<td>apple (pomme)</td>
 				<td>
@@ -204,17 +94,7 @@
 				</td>
 				<td>pièces</td>
 			</tr>
-			<tr>
-				<td>citron</td>
-				<td>
-					<select class="form-select" id="citron" name="citron" required>
-						@foreach ($citron as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('citron_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
+
             </tbody>
         </table>
 		<div class="row p-2">
@@ -241,74 +121,43 @@ $actionMessage = 'Khouloud用';
         </a>
     </p>
 
-	@if(!empty($stock_accessoire))
+	@if(!empty($stock_cuisine_main))
 	<div class="table-responsive" id="records" style="width: 100%;">
-	&#11093; accessoiresテーブル
+	&#11093; StockMain
 	<table class="table table-striped" style="min-width: 800px;">
 		<thead>
 			<tr>			
 				@foreach ($columns as $column)
-					@if ($column === 'created_at')
-						<th>Date</th>
-					@elseif ($column === 'tahina_pate_du_sesame')
-						<th>tahina</th>
-					@elseif ($column === 'viande_hachee_poulet_congele')
-					<th>hachée poulet congelé</th>
-					@elseif ($column === 'viande_hachee_boeuf_congele')
-					<th>hachée boeuf congelé</th>
-					@elseif ($column === 'tahina_pate_du_sesame')
-						<th>tahina</th>
-					@else
-						<th>{{ $column }}</th>
-					@endif					
+						<th>{{ $column }}</th>			
 				@endforeach
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($stock_accessoire as $accessoire)
+			@foreach ($stock_cuisine_main as $record)
 				<tr>
 					@foreach ($columns as $column)
 					<td>
-						@if($column === 'papier_toilettes')
+						@if($column === 'patecurry')
 							@php
-								$id = $accessoire->$column;
-								$matchingName = $papier_toilettes->where('id', $id)->first()['name'] ?? '';
+								$id = $record->$column;
+								$matchingName = $patecurry->where('id', $id)->first()['name'] ?? '';
 							@endphp
 							{{ $matchingName }}
-						@elseif($column === 'papier_serviette')
+						@elseif($column === 'pomme_de_terre')
 							@php
-								$id = $accessoire->$column;
-								$matchingName = $papier_serviette->where('id', $id)->first()['name'] ?? '';
+								$id = $record->$column;
+								$matchingName = $pomme_de_terre->where('id', $id)->first()['name'] ?? '';
 							@endphp
 							{{ $matchingName }}
-						@elseif($column === 'sac_petit')
+						@elseif($column === 'apple')
 							@php
-								$id = $accessoire->$column;
-								$matchingName = $sac_petit->where('id', $id)->first()['name'] ?? '';
+								$id = $record->$column;
+								$matchingName = $apple->where('id', $id)->first()['name'] ?? '';
 							@endphp
-							{{ $matchingName }}
-						@elseif($column === 'sac_grand')
-							@php
-								$id = $accessoire->$column;
-								$matchingName = $sac_grand->where('id', $id)->first()['name'] ?? '';
-							@endphp
-							{{ $matchingName }}
-						@elseif($column === 'sac_poubelle')
-							@php
-								$id = $accessoire->$column;
-								$matchingName = $sac_poubelle->where('id', $id)->first()['name'] ?? '';
-							@endphp
-							{{ $matchingName }}
-						@elseif($column === 'tantan_boeuf')
-							@php
-								$id = $accessoire->$column;
-								$matchingName = $tantan->where('id', $id)->first()['name'] ?? '';
-							@endphp
-							{{ $matchingName }}
-
+						{{ $matchingName }}
 						@else
 							<!-- プルダウン以外 -->
-							{{ $accessoire->$column }}
+							{{ $record->$column }}
 						@endif
 					</td>
 					@endforeach

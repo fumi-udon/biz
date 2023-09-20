@@ -43,23 +43,9 @@ class KhouloudController extends Controller
 
         // select ボックス要素作成
         $patecurry = $this->get_select_values('patecurry');
-
-        $tomate = $this->get_select_values('line_5piece');
-        $onion = $this->get_select_values('line_5piece');
-        $carottes = $this->get_select_values('line_5piece');        
-        $piment = $this->get_select_values('line_5piece');
-        $aubergine = $this->get_select_values('line_5piece');
-        $courgette = $this->get_select_values('line_5piece');
         $pomme_de_terre = $this->get_select_values('line_5piece');
-
-        $poireaux = $this->get_select_values('standard');
-        $persil = $this->get_select_values('standard');
-        $coreandre = $this->get_select_values('standard');
-        $laitue = $this->get_select_values('line_2piece');
-        $choux = $this->get_select_values('line_2piece');
         $apple = $this->get_select_values('line_2piece');
-        $citron = $this->get_select_values('line_5piece');        
-
+        
         /**
          * Satoの手動指示がある場合は優先表示
          * flg 11 [上書き]
@@ -86,24 +72,31 @@ class KhouloudController extends Controller
             //[上書き]サト指示有の為 表示
             \Session::flash('sato_record_add', $sato_record_add);
         }
+
+        // 登録データ表示
+        $columns = [
+            'created_at',
+            'patecurry',
+            'pomme_de_terre',
+            'apple',
+         ];
+
+        $stock_cuisine_main = StockCuisineMain::select($columns)
+            ->where('shop', '=', 'bn') // 最初の条件
+            ->where('page_id', '=', 'khouloud_commence_input') // 条件
+            ->where('fuseaux', '=', 'am')   // 条件
+            ->orderBy('created_at', 'desc') // 'created_at' カラムを降順にソート
+            ->limit(6) // 最新の5行を取得
+            ->get();
+
         return view('khouloud_commence_input', compact(
             'today',
             'daysoftheweek',
             'patecurry',
-            'tomate',
-            'onion',
-            'carottes',
-            'piment',
-            'aubergine',
-            'courgette',
             'pomme_de_terre',
-            'poireaux',
-            'persil',
-            'coreandre',
-            'laitue',
-            'choux',
             'apple',
-            'citron',
+            'stock_cuisine_main',
+            'columns',
         ));
     }
 
@@ -120,20 +113,8 @@ class KhouloudController extends Controller
         // session 格納
         \Session::flash('flash_message', 'MERCI<br>Les données sont envoyées correctement');
         \Session::flash('patecurry_now', $inputs['patecurry']);
-        \Session::flash('tomate_now', $inputs['tomate']);
-        \Session::flash('onion_now', $inputs['onion']);
-        \Session::flash('carottes_now', $inputs['carottes']);
-        \Session::flash('piment_now', $inputs['piment']);
-        \Session::flash('aubergine_now', $inputs['aubergine']);
-        \Session::flash('courgette_now', $inputs['courgette']);
         \Session::flash('pomme_de_terre_now', $inputs['pomme_de_terre']);
-        \Session::flash('poireaux_now', $inputs['poireaux']);
-        \Session::flash('persil_now', $inputs['persil']);
-        \Session::flash('coreandre_now', $inputs['coreandre']);
-        \Session::flash('laitue_now', $inputs['laitue']);
-        \Session::flash('choux_now', $inputs['choux']);
         \Session::flash('apple_now', $inputs['apple']);
-        \Session::flash('citron_now', $inputs['citron']);
         \Session::flash('daysoftheweek', $daysoftheweek);
 
         // PlanProduction テーブルからカレー作り取得 (id=8)
@@ -175,10 +156,12 @@ class KhouloudController extends Controller
         if($s_id == 'patecurry'){
             $cols = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '1', 'name' => 'un peu'],
-                ['id' => '2', 'name' => 'moins que moitié'],
-                ['id' => '3', 'name' => 'la moitié'],
-                ['id' => '4', 'name' => 'beaucoup'],
+                ['id' => '1', 'name' => 'trés peu'],
+                ['id' => '2', 'name' => 'un peu'],
+                ['id' => '3', 'name' => 'moins que moitié'],
+                ['id' => '4', 'name' => 'la moitié'],
+                ['id' => '5', 'name' => 'plus que la moité'],
+                ['id' => '6', 'name' => 'beaucoup'],
             ]);
             return $cols;
         }
