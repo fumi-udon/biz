@@ -15,7 +15,7 @@
 		<div class="alert alert-primary border" role="alert">
 		<p><h5>Bonjour Khouloud!</h5></p>
 		@php
-			$text_etc = "➡ Rappelez-vous au légumerie si nous avons la commandé sur Whatsapp : TEL: 21 733 668 ";
+			$text_etc = "➡ Rappelez-vous au légumerie si nous avons la commandé sur Whatsapp : TEL: 29 105 294";
 		@endphp
 
 		<!-- サト上書き -->
@@ -26,9 +26,9 @@
 			</div>
 		@else 
 			<div>
-				<!-- カレーを作るかどうか -->
+				<!-- カレーを作るかどうか PlanProductionテーブル (id=8) -->
 				@if(Session::get('curry') == '1')
-					&#x1f35b;  Veuillez préparer le curry ce matin  
+					&#x1f35b;  Veuillez préparer le curry ce matin
 				@else
 					&#x1f538;  <span style="color: red;">Ne pas</span> faire le curry ce matin alors nettoyez-vous l'hôte avec aicha
 				@endif
