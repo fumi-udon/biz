@@ -79,6 +79,7 @@ class KhouloudController extends Controller
             'patecurry',
             'pomme_de_terre',
             'apple',
+            'bn1' // okonomiyaki
          ];
 
         $stock_cuisine_main = StockCuisineMain::select($columns)
@@ -115,6 +116,8 @@ class KhouloudController extends Controller
         \Session::flash('patecurry_now', $inputs['patecurry']);
         \Session::flash('pomme_de_terre_now', $inputs['pomme_de_terre']);
         \Session::flash('apple_now', $inputs['apple']);
+        \Session::flash('okonomiyaki_now', $inputs['bn1']);
+        
         \Session::flash('daysoftheweek', $daysoftheweek);
 
         // PlanProduction テーブルからカレー作り取得 (id=8)
@@ -130,7 +133,7 @@ class KhouloudController extends Controller
         $inputs['shop'] = 'bn';
         $inputs['page_id'] = 'khouloud_commence_input';
         $inputs['fuseaux'] = 'am';
-        $inputs['staff'] = 'khouloud';   
+        $inputs['staff'] = 'khouloud';  
         StockCuisineMain::create($inputs);
 
         // method_name

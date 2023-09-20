@@ -16,6 +16,7 @@
 		<p><h5>Bonjour Khouloud!</h5></p>
 		@php
 			$text_etc = "➡ Rappelez-vous au légumerie si nous avons la commandé sur Whatsapp : TEL: 29 105 294  (Aziz livreur)";
+			$text_ref_01 = "";
 		@endphp
 
 		<!-- サト上書き -->
@@ -25,17 +26,33 @@
 				<p>{{ $text_etc }}</p>
 			</div>
 		@else 
-			<div>
+			<div class="">
 				<!-- カレーを作るかどうか PlanProductionテーブル (id=8) -->
 				@if(Session::get('curry') == '1')
-					&#x1f35b;  Veuillez préparer le curry ce matin
+					<p>&#x1f35b;  Veuillez préparer le curry ce matin</p>
 				@else
-					&#x1f538;  <span style="color: red;">Ne pas</span> faire le curry ce matin alors nettoyez-vous l'hôte avec aicha
+				<p>&#x1f538;  <span style="color: red;">Ne pas</span> faire le curry ce matin alors nettoyez-vous l'hôte avec aicha</p>
 				@endif
 				<!-- 掃除プラン -->
 				@if(Session::get('daysoftheweek') == 'tue')
 					<p> &#x1f529; Plan de nettoyage:  table au milieu de la cuisine _ khouloud (après 15h)</p>
 				@endif
+
+				<!-- おにぎりの鬼 -->
+				@if(Session::get('daysoftheweek') == 'fri' || Session::get('daysoftheweek') == 'mon')
+					<p> &#x2605; Onigiri (140g)  2 pièces </p>
+				@elseif(Session::get('daysoftheweek') == 'sat')
+					<p> &#x2605; Onigiri (140g)  4 pièces </p>
+				@endif
+
+				<!-- お好み焼き KIT　きっと役に立つ  -->
+				@if( Session::get('okonomiyaki_now') == 0 )
+				<p> &#x1f365; Paquet pour l'okonomiyaki(farine et du poudre, choux2, chips)   1 paquet</p>
+				@endif
+
+				<!-- ボトル満タンが気持ちえーー  -->
+				<p> &#x1f376; Remplir des bouteilles : mayonnaise / moutard / nori émincées</p>
+
 			</div>
 			<!-- サト追加 -->
 			@if(Session::has('sato_record_add'))
@@ -95,6 +112,13 @@
 				<td>pièces</td>
 			</tr>
 
+			<!-- okonomiyaki -->
+			<tr>
+				<td>okonomiyaki</td>
+				<td><input type="number" id="bn1" name="bn1" class="form-control" value="{{ Session::get('okonomiyaki_now') }}" required></td>
+				<td>paquet</td>
+			</tr>
+
             </tbody>
         </table>
 		<div class="row p-2">
@@ -128,7 +152,11 @@ $actionMessage = 'Khouloud用';
 		<thead>
 			<tr>			
 				@foreach ($columns as $column)
-						<th>{{ $column }}</th>			
+					@if($column === 'bn1')
+					<th>Okonomiyaki</th>
+					@else
+					<th>{{ $column }}</th>
+					@endif		
 				@endforeach
 			</tr>
 		</thead>
@@ -154,7 +182,7 @@ $actionMessage = 'Khouloud用';
 								$id = $record->$column;
 								$matchingName = $apple->where('id', $id)->first()['name'] ?? '';
 							@endphp
-						{{ $matchingName }}
+							{{ $matchingName }}
 						@else
 							<!-- プルダウン以外 -->
 							{{ $record->$column }}
