@@ -15,7 +15,7 @@
 		<div class="alert alert-primary border" role="alert">
 		<p><h5>Bonjour Khouloud!</h5></p>
 		@php
-			$text_etc = "➡ Rappelez-vous au légumerie si nous avons la commandé sur Whatsapp : TEL: 29 105 294";
+			$text_etc = "➡ Rappelez-vous au légumerie si nous avons la commandé sur Whatsapp : TEL: 29 105 294  (Aziz livreur)";
 		@endphp
 
 		<!-- サト上書き -->
@@ -151,30 +151,6 @@
 					<select class="form-select" id="pomme_de_terre" name="pomme_de_terre" required>
 						@foreach ($pomme_de_terre as $item)
 							<option value="{{ $item['id'] }}" @if( Session::get('pomme_de_terre_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>poireaux</td>
-				<td>
-					<select class="form-select" id="poireaux" name="poireaux" required>
-						@foreach ($poireaux as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('poireaux_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td>pièces</td>
-			</tr>
-
-			<tr>
-				<td>persil</td>
-				<td>
-					<select class="form-select" id="persil" name="persil" required>
-						@foreach ($persil as $item)
-							<option value="{{ $item['id'] }}" @if( Session::get('persil_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
 						@endforeach
 					</select>
 				</td>
