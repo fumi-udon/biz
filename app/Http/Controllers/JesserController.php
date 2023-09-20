@@ -408,7 +408,14 @@ class JesserController extends Controller
             'tahina_pate_du_sesame',
             'viande_hachee_poulet_congele',
             'viande_hachee_boeuf_congele',
-            'tantan_boeuf',
+            'tantan_boeuf',            
+            // asia _ select box
+            "sauce_poisson", "pate_miso_20kg", 
+            "mirin_20kg", "algue_wakame", 
+            "poudre_dashi", "shichimi", 
+            "sauce_tomyum", "sauce_toubanjyun",
+            //number
+            "gari_gingimbre", "algue_nori",
         ];
 
         $stock_accessoire = StockAccessoire::select($columns)
@@ -463,7 +470,14 @@ class JesserController extends Controller
             'tahina_pate_du_sesame',
             'viande_hachee_poulet_congele',
             'viande_hachee_boeuf_congele',
-            'tantan_boeuf',             
+            'tantan_boeuf',
+            // asia _ select box
+            "sauce_poisson", "pate_miso_20kg", 
+            "mirin_20kg", "algue_wakame", 
+            "poudre_dashi", "shichimi", 
+            "sauce_tomyum", "sauce_toubanjyun",
+            //number
+            "gari_gingimbre", "algue_nori",       
         ]);
         // 他のカラムのデータを設定
         $inputs['flg'] = 1;
@@ -472,8 +486,7 @@ class JesserController extends Controller
         $this->set_session_datas(true ,$inputs);
 
         // フォームデータをStockモデルを使用してインサート
-        StockAccessoire::create($inputs);
-
+         $resultat= StockAccessoire::create($inputs);
         // store 
         \Session::flash("flash_message", true);
 
@@ -569,16 +582,38 @@ class JesserController extends Controller
         $aluminium_701 = $this->get_select_values('100_plus');
         $aluminium_901 = $this->get_select_values('100_plus');
         $pot_de_sauce_30cc = $this->get_select_values('100_plus');
+        // アジア食材
+        $sauce_poisson = $this->get_select_values('asia_1');
+        $pate_miso_20kg = $this->get_select_values('asia_1');
+        $mirin_20kg = $this->get_select_values('asia_1');
+        $algue_wakame = $this->get_select_values('asia_1');
+        $poudre_dashi = $this->get_select_values('asia_1');
+        $shichimi = $this->get_select_values('asia_1');
+        $sauce_tomyum = $this->get_select_values('asia_1');
+        $sauce_toubanjyun = $this->get_select_values('asia_1');
 
         $pulldowns = [$papier_toilettes, $papier_clients, $sac_petit, $sac_grand, $sac_poubelle, $tantan, 
                             $plastique_chaud_750ml, $plastique_froide_500ml, $plastique_froide_1000ml, $bol_carton_rond, 
-                            $aluminium_401, $aluminium_701,$aluminium_901, $pot_de_sauce_30cc, $sac_transparant
+                            $aluminium_401, $aluminium_701,$aluminium_901, $pot_de_sauce_30cc, $sac_transparant,
+                            $sauce_poisson,
+                            $pate_miso_20kg,
+                            $mirin_20kg,
+                            $algue_wakame,
+                            $poudre_dashi,
+                            $shichimi,
+                            $sauce_tomyum,
+                            $sauce_toubanjyun,
                     ];
 
         // テーブルのカラム名 を設定
         $columun_names = ["papier_toilettes", "papier_serviette", "sac_petit", "sac_grand", "sac_poubelle", "tantan_boeuf", 
-        "plastique_chaud_750ml", "plastique_froide_500ml", "plastique_froide_1000ml", "bol_carton_rond", 
-        "aluminium_401","aluminium_701","aluminium_901", "pot_de_sauce_30cc", "sac_transparant"];
+                        "plastique_chaud_750ml", "plastique_froide_500ml", "plastique_froide_1000ml", "bol_carton_rond", 
+                        "aluminium_401","aluminium_701","aluminium_901", "pot_de_sauce_30cc", "sac_transparant",
+                        "sauce_poisson", "pate_miso_20kg", 
+                        "mirin_20kg", "algue_wakame", 
+                        "poudre_dashi", "shichimi", 
+                        "sauce_tomyum", "sauce_toubanjyun",
+            ];
 
         $stock_accessoire_display = FumiTools::get_display_datas_stock_accessoires($stock_accessoire, $pulldowns, $columun_names);
 

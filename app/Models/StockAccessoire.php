@@ -49,6 +49,13 @@ class StockAccessoire extends Model
         'color',
         'flg',
         'flg2',
+        // asia _ select box
+        "sauce_poisson", "pate_miso_20kg", 
+        "mirin_20kg", "algue_wakame", 
+        "poudre_dashi", "shichimi", 
+        "sauce_tomyum", "sauce_toubanjyun",
+        //number
+        "gari_gingimbre", "algue_nori",
     ]; 
 
     /**
