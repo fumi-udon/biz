@@ -31,17 +31,19 @@
 				<!-- 月曜：  プラン -->
 				@if($daysoftheweek == 'mon')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
+					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
 				@endif
 				<!-- 火曜： チェック銀行へ プラン -->
 				@if($daysoftheweek == 'tue')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
-					<p> &#x1f5c3; Si vous avez des chèques à encaisser, veuillez les déposer à la banque Attijari.</p>
+					<p> &#x1f5c3; Si vous avez des chèques à encaisser, veuillez les déposer à la banque Attijari avant le vendredi</p>
 					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
 				@endif
 				<!-- 水曜 チェック銀行へ プラン -->
 				@if($daysoftheweek == 'wed')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
 					<p> &#x1f5c3; Vérifier le stock de boissons et de thé et passer les commandes nécessaires.</p>
+					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
 				@endif
 				<!-- 木曜  プラン -->
 				@if($daysoftheweek == 'thu')
@@ -51,7 +53,7 @@
 				<!-- 金曜  プラン -->
 				@if($daysoftheweek == 'fri')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
-					<p> &#x1f5c3; </p>
+					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
 				@endif
 
 				<!-- Steg Sonet 月初め -->

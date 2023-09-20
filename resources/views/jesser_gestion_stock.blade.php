@@ -33,7 +33,10 @@
                 </tr>
             </thead>
             <tbody>
-		@if ($daysoftheweek == 'tue')
+<!-- ストック管理 リスト（曜日毎に） start -->
+
+<!-- Emballage系統 -->
+@if ($daysoftheweek == 'tue')
 			<tr>
 				<td>essuie jumbo</td>
 				<td><input type="number" id="essuie_jmb" name="essuie_jmb" class="form-control" value="{{ Session::get('essuie_jmb') }}" required></td>
@@ -206,14 +209,15 @@
 			<tr>
 				<td>bicarbonate</td>
 				<td><input type="number" id="bicarbonate" name="bicarbonate" class="form-control" value="{{ Session::get('bicarbonate') }}" required></td>
-				<td>boite</td>
+				<td>paquets</td>
 			</tr>
 			<tr>
 				<td>tahina pâte du sésame</td>
 				<td><input type="number" id="tahina_pate_du_sesame" name="tahina_pate_du_sesame" class="form-control" value="{{ Session::get('tahina_pate_du_sesame') }}" required></td>
 				<td>pieces</td>
 			</tr>
-		@elseif ($daysoftheweek == 'tue')
+<!-- 事務所の肉系のやつ -->
+@elseif ($daysoftheweek == 'tue')
 			<tr>
 				<td>viande hachée de poulet en congelé (bureau)</td>
 				<td><input type="number" id="viande_hachee_poulet_congele" name="viande_hachee_poulet_congele" class="form-control" value="{{ Session::get('viande_hachee_poulet_congele') }}" required></td>
@@ -235,7 +239,128 @@
 				</td>
 				<td></td>
 			</tr>
-		@endif
+<!-- アジア食材系のやーーつぅー -->
+@elseif ($daysoftheweek == 'wed')
+			<!-- sauce_poisson -->
+			<tr>
+				<td>sauce_poisson</td>
+				<td>
+					<select class="form-select" id="sauce_poisson" name="sauce_poisson" required>
+						@foreach ($sauce_poisson as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('sauce_poisson_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td> bouteilles</td>
+			</tr>
+
+			<!-- pate_miso_20kg -->
+			<tr>
+				<td>pate_miso_20kg</td>
+				<td>
+					<select class="form-select" id="pate_miso_20kg" name="pate_miso_20kg" required>
+						@foreach ($pate_miso_20kg as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('pate_miso_20kg_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td> bidon</td>
+			</tr>
+
+			<!-- mirin_20kg -->
+			<tr>
+				<td>mirin_20kg</td>
+				<td>
+					<select class="form-select" id="mirin_20kg" name="mirin_20kg" required>
+						@foreach ($mirin_20kg as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('mirin_20kg_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td> bidon</td>
+			</tr>
+
+			<!-- algue_nori -->
+			<tr>
+				<td>algue_nori</td>
+				<td><input type="number" id="algue_nori" name="algue_nori" class="form-control" value="{{ Session::get('algue_nori') }}" required></td>
+				<td>sachet</td>
+			</tr>
+
+			<!-- algue_wakame -->
+			<tr>
+				<td>algue_wakame</td>
+				<td>
+					<select class="form-select" id="algue_wakame" name="algue_wakame" required>
+						@foreach ($algue_wakame as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('algue_wakame_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td> paquet</td>
+			</tr>
+
+			<!-- gari_gingimbre -->
+			<tr>
+				<td>gari_gingimbre</td>
+				<td><input type="number" id="gari_gingimbre" name="gari_gingimbre" class="form-control" value="{{ Session::get('gari_gingimbre') }}" required></td>
+				<td>sachet</td>
+			</tr>
+
+			<!-- poudre_dashi -->
+			<tr>
+				<td>poudre_dashi</td>
+				<td>
+					<select class="form-select" id="poudre_dashi" name="poudre_dashi" required>
+						@foreach ($poudre_dashi as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('poudre_dashi_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td> paquet</td>
+			</tr>
+
+			<!-- shichimi -->
+			<tr>
+				<td>shichimi</td>
+				<td>
+					<select class="form-select" id="shichimi" name="shichimi" required>
+						@foreach ($shichimi as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('shichimi_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td> paquet</td>
+			</tr>
+
+			<!-- sauce_tomyum -->
+			<tr>
+				<td>sauce_tomyum</td>
+				<td>
+					<select class="form-select" id="sauce_tomyum" name="sauce_tomyum" required>
+						@foreach ($sauce_tomyum as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('sauce_tomyum_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td> pièces</td>
+			</tr>
+
+			<!-- sauce_toubanjyun -->
+			<tr>
+				<td>sauce_toubanjyun</td>
+				<td>
+					<select class="form-select" id="sauce_toubanjyun" name="sauce_toubanjyun" required>
+						@foreach ($sauce_toubanjyun as $item)
+						<option value="{{ $item['id'] }}" @if( Session::get('sauce_toubanjyun_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td> pièces</td>
+			</tr>
+@endif
+<!-- ストック管理 リスト（曜日毎に） end -->
+
             </tbody>
         </table>
 		<div class="row p-2">

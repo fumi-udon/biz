@@ -23,6 +23,7 @@ use App\Models\Finance;
 use App\Models\AuthHanabishi;
 use App\Models\Responsable;
 use App\Models\StockAccessoire;
+use App\Models\StockCuisineMain;
 
 use Carbon\Carbon;
 
@@ -372,9 +373,19 @@ class JesserController extends Controller
         $sac_petit = $this->get_select_values('sac_petit');
         $sac_grand = $this->get_select_values('sac_grand');
         $sac_poubelle = $this->get_select_values('sac_poubelle');
-        $sac_transparant = $this->get_select_values('sac_transparant');
-        
+        $sac_transparant = $this->get_select_values('sac_transparant');        
         $tantan = $this->get_select_values('tantan');
+
+        // アジア食材
+        $sauce_poisson = $this->get_select_values('asia_1');
+        $pate_miso_20kg = $this->get_select_values('asia_1');
+        $mirin_20kg = $this->get_select_values('asia_1');
+        $algue_wakame = $this->get_select_values('asia_1');
+        $poudre_dashi = $this->get_select_values('asia_1');
+        $shichimi = $this->get_select_values('asia_1');
+        $sauce_tomyum = $this->get_select_values('asia_1');
+        $sauce_toubanjyun = $this->get_select_values('asia_1');
+  
 
         $columns = [
             'created_at',
@@ -418,8 +429,12 @@ class JesserController extends Controller
             'pot_de_sauce_30cc',
             'bol_carton_rond',
             'sac_transparant',
+            "sauce_poisson", "pate_miso_20kg", 
+            "mirin_20kg", "algue_wakame", 
+            "poudre_dashi", "shichimi", 
+            "sauce_tomyum", "sauce_toubanjyun",
             'stock_accessoire', 
-            'daysoftheweek'
+            'daysoftheweek',
          ));  
     }
 
@@ -448,7 +463,7 @@ class JesserController extends Controller
             'tahina_pate_du_sesame',
             'viande_hachee_poulet_congele',
             'viande_hachee_boeuf_congele',
-            'tantan_boeuf',
+            'tantan_boeuf',             
         ]);
         // 他のカラムのデータを設定
         $inputs['flg'] = 1;
@@ -491,6 +506,10 @@ class JesserController extends Controller
             'sac_poubelle',
             'sac_transparant',
             'tantan_boeuf',
+            "sauce_poisson", "pate_miso_20kg", 
+            "mirin_20kg", "algue_wakame", 
+            "poudre_dashi", "shichimi", 
+            "sauce_tomyum", "sauce_toubanjyun",
         ];        
         foreach ($keys_select_box as $key) {
             $nowKey = $key . '_now';
@@ -506,6 +525,7 @@ class JesserController extends Controller
             'tahina_pate_du_sesame',
             'viande_hachee_poulet_congele',
             'viande_hachee_boeuf_congele',
+            "gari_gingimbre", "algue_nori",
         ];        
         foreach ($keys as $key) {
             if (isset($inputs[$key])) {
@@ -579,6 +599,24 @@ class JesserController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function get_select_values($s_id){
+
+        if($s_id == 'asia_1'){
+            // select ボックス要素作成
+            $cols = collect([
+                    ['id' => '', 'name' => ''],
+                    ['id' => 1, 'name' => 1],
+                    ['id' => 2, 'name' => 2],
+                    ['id' => 3, 'name' => 3],
+                    ['id' => 4, 'name' => 4],
+                    ['id' => 5, 'name' => 5],
+                    ['id' => 6, 'name' => 6],
+                    ['id' => 7, 'name' => 7],
+                    ['id' => 8, 'name' => 8],
+                    ['id' => 9, 'name' => 9],
+                    ['id' => 10, 'name' => 10],                
+            ]);
+            return $cols;
+        }
 
         if($s_id == '50_plus'){
             // select ボックス要素作成
