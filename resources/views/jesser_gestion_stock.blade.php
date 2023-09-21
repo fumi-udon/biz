@@ -22,6 +22,7 @@
 
     <div class="my-3 p-3 bg-body rounded shadow-sm">
 	  <div class="container px-1">
+		<h4>Organiser les marchandises et les compter</h4>
 		<form method='POST' action="{{ route('jesser.gestion.stock.store',['id' => 'stock_emballage','params' => 'bistronippon']) }}">
 		@csrf
         <table class="table table-bordered">
