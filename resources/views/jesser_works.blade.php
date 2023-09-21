@@ -31,34 +31,34 @@
 				<!-- 月曜：  プラン -->
 				@if($daysoftheweek == 'mon')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
-					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
+					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 				<!-- 火曜： チェック銀行へ プラン -->
 				@if($daysoftheweek == 'tue')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
 					<p> &#x1f5c3; Si vous avez des chèques à encaisser, veuillez les déposer à la banque Attijari avant le vendredi</p>
-					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
+					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 				<!-- 水曜 チェック銀行へ プラン -->
 				@if($daysoftheweek == 'wed')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
 					<p> &#x1f5c3; Vérifier le stock de boissons et de thé et passer les commandes nécessaires.</p>
-					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
+					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 				<!-- 木曜  プラン -->
 				@if($daysoftheweek == 'thu')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
-					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
+					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 				<!-- 金曜  プラン -->
 				@if($daysoftheweek == 'fri')
 					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
-					<p> &#x1f5c3; Achats: monoprix / Zepyer / des magazins (demandez un list à Sato)</p>
+					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 
 				<!-- Steg Sonet 月初め -->
 				@if($daysoftheweek == 'mon' && ( $le_date == '01' || $le_date == '02' || $le_date == '03' || $le_date == '04' || $le_date == '05' || $le_date == '06' || $le_date == '07' || $le_date == '08'))
-					<p> &#x1f6ce; Si vous n'avez pas encore réglé vos factures STEG/SONET/etc du mois dernier, veuillez les payer cette semaine. N'oubliez pas apporter des photos</p>
+					<p> &#x1f6ce; Si vous n'avez pas encore réglé vos factures STEG/SONET/etc du mois dernier, veuillez les payer cette semaine. N'oubliez pas apporter des photos de deux compteur</p>
 				@endif
 			</div>
 			<!-- サト追加 -->
