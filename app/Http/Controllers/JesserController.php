@@ -377,14 +377,14 @@ class JesserController extends Controller
         $tantan = $this->get_select_values('tantan');
 
         // アジア食材
-        $sauce_poisson = $this->get_select_values('asia_1');
+        //$sauce_poisson = $this->get_select_values('asia_1');
         $pate_miso_20kg = $this->get_select_values('asia_1');
         $mirin_20kg = $this->get_select_values('asia_1');
         $algue_wakame = $this->get_select_values('asia_1');
-        $poudre_dashi = $this->get_select_values('asia_1');
+        // $poudre_dashi = $this->get_select_values('asia_1');
         $shichimi = $this->get_select_values('asia_1');
-        $sauce_tomyum = $this->get_select_values('asia_1');
-        $sauce_toubanjyun = $this->get_select_values('asia_1');
+        //$sauce_tomyum = $this->get_select_values('asia_1');
+        //$sauce_toubanjyun = $this->get_select_values('asia_1');
   
 
         $columns = [
@@ -410,12 +410,12 @@ class JesserController extends Controller
             'viande_hachee_boeuf_congele',
             'tantan_boeuf',            
             // asia _ select box
-            "sauce_poisson", "pate_miso_20kg", 
+             "pate_miso_20kg", 
             "mirin_20kg", "algue_wakame", 
-            "poudre_dashi", "shichimi", 
-            "sauce_tomyum", "sauce_toubanjyun",
+            "shichimi",             
             //number
-            "gari_gingimbre", "algue_nori",
+            "sauce_poisson","sauce_tomyum", "sauce_toubanjyun",
+            "gari_gingimbre", "algue_nori","poudre_dashi", 
         ];
 
         $stock_accessoire = StockAccessoire::select($columns)
@@ -436,10 +436,9 @@ class JesserController extends Controller
             'pot_de_sauce_30cc',
             'bol_carton_rond',
             'sac_transparant',
-            "sauce_poisson", "pate_miso_20kg", 
+            "pate_miso_20kg", 
             "mirin_20kg", "algue_wakame", 
-            "poudre_dashi", "shichimi", 
-            "sauce_tomyum", "sauce_toubanjyun",
+            "shichimi", 
             'stock_accessoire', 
             'daysoftheweek',
          ));  
@@ -472,12 +471,14 @@ class JesserController extends Controller
             'viande_hachee_boeuf_congele',
             'tantan_boeuf',
             // asia _ select box
-            "sauce_poisson", "pate_miso_20kg", 
+            "pate_miso_20kg", 
             "mirin_20kg", "algue_wakame", 
-            "poudre_dashi", "shichimi", 
-            "sauce_tomyum", "sauce_toubanjyun",
+            "shichimi", 
+            
             //number
-            "gari_gingimbre", "algue_nori",       
+            "sauce_poisson", 
+            "sauce_tomyum", "sauce_toubanjyun",
+            "gari_gingimbre", "algue_nori", "poudre_dashi",   
         ]);
         // 他のカラムのデータを設定
         $inputs['flg'] = 1;
@@ -519,10 +520,9 @@ class JesserController extends Controller
             'sac_poubelle',
             'sac_transparant',
             'tantan_boeuf',
-            "sauce_poisson", "pate_miso_20kg", 
+            "pate_miso_20kg", 
             "mirin_20kg", "algue_wakame", 
-            "poudre_dashi", "shichimi", 
-            "sauce_tomyum", "sauce_toubanjyun",
+            "shichimi", 
         ];        
         foreach ($keys_select_box as $key) {
             $nowKey = $key . '_now';
@@ -538,7 +538,10 @@ class JesserController extends Controller
             'tahina_pate_du_sesame',
             'viande_hachee_poulet_congele',
             'viande_hachee_boeuf_congele',
-            "gari_gingimbre", "algue_nori",
+            // asia食材
+            "sauce_poisson", 
+            "sauce_tomyum", "sauce_toubanjyun",
+            "gari_gingimbre", "algue_nori", "poudre_dashi",
         ];        
         foreach ($keys as $key) {
             if (isset($inputs[$key])) {
@@ -583,37 +586,34 @@ class JesserController extends Controller
         $aluminium_901 = $this->get_select_values('100_plus');
         $pot_de_sauce_30cc = $this->get_select_values('100_plus');
         // アジア食材
-        $sauce_poisson = $this->get_select_values('asia_1');
+        //$sauce_poisson = $this->get_select_values('asia_1');
         $pate_miso_20kg = $this->get_select_values('asia_1');
         $mirin_20kg = $this->get_select_values('asia_1');
         $algue_wakame = $this->get_select_values('asia_1');
-        $poudre_dashi = $this->get_select_values('asia_1');
+        // $poudre_dashi = $this->get_select_values('asia_1');
         $shichimi = $this->get_select_values('asia_1');
-        $sauce_tomyum = $this->get_select_values('asia_1');
-        $sauce_toubanjyun = $this->get_select_values('asia_1');
+        // $sauce_tomyum = $this->get_select_values('asia_1');
+        // $sauce_toubanjyun = $this->get_select_values('asia_1');
 
         $pulldowns = [$papier_toilettes, $papier_clients, $sac_petit, $sac_grand, $sac_poubelle, $tantan, 
                             $plastique_chaud_750ml, $plastique_froide_500ml, $plastique_froide_1000ml, $bol_carton_rond, 
                             $aluminium_401, $aluminium_701,$aluminium_901, $pot_de_sauce_30cc, $sac_transparant,
-                            $sauce_poisson,
+                            // asia食材
                             $pate_miso_20kg,
                             $mirin_20kg,
                             $algue_wakame,
-                            $poudre_dashi,
                             $shichimi,
-                            $sauce_tomyum,
-                            $sauce_toubanjyun,
-                    ];
+                     ];
 
         // テーブルのカラム名 を設定
         $columun_names = ["papier_toilettes", "papier_serviette", "sac_petit", "sac_grand", "sac_poubelle", "tantan_boeuf", 
                         "plastique_chaud_750ml", "plastique_froide_500ml", "plastique_froide_1000ml", "bol_carton_rond", 
                         "aluminium_401","aluminium_701","aluminium_901", "pot_de_sauce_30cc", "sac_transparant",
-                        "sauce_poisson", "pate_miso_20kg", 
+                        // asia食材
+                        "pate_miso_20kg", 
                         "mirin_20kg", "algue_wakame", 
-                        "poudre_dashi", "shichimi", 
-                        "sauce_tomyum", "sauce_toubanjyun",
-            ];
+                        "shichimi", 
+                        ];
 
         $stock_accessoire_display = FumiTools::get_display_datas_stock_accessoires($stock_accessoire, $pulldowns, $columun_names);
 
@@ -648,7 +648,9 @@ class JesserController extends Controller
                     ['id' => 7, 'name' => 7],
                     ['id' => 8, 'name' => 8],
                     ['id' => 9, 'name' => 9],
-                    ['id' => 10, 'name' => 10],                
+                    ['id' => 10, 'name' => 10],  
+                    ['id' => 11, 'name' => 11],
+                    ['id' => 12, 'name' => 12],              
             ]);
             return $cols;
         }

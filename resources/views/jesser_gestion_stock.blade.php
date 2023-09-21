@@ -244,14 +244,8 @@
 			<!-- sauce_poisson -->
 			<tr>
 				<td>sauce_poisson</td>
-				<td>
-					<select class="form-select" id="sauce_poisson" name="sauce_poisson" required>
-						@foreach ($sauce_poisson as $item)
-						<option value="{{ $item['id'] }}" @if( Session::get('sauce_poisson_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td> bouteilles</td>
+				<td><input type="number" id="sauce_poisson" name="sauce_poisson" class="form-control" value="{{ Session::get('sauce_poisson') }}" required></td>
+				<td>bouteilles</td>
 			</tr>
 
 			<!-- pate_miso_20kg -->
@@ -309,15 +303,9 @@
 
 			<!-- poudre_dashi -->
 			<tr>
-				<td>poudre_dashi</td>
-				<td>
-					<select class="form-select" id="poudre_dashi" name="poudre_dashi" required>
-						@foreach ($poudre_dashi as $item)
-						<option value="{{ $item['id'] }}" @if( Session::get('poudre_dashi_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td> paquet</td>
+				<td>poudre_dashi (combien de kg?)</td>
+				<td><input type="number" id="poudre_dashi" name="poudre_dashi" class="form-control" value="{{ Session::get('poudre_dashi') }}" required></td>
+				<td>kg</td>
 			</tr>
 
 			<!-- shichimi -->
@@ -336,27 +324,15 @@
 			<!-- sauce_tomyum -->
 			<tr>
 				<td>sauce_tomyum</td>
-				<td>
-					<select class="form-select" id="sauce_tomyum" name="sauce_tomyum" required>
-						@foreach ($sauce_tomyum as $item)
-						<option value="{{ $item['id'] }}" @if( Session::get('sauce_tomyum_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td> pièces</td>
+				<td><input type="number" id="sauce_tomyum" name="sauce_tomyum" class="form-control" value="{{ Session::get('sauce_tomyum') }}" required></td>
+				<td>pièces</td>
 			</tr>
 
 			<!-- sauce_toubanjyun -->
 			<tr>
 				<td>sauce_toubanjyun</td>
-				<td>
-					<select class="form-select" id="sauce_toubanjyun" name="sauce_toubanjyun" required>
-						@foreach ($sauce_toubanjyun as $item)
-						<option value="{{ $item['id'] }}" @if( Session::get('sauce_toubanjyun_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
-						@endforeach
-					</select>
-				</td>
-				<td> pièces</td>
+				<td><input type="number" id="sauce_toubanjyun" name="sauce_toubanjyun" class="form-control" value="{{ Session::get('sauce_toubanjyun') }}" required></td>
+				<td>pièces</td>
 			</tr>
 @endif
 <!-- ストック管理 リスト（曜日毎に） end -->

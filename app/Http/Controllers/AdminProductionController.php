@@ -60,10 +60,13 @@ class AdminProductionController extends Controller
 
         // PlanProduction テーブルUDON設定値を取得 15時アイシャ指示 Mix用 [ID]
         $plan_production_id_five = PlanProduction::where('id',6)->first()->toArray();
+
+        // PlanProduction テーブル 朝のカレーだーい。校長
+        $plan_production_id_eight = PlanProduction::where('id',8)->first()->toArray();
         
         // Stock データ取得
         $stock_ingredients = $this->prendre_stock();
-        return view('admin/admin_production', compact('plan_production','plan_production_id_five' ,'plan_production_idtwo','action_message', 'stock_ingredients'));
+        return view('admin/admin_production', compact('plan_production','plan_production_id_eight','plan_production_id_five' ,'plan_production_idtwo','action_message', 'stock_ingredients'));
     }
     /**
      * finance. 売上財務インデックスページ表示
@@ -196,7 +199,7 @@ class AdminProductionController extends Controller
                 ]
         );
 
-        $action_message = "ラッキーガールのサト丸ちゃんのデータ登録。上から目線かよ！！";
+        $action_message = "Acile用:チャオングルス武美のデータ登録完了。ちゃんかキリン！！";
    
         return redirect()->route('admin.index',['action_message' => $action_message])->with([
             //画面引継ぎsession格納
@@ -278,7 +281,24 @@ class AdminProductionController extends Controller
                 'sun' => $inputs['udon_base_sun'],
             ]);
             Log::debug("UDON 15時 Mix:".$resultat_id);
-            $action_message = "15時指示 UDON混ぜ個数の更新っす！ PlanProductionテーブル ID6 _ [URL]preparer_dinerページに固定表示";
+            $action_message = "おっすオラ15時のうどんっす！ PlanProductionテーブル ID6 _ [URL]preparer_dinerページに固定表示";
+        }
+
+        // Curry 朝 
+        if($btn_name == "curry_matin"){
+            //  Khouloud_commence_input page　ホルート用 id=8
+            Log::debug("UDON 更新:".$btn_name);
+            $resultat_id = PlanProduction::where('id', '8')->update([
+                'mon' => $inputs['curry_base_mon'],
+                'tue' => $inputs['curry_base_tue'],
+                'wed' => $inputs['curry_base_wed'],
+                'thu' => $inputs['curry_base_thu'],
+                'fri' => $inputs['curry_base_fri'],
+                'sat' => $inputs['curry_base_sat'],
+                'sun' => $inputs['curry_base_sun'],
+            ]);
+            Log::debug("朝いちカレー更新 yes:".$resultat_id);
+            $action_message = "朝カレーと言えば。イチロー！ PlanProductionテーブル ID8 _ [URL]Khouloud_commence_input ページに表示";
         }
 
         return redirect()->route('admin.index',['action_message' => $action_message]);

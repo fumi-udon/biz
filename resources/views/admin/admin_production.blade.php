@@ -88,14 +88,32 @@
 		</form>
     </div>
 	<!-- [追加2023/08/30] Udon15時水回し指示 エリア end -->
-
+	<hr/>
+	<!-- [追加2023/09/21] Khouloudカレー作り '1':作る-->
+	<div class=" text-muted pt-3 pb-3">
+		<h3> 朝カレー作り 固定値</h3>
+		<p>1:作る / 0:<b>作らない</b></p>
+		<form method='POST' action="{{ route('update',['btn' => 'curry_matin']) }}">
+            @csrf
+			<p>
+			月曜:  <input type="number" value="{{ $plan_production_id_eight['mon'] }}" name="curry_base_mon" id="curry_base_mon" size="6" maxlength="2" required><br>
+			火曜:  <input type="number" value="{{ $plan_production_id_eight['tue'] }}" name="curry_base_tue" id="curry_base_tue" size="6" maxlength="2" required><br>
+			水曜:  <input type="number" value="{{ $plan_production_id_eight['wed'] }}" name="curry_base_wed" id="curry_base_wed" size="6" maxlength="2" required><br>
+			木曜:  <input type="number" value="{{ $plan_production_id_eight['thu'] }}" name="curry_base_thu" id="curry_base_thu" size="6" maxlength="2" required><br>
+			金曜:  <input type="number" value="{{ $plan_production_id_eight['fri'] }}" name="curry_base_fri" id="curry_base_fri" size="6" maxlength="2" required><br>
+			土曜:  <input type="number" value="{{ $plan_production_id_eight['sat'] }}" name="curry_base_sat" id="curry_base_sat" size="6" maxlength="2" required><br>
+			日曜:  <input type="number" value="{{ $plan_production_id_eight['sun'] }}" name="curry_base_sun" id="curry_base_sun" size="6" maxlength="2" required><br>
+			<p style="margin:5px;"><input type="submit" name="curry_matin_update" value="カレーを食べよう" class="btn btn-dark"/></p>
+		</form>
+    </div>
+		<!-- [追加2023/09/21] Khouloudカレー作り end-->
 </div><!--インライングリッド row end -->
 <!-- Udon エリア end -->
 <hr/>
-<!-- sato独自指示 エリア end -->
+<!-- sato独自指示 エリア Alice用のページ end -->
 <div class="my-3 p-3 bg-body rounded shadow-sm">
 	<div class=" text-muted pt-3 pb-3">
-	<h4> サト手動指示 </h4>
+	<h4> サト手動指示 / Alice の8hと15h用</h4>
 	<form method='POST' action="{{ route('admin.store',['btn' => 'sato']) }}">
         @csrf
 		<div class="row mb-3">

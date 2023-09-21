@@ -27,7 +27,7 @@
 			</div>
 		@else 
 			<div class="">
-				<!-- カレーを作るかどうか PlanProductionテーブル (id=8) -->
+				<!-- カレーを作るかどうか PlanProductionテーブル (id=8) 1 1は作る-->
 				@if(Session::get('curry') == '1')
 					<p>&#x1f35b;  Veuillez préparer le curry ce matin</p>
 				@else
