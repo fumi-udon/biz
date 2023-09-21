@@ -311,7 +311,7 @@
 
 			<!-- shichimi -->
 			<tr>
-				<td>shichimi</td>
+				<td>shichimi (nanami spicy)</td>
 				<td>
 					<select class="form-select" id="shichimi" name="shichimi" required>
 						@foreach ($shichimi as $item)
@@ -331,9 +331,9 @@
 
 			<!-- sauce_toubanjyun -->
 			<tr>
-				<td>sauce_toubanjyun</td>
+				<td>sauce_toubanjyun (kg)</td>
 				<td><input type="number" id="sauce_toubanjyun" name="sauce_toubanjyun" class="form-control" value="{{ Session::get('sauce_toubanjyun') }}" required></td>
-				<td>pièces</td>
+				<td>kg</td>
 			</tr>
 @endif
 <!-- ストック管理 リスト（曜日毎に） end -->
@@ -361,14 +361,40 @@
 				@foreach ($columns as $column)
 					@if ($column === 'created_at')
 						<th>Date</th>
+				<!-- Emballage -->
+					@elseif ($column === 'aluminium_401')
+						<th>aluminium S</th>
+					@elseif ($column === 'aluminium_701')
+						<th>aluminium M</th>
+					@elseif ($column === 'aluminium_901')
+						<th>aluminium L</th>
+					@elseif ($column === 'pot_de_sauce_30cc')
+						<th>pot 30cc</th>
+					@elseif ($column === 'bol_carton_rond')
+						<th>bol carton rond</th>
+						
+				<!-- 肉系 -->
 					@elseif ($column === 'tahina_pate_du_sesame')
 						<th>tahina</th>
 					@elseif ($column === 'viande_hachee_poulet_congele')
 					<th>hachée poulet congelé</th>
 					@elseif ($column === 'viande_hachee_boeuf_congele')
 					<th>hachée boeuf congelé</th>
+				<!-- asia and 食材 -->
 					@elseif ($column === 'tahina_pate_du_sesame')
-						<th>tahina</th>
+						<th>tahina</th>					
+					@elseif ($column === 'sauce_toubanjyun')
+						<th>Tobanjyuan(kg)</th>
+					@elseif ($column === 'poudre_dashi')
+					<th>Dashi (kg)</th>			
+					@elseif ($column === 'algue_nori')
+					<th>Nori</th>
+					@elseif ($column === 'gari_gingimbre')
+					<th>Gari</th>
+					@elseif ($column === 'algue_wakame')
+					<th>Wakame</th>
+
+				<!-- ELSEそのまま表示 -->
 					@else
 						<th>{{ $column }}</th>
 					@endif					
