@@ -37,7 +37,7 @@
 <!-- ストック管理 リスト（曜日毎に） start -->
 
 <!-- Emballage系統 -->
-@if ($daysoftheweek == 'tue')
+@if ($daysoftheweek == 'mon')
 			<tr>
 				<td>essuie jumbo</td>
 				<td><input type="number" id="essuie_jmb" name="essuie_jmb" class="form-control" value="{{ Session::get('essuie_jmb') }}" required></td>
