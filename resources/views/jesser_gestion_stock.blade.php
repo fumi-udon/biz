@@ -207,16 +207,7 @@
 				</td>
 				<td></td>
 			</tr>
-			<tr>
-				<td>bicarbonate</td>
-				<td><input type="number" id="bicarbonate" name="bicarbonate" class="form-control" value="{{ Session::get('bicarbonate') }}" required></td>
-				<td>paquets</td>
-			</tr>
-			<tr>
-				<td>tahina pâte du sésame</td>
-				<td><input type="number" id="tahina_pate_du_sesame" name="tahina_pate_du_sesame" class="form-control" value="{{ Session::get('tahina_pate_du_sesame') }}" required></td>
-				<td>pieces</td>
-			</tr>
+
 <!-- 事務所の肉系のやつ -->
 @elseif ($daysoftheweek == 'wed')
 			<tr>
@@ -239,6 +230,16 @@
 				</select>
 				</td>
 				<td></td>
+			</tr>
+			<tr>
+				<td>bicarbonate</td>
+				<td><input type="number" id="bicarbonate" name="bicarbonate" class="form-control" value="{{ Session::get('bicarbonate') }}" required></td>
+				<td>paquets</td>
+			</tr>
+			<tr>
+				<td>tahina pâte du sésame</td>
+				<td><input type="number" id="tahina_pate_du_sesame" name="tahina_pate_du_sesame" class="form-control" value="{{ Session::get('tahina_pate_du_sesame') }}" required></td>
+				<td>pieces</td>
 			</tr>
 <!-- アジア食材系のやーーつぅー -->
 @elseif ($daysoftheweek == 'thu')
