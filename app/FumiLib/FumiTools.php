@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 // Mail 送信用
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendinBlueDemoEmail;
+use App\Mail\KhouloudEmail;
+
 use \DateTime; // 追加: PHPのグローバルな名前空間にあるDateTimeクラスを使用することを明示
 use DateTimeZone;
 use App\Models\ConditionType;
@@ -303,4 +305,37 @@ class FumiTools
                 ConditionType::create($data);
         }
     }
+
+    /**
+     * メール送信とDB登録処理
+     * @pram subject,body,log,type,color
+     * ホルートページから
+     * 
+     */
+    public static function send_mail_db_reg_khouloud($flg, $to, $cc, $subject, $body, $datas)
+    {
+        if($flg){
+            // Mail 送信 処理
+            $log = $datas['log'];
+            $type = (int)$datas['type'];  
+            $color = $datas['color']; 
+
+            Mail::to($to)
+                ->cc($cc)
+                ->send(new KhouloudEmail($subject, $body));
+                 logger()->info($log);
+
+                // Mail送信 済/未 判定レコードを作成
+                $data = [
+                    'type' => $type, //
+                    'kubun' => $type,
+                    'numero' => $type,
+                    'color' => $color,
+                    'sub1' => $type,
+                    'sub2' => $type,
+                ]; 
+                ConditionType::create($data);
+        }
+    }
+    
 }

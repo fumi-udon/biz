@@ -207,5 +207,34 @@ class KhouloudController extends Controller
 
     }
 
+    /**
+     * select values
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function send_mail($bravo, $bodys){
+            // Mail 送信
+            $to = ['fumi.0000000@gmail.com'];
+            $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
+            $log_text = "[BN: ホルホルスタート] ";
+    
+            $datas = [
+                'log' => $log_text.'Mail',
+                'type' => 10, // 21: Khouloud系
+                'color' => 'green', //  ホルホル
+            ];
+            $subject = $log_text;
+            // コレクションを作成し、変数を設定します
+            $body = new Collection([
+                'test' => $bodys['test'],
+            ]);
+    
+            if (env('APP_ENV') == 'production') {
+                // 本番環境の場合のみメール送信
+                FumiTools::send_mail_db_reg_khouloud(true, $to, $cc, $subject, $body, $datas);
+            }else{
+                Log::debug("[メール送信_send_mail_db_reg_khouloud ホルホル朝活メール] 本番環境のみ");
+            }
+    }
 
 }
