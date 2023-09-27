@@ -37,7 +37,7 @@
 <!-- ストック管理 リスト（曜日毎に） start -->
 
 <!-- Emballage系統 -->
-@if ($daysoftheweek == 'mon')
+@if ( $effect_dates['stock_emballage_1'] == $date_ymd )
 			<tr>
 				<td>essuie jumbo</td>
 				<td><input type="number" id="essuie_jmb" name="essuie_jmb" class="form-control" value="{{ Session::get('essuie_jmb') }}" required></td>
@@ -208,8 +208,8 @@
 				<td></td>
 			</tr>
 
-<!-- 事務所の肉系のやつ -->
-@elseif ($daysoftheweek == 'wed')
+<!-- 肉系と重曹とかその辺りのヘンテコ食材-->
+@elseif ( $effect_dates['stock_boeuf_1'] == $date_ymd || $effect_dates['stock_boeuf_2'] == $date_ymd )
 			<tr>
 				<td>viande hachée de poulet en congelé (bureau)</td>
 				<td><input type="number" id="viande_hachee_poulet_congele" name="viande_hachee_poulet_congele" class="form-control" value="{{ Session::get('viande_hachee_poulet_congele') }}" required></td>
@@ -242,7 +242,7 @@
 				<td>pieces</td>
 			</tr>
 <!-- アジア食材系のやーーつぅー -->
-@elseif ($daysoftheweek == 'thu')
+@elseif ( $effect_dates['stock_asia_1'] == $date_ymd || $effect_dates['stock_asia_2'] == $date_ymd )
 			<!-- sauce_poisson -->
 			<tr>
 				<td>sauce_poisson</td>
@@ -336,6 +336,10 @@
 				<td><input type="number" id="sauce_toubanjyun" name="sauce_toubanjyun" class="form-control" value="{{ Session::get('sauce_toubanjyun') }}" required></td>
 				<td>kg</td>
 			</tr>
+@else
+
+			<p class="text-danger text-uppercase p-5">Nothing for today</p>
+
 @endif
 <!-- ストック管理 リスト（曜日毎に） end -->
 

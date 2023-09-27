@@ -38,6 +38,9 @@ class JesserController extends Controller
      */
     public function jesser_top(){
 
+        // 管理 支払い 実施日取得
+        $effect_dates = $this->effectuer_day();
+
         /**
          * 入力データ表示
          * 'flg1' => xxxx TODO
@@ -50,6 +53,90 @@ class JesserController extends Controller
     }
 
     /**
+     * 管理 支払い 実施日
+     */
+    public function effectuer_day(){
+
+        // タイムゾーンを設定（例: アフリカのTunis）
+        Carbon::setTestNow(Carbon::now()->tz('Africa/Tunis'));
+        // 現在の日付を取得
+        $today = Carbon::now();        
+        // 第一週目の月曜日を取得
+        $obj_first_mon = $today->startOfMonth()->startOfWeek(Carbon::MONDAY);
+        $obj_first_tue = $obj_first_mon->copy()->next(Carbon::TUESDAY);
+        $obj_first_wed = $obj_first_mon->copy()->next(Carbon::WEDNESDAY);
+        $obj_first_thu = $obj_first_mon->copy()->next(Carbon::THURSDAY);
+        $obj_first_fri = $obj_first_mon->copy()->next(Carbon::FRIDAY);       
+        $first_mon = $obj_first_mon->toDateString();
+        $first_tue = $obj_first_tue->toDateString();
+        $first_wed = $obj_first_wed->toDateString();
+        $first_thu = $obj_first_thu->toDateString();
+        $first_fri = $obj_first_fri->toDateString();
+        // 第2週目の月曜日を計算
+        $obj_second_mon = $obj_first_mon->copy()->addWeek();
+        $obj_second_tue = $obj_second_mon->copy()->next(Carbon::TUESDAY);
+        $obj_second_wed = $obj_second_mon->copy()->next(Carbon::WEDNESDAY);
+        $obj_second_thu = $obj_second_mon->copy()->next(Carbon::THURSDAY);
+        $obj_second_fri = $obj_second_mon->copy()->next(Carbon::FRIDAY);
+        $second_mon = $obj_second_mon->toDateString();
+        $second_tue = $obj_second_tue->toDateString();
+        $second_wed = $obj_second_wed->toDateString();
+        $second_thu = $obj_second_thu->toDateString();
+        $second_fri = $obj_second_fri->toDateString();
+        // 第3週目の月曜日を計算
+        $obj_third_mon = $obj_second_mon->copy()->addWeeks();
+        $obj_third_tue = $obj_third_mon->copy()->next(Carbon::TUESDAY);
+        $obj_third_wed = $obj_third_mon->copy()->next(Carbon::WEDNESDAY);
+        $obj_third_thu = $obj_third_mon->copy()->next(Carbon::THURSDAY);
+        $obj_third_fri = $obj_third_mon->copy()->next(Carbon::FRIDAY);
+        $third_mon = $obj_third_mon->toDateString();
+        $third_tue = $obj_third_tue->toDateString();
+        $third_wed = $obj_third_wed->toDateString();
+        $third_thu = $obj_third_thu->toDateString();
+        $third_fri = $obj_third_fri->toDateString();
+        // 第4週目の月曜日を計算
+        $obj_fourth_mon = $obj_first_mon->copy()->addWeeks(3);
+        $obj_fourth_tue = $obj_fourth_mon->copy()->next(Carbon::TUESDAY);
+        $obj_fourth_wed = $obj_fourth_mon->copy()->next(Carbon::WEDNESDAY);
+        $obj_fourth_thu = $obj_fourth_mon->copy()->next(Carbon::THURSDAY);
+        $obj_fourth_fri = $obj_fourth_mon->copy()->next(Carbon::FRIDAY);
+        $fourth_mon = $obj_fourth_mon->toDateString();
+        $fourth_tue = $obj_fourth_tue->toDateString();
+        $fourth_wed = $obj_fourth_wed->toDateString();
+        $fourth_thu = $obj_fourth_thu->toDateString();
+        $fourth_fri = $obj_fourth_fri->toDateString();
+        // 第5週目の月曜日を計算
+        $obj_fifth_mon = $obj_fourth_mon->copy()->addWeeks();
+        $obj_fifth_tue = $obj_fifth_mon->copy()->next(Carbon::TUESDAY);
+        $obj_fifth_wed = $obj_fifth_mon->copy()->next(Carbon::WEDNESDAY);
+        $obj_fifth_thu = $obj_fifth_mon->copy()->next(Carbon::THURSDAY);
+        $obj_fifth_fri = $obj_fifth_mon->copy()->next(Carbon::FRIDAY);
+        $fifth_mon = $obj_fifth_mon->toDateString();
+        $fifth_tue = $obj_fifth_tue->toDateString();
+        $fifth_wed = $obj_fifth_wed->toDateString();
+        $fifth_thu = $obj_fifth_thu->toDateString();
+        $fifth_fri = $obj_fifth_fri->toDateString();
+
+        $dates = [
+            // asia食材
+            'stock_asia_1' => $second_tue,
+            'stock_asia_2' => $fourth_tue,
+            // オンバラージュ
+            'stock_emballage_1' => $third_thu,                      
+            // 肉
+            'stock_boeuf_1' => $second_wed,
+            'stock_boeuf_2' => $fourth_wed,
+
+            // STEG, SONET 毎月1回 月初めの火曜
+            'steg_sonet' => $third_mon,
+            // Cheque 月1回
+            'cheque_1' => $second_mon,
+        ];
+        
+        return $dates;
+    }
+
+    /**
      * 
      * works 本日のタスク
      *
@@ -57,11 +144,16 @@ class JesserController extends Controller
      */
     public function jesser_works(){
 
+        // 管理 支払い 実施日取得
+        $effect_dates = $this->effectuer_day();
+
         // 曜日を取得 Fumi 独自クラスインスタンス化 
         $fumi_tools =new FumiTools();
         $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
         $now = Carbon::now();
         $le_date = $now->format('d');
+        $now = Carbon::now();
+        $date_ymd = $now->format('Y-m-d');
 
         /**
          * Satoの手動指示がある場合は優先表示
@@ -93,7 +185,9 @@ class JesserController extends Controller
             'sato_record_override',
             'sato_record_add',
             'daysoftheweek',
-            'le_date'
+            'le_date',
+            'date_ymd',
+            'effect_dates'
         ));   
     }    
 
@@ -350,6 +444,10 @@ class JesserController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function jesser_gestion_stock(){
+        // 管理 支払い 実施日取得
+        $effect_dates = $this->effectuer_day();
+        $now = Carbon::now();
+        $date_ymd = $now->format('Y-m-d');
 
         // 曜日を取得 Fumi 独自クラスインスタンス化 
         $fumi_tools =new FumiTools();
@@ -441,6 +539,8 @@ class JesserController extends Controller
             "shichimi", 
             'stock_accessoire', 
             'daysoftheweek',
+            'effect_dates',
+            'date_ymd',
          ));  
     }
 

@@ -30,41 +30,47 @@
 			<div>
 				<!-- 月曜：  プラン -->
 				@if($daysoftheweek == 'mon')
-					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
 					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
-				<!-- 火曜： チェック銀行へ プラン -->
+				<!-- 火曜： プラン -->
 				@if($daysoftheweek == 'tue')
-					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>					
 					<p> &#x1f5c3; Ménage de salle client: l'étagère et le comptoir et des points sals</p>
 					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
-				<!-- 水曜 チェック銀行へ プラン -->
+				<!-- 水曜 プラン -->
 				@if($daysoftheweek == 'wed')
-					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
 					<p> &#x1f5c3; Vérifier le stock de boissons et de thé et passer les commandes nécessaires.</p>
 					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 				<!-- 木曜  プラン -->
 				@if($daysoftheweek == 'thu')
-					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
 					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 					<p> &#x1f5c3; Ménage de salle client: l'étagère et le comptoir et des points sals</p>
 				@endif
 				<!-- 金曜  プラン -->
 				@if($daysoftheweek == 'fri')
-					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
 					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 
-				<!-- Steg Sonet 月初め -->
-				@if($daysoftheweek == 'mon' && ( $le_date == '01' || $le_date == '02' || $le_date == '03' || $le_date == '04' || $le_date == '05' || $le_date == '06' || $le_date == '07' || $le_date == '08'))
-					<p> &#x1f6ce; Si vous n'avez pas encore réglé vos factures STEG/SONET/etc du mois dernier, veuillez les payer cette semaine. N'oubliez pas apporter des photos de deux compteur</p>
-				@endif
-				<!-- chéques　月末付近と中旬 -->
-				@if($daysoftheweek == 'tue' && ( $le_date == '15' || $le_date == '16' || $le_date == '17' || $le_date == '18' || $le_date == '19' || $le_date == '20' || $le_date == '21'))
+				<!-- ↓ 不定期対応 ↓ -->
+ 				<!-- STEG SONET -->
+				@if( $effect_dates['steg_sonet'] == $date_ymd )
+					<p> &#x1f6ce; STEG et SONET etc... :  veuillez les payer cette semaine. N'oubliez pas apporter des photos de deux compteur</p>
+				@endif				
+				<!-- chéques　月1 -->
+				@if( $effect_dates['cheque_1'] == $date_ymd )
 					<p> &#x1f5c3; Si vous avez des chèques à encaisser, veuillez les déposer à la banque Attijari avant le vendredi</p>
 				@endif
+				<!-- 在庫管理 -->
+				@if( $effect_dates['stock_asia_1'] == $date_ymd 
+						|| $effect_dates['stock_asia_2']  == $date_ymd 
+						|| $effect_dates['stock_emballage_1']  == $date_ymd 
+						|| $effect_dates['stock_boeuf_1'] == $date_ymd 
+						|| $effect_dates['stock_boeuf_2'] == $date_ymd 
+					)
+					<p> &#x1f5c3; Accédez à la page "gestion des stocks".</p>
+				@endif				
+
 			</div>
 			<!-- サト追加 -->
 			@if(Session::has('sato_record_add'))
