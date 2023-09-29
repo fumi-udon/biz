@@ -39,7 +39,7 @@
 				@endif
 				<!-- 水曜 プラン -->
 				@if($daysoftheweek == 'wed')
-					<p> &#x1f5c3; Vérifier le stock de boissons et de thé et passer les commandes nécessaires.</p>
+					<p> &#x1f5c3; Vérifiez le stock de boissons et de thé, puis passez les commandes nécessaires</p>
 					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 				<!-- 木曜  プラン -->
@@ -75,7 +75,7 @@
 			<!-- サト追加 -->
 			@if(Session::has('sato_record_add'))
 			<div>
-				<p> &#x1f538; {!! Session::get('sato_record_add')->override_tx_1 !!} </p>				
+				<p>{!! Session::get('sato_record_add')->override_tx_1 !!}</p>				
 			</div>			
 			@endif
 			<p class="p-3">{{ $text_etc }}</p>
