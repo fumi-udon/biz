@@ -4,19 +4,20 @@
 @section('content')
 <!-- FUMI start -->
 <main class="container">
+	@if (Session::has('jesser_close') && session('jesser_close') )
+		<p>Hi! Jesser</p>	
+	@endif
 	<div class="d-flex align-items-center p-3 my-3 text-white bg-pink rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">
-		<h1 class="h6 mb-0 text-white lh-1">IMPORTANT! SECURITE</h1>
+		<h1 class="h6 mb-0 text-white lh-1"> IMPORTANT! SECURITE</h1>
 		<small>Closing Checklist</small>
 	</div>
 	</div>
-
     <div class="my-3 p-3 bg-body rounded shadow-sm">
 	  <div class="container px-1">
 		<form method='POST' action="{{ route('close.step1',['id' => 'chk_top','params' => 'incendie']) }}">
 		@csrf
-
 		<div class="row gx-1"><!--row 1行目 start-->
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">

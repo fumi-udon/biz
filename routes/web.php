@@ -96,7 +96,8 @@ Route::get('/riz_jp', [RecettesController::class, 'riz_jp'])->name('recettes.riz
 
 //check list
 use App\Http\Controllers\CheckListController;
-Route::get('/close_top', [CheckListController::class, 'close_top'])->name('close.top');
+// Route::get('/close_top/{id?}/{params?}', [CheckListController::class, 'close_top'])->name('close.top');
+Route::match(['get', 'post'], '/close_top/{id?}/{params?}', [CheckListController::class, 'close_top'])->name('close.top');
 Route::post('/close_step1', [CheckListController::class, 'close_step1'])->name('close.step1');
 Route::post('/close_step2', [CheckListController::class, 'close_step2'])->name('close.step2');
 Route::post('/close_step3', [CheckListController::class, 'close_step3'])->name('close.step3');

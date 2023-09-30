@@ -4,6 +4,9 @@
 @section('content')
 <!-- FUMI start -->
 <main class="container">
+	@if (Session::has('jesser_close') && session('jesser_close') )
+		<p>Hi! Jesser</p>	
+	@endif
 	<div class="d-flex align-items-center p-3 my-3 text-white bg-pink rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">
@@ -44,7 +47,7 @@
 					<div class="d-flex align-items-center">
 						<div class="flex-grow-1">
 							<label for="climatiseurs" class="d-flex align-items-center">
-							<b style="margin-right:10px;">&#9849;Climatiseurs / Ventilateurs</b>
+							<b style="margin-right:10px;">&#9849;Climatiseurs / Ventilateurs / Chauffage</b>
 
 							<input class="form-check-input ms-2" type="checkbox" id="climatiseurs" name="climatiseurs" value="{{ Session::get('climatiseurs') }}" data-bs-toggle="modal" data-bs-target="#climatiseursModal" required>
 							</label>

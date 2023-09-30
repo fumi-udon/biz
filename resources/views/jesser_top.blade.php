@@ -28,6 +28,13 @@
                 Gestion de stock
                 <a href="jesser_gestion_stock" class="btn btn-primary">click</a>
             </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Côntrol de fermeture
+                <form method='POST' action="{{ route('close.top',['id' => 'jesser_close','params' => 'jesser_close']) }}">
+		            @csrf
+                    <input type="submit" value="start check" name="click" class="btn btn-primary btn-round">
+                </form>
+            </li>
         </ul>
     </div>
     </div><!--row end-->

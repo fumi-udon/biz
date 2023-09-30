@@ -4,6 +4,9 @@
 @section('content')
 <!-- FUMI start -->
 <main class="container">
+@if (Session::has('jesser_close') && session('jesser_close') )
+	<p>Hi! Jesser</p>	
+@endif
 	<div class="d-flex align-items-center p-3 my-3 text-white bg-fumi-1 rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">
@@ -53,7 +56,7 @@
 					</div>
 				</div>
 			</div>
-
+		@if (Session::has('jesser_close') && session('jesser_close') )
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">
 					<div class="d-flex align-items-center">
@@ -67,8 +70,7 @@
 						<img src="/img/door1.png" alt="door1 Image" class="ms-1" style="width: 80px; height: 80px;">
 					</div>
 				</div>
-			</div>
-
+			</div>		
 		</div><!--row 1行目 end-->
 
 		<div class="row gx-1"><!--row 2行目 start-->
@@ -86,6 +88,7 @@
 			</div>
 
 		</div><!--row 2行目 end-->
+		@endif
 
 		<!-- 認証エリア -->
 		<div class="p-4 border bg-light" style="margin-top:10px;">

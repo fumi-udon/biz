@@ -21,7 +21,11 @@ class CheckListController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function close_top(){
+    public function close_top($id= null, $params= null){
+        // Jesserページから来た場合
+        $jesser_close = ($id !== null && $id === 'jesser_close');
+        // テンポラリセッションに値を設定
+        Session::put('jesser_close', $jesser_close);
 
         // 履歴表示
         $records = Responsable::where('type', 'close')
@@ -35,7 +39,7 @@ class CheckListController extends Controller
             return $record;
         })
         ->toArray();
-        return view('chk_close_top', compact('records'));
+        return view('chk_close_top', compact('records', 'jesser_close'));
     }
 
     /**
@@ -94,7 +98,10 @@ class CheckListController extends Controller
         Log::debug($close_name);
         Log::debug($input_pass);
         // パスワード認証 
-        $adminpass = AuthHanabishi::where('user_name', '=', $close_name)->value('password');
+        $adminpass = AuthHanabishi::where('user_name', '=', $close_name)
+                        ->where('sub_1', '=', 'close')
+                        ->value('password');
+
         // 認証チェック
         $auth_flg = false;
 
@@ -130,6 +137,10 @@ class CheckListController extends Controller
             ]
         );
 
+        // [ジェイセル判定] キーが存在するかを確認してから削除
+        if (Session::has('jesser_close')) {
+            Session::forget('jesser_close');
+        }
         return view('chk_garantie', compact('close_name', 'auth_flg', 'formattedDate'));
     }
 
@@ -147,6 +158,7 @@ class CheckListController extends Controller
                 ['id' => 'fumi', 'name' => 'fumi'],
                 ['id' => 'sato', 'name' => 'sato'],
                 ['id' => 'bilel', 'name' => 'bilel'],
+                ['id' => 'jesser', 'name' => 'jesser'],
                 ['id' => 'guest', 'name' => 'guest'],
             ]);
         }
