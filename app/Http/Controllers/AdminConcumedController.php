@@ -53,7 +53,6 @@ class AdminConcumedController extends Controller
         // [画面表示用 設定] 
         // SelectBox初期化 店リスト  
         $shops = $this->get_shop_list();
-
         // [食材消費量] Curl https通信＿SSL エラー回避
         $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
             'store' => $shop,

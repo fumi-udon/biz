@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
 use App\Models\AuthHanabishi;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Log;
 
@@ -129,11 +131,80 @@ class AdminProductionController extends Controller
             })->pluck('total')->sum();
 
             $totals->put($month, $total);
-        }        
+        }
         // dd($totals); // $totalsの中身を表示する
         $totals_ary = $totals->toArray();
 
         return view('admin/admin_finance', compact("shops", "totals_ary"));
+    }
+
+    /**
+     * finance. 当日のみの 売上財務ページ表示
+     * 夜のジェイセル用
+     * 当日の夜のみ表示設定 22h30～23h30
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function finance_journal(Request $request)
+    {
+        // リクエストデータ取得 
+        $inputs = $request->all();
+        $auth_pass_journal = $inputs["auth_pass_journal"];
+        $auth_ok = AuthHanabishi::where('sub_1', 'finance')
+        ->where('password', $auth_pass_journal)
+        ->count();
+
+        $todayDate = Carbon::now()->format('Y-m-d');
+
+        if(! $auth_ok){
+            //認証エラー
+            \Session::flash('error_message', 'Error password! veuillez refaire sur la page!<div><a href="/jesser_top">Jesser top page</a></div>');
+            \Session::flash('formattedDate', $todayDate);
+            return view('error_page', compact("todayDate"));  
+        }
+
+        // -------[本番環境でのみ処理]-------- START
+        // 11時前には帰らせないぞー 
+        if (App::environment('production')) {            
+            $nowSeconds = Carbon::now()->format(' H:i:s');   
+            if(strtotime($todayDate . ' 22:34:00') >= strtotime($todayDate . $nowSeconds)){
+                //出直してこい！
+                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 22h35.!  <div><a href="/jesser_top">Retour</a></div>');
+                \Session::flash('formattedDate', $todayDate);
+                return view('error_page', compact("todayDate"));  
+            }
+        }
+        // -------[本番環境でのみ処理]-------- END
+
+        // ◇Jsonコード取得 外部サーバー通信
+        $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
+            'store' => 'main',
+            'date' => $todayDate,
+        ]);
+
+        $collect = collect($response->json());
+        // ランチ
+        $filteredDataLunch = collect($collect)->filter(function ($item) use ($todayDate) {
+            return !is_null($item['end_date']) &&
+                strtotime($item['end_date']) >= strtotime($todayDate . ' 00:00:01') &&
+                strtotime($item['end_date']) <= strtotime($todayDate . ' 17:00:00') ;
+        });
+        $total_lunch = $filteredDataLunch->sum('total');
+
+        // ディナー
+        $filteredDataDinner = collect($collect)->filter(function ($item)  use ($todayDate) {
+            return !is_null($item['end_date']) &&
+                strtotime($item['end_date']) >= strtotime($todayDate . '17:00:01') &&
+                strtotime($item['end_date']) <= strtotime($todayDate . '23:59:59') ;
+        });
+        $total_diner = $filteredDataDinner->sum('total');
+
+        // 一日売上合計
+        $journal_recettes = $total_lunch + $total_diner;
+
+        $alert_message = "Veuillez clôturer toutes les tables avant d'ouvrir la page";
+
+        return view('jesser_finance_journal', compact("todayDate","journal_recettes", "total_lunch", "total_diner", "auth_ok", "alert_message"));
     }
 
     /**

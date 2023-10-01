@@ -35,6 +35,20 @@
                     <input type="submit" value="start check" name="click" class="btn btn-primary btn-round">
                 </form>
             </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Journal (open: from 22h35 )
+                <form method='POST' action="{{ route('finance.journal',['id' => 'finance_journal','params' => 'finance_journal']) }}">
+                @csrf
+                    <div class="row">
+                        <div class="col-auto">
+                            <input type="password" class="form-control-sm" id="auth_pass_journal" name="auth_pass_journal" placeholder="Password" minlength="4" required>
+                        </div>
+                        <div class="col-auto">
+                            <input type="submit" value="click" name="finance_journal" class="btn btn-primary btn-round">
+                        </div>
+                    </div>
+                </form>
+            </li>            
         </ul>
     </div>
     </div><!--row end-->
