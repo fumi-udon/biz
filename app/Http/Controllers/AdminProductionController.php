@@ -169,7 +169,7 @@ class AdminProductionController extends Controller
             $nowSeconds = Carbon::now()->format(' H:i:s');   
             if(strtotime($todayDate . ' 22:34:00') >= strtotime($todayDate . $nowSeconds)){
                 //出直してこい！
-                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 22h35.!  <div><a href="/jesser_top">Retour</a></div>');
+                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 22h35.!  <div><a href="/jesser_top">Jesser top page</a></div>');
                 \Session::flash('formattedDate', $todayDate);
                 return view('error_page', compact("todayDate"));  
             }
