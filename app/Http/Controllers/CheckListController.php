@@ -32,7 +32,7 @@ class CheckListController extends Controller
         ->where('charge', 'close_chk')
         ->where('fuseau_horaire', 1)
         ->orderByDesc('created_at')
-        ->limit(30) // 追加された行: 30行のレコードを取得する
+        ->limit(10) // 追加された行: 30行のレコードを取得する
         ->get()
         ->map(function ($record) {
             $record['formatted_created_at'] = Carbon::parse($record['created_at'])->format('d/m/Y _ H:i:s');
