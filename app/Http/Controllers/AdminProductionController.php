@@ -168,25 +168,24 @@ class AdminProductionController extends Controller
         if (App::environment('production')) {            
             $nowSeconds = Carbon::now()->format(' H:i:s');
 
-            // 「秘密の制限時間」ディナー売上表示
-            if( strtotime($todayDate . ' 22:34:00') >= strtotime($todayDate . $nowSeconds) ){
-                //出直してこい！
-                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 22h35.!  <div><a href="/jesser_top">Jesser top page</a></div>');
-                \Session::flash('formattedDate', $todayDate);
-                return view('error_page', compact("todayDate"));  
+            //「秘密の制限時間」Lundch と Diner売上表示
+            if(
+                //現在時刻が範囲内
+                ( strtotime($todayDate . ' 15:09:00') <= strtotime($todayDate . $nowSeconds) &&
+                strtotime($todayDate . ' 17:00:00') >= strtotime($todayDate . $nowSeconds) )
+              ||
+                ( strtotime($todayDate . ' 22:35:00') <= strtotime($todayDate . $nowSeconds) &&
+                strtotime($todayDate . ' 23:59:00') >= strtotime($todayDate . $nowSeconds) )
+            ){
+                // 時刻範囲内 表示OK
+                $display_recette = true;
+                
+            }else{
+                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 15h10 pour le lunch ou après 22h35 pour le diner!  <div><a href="/jesser_top">Jesser top page</a></div>');
+                \Session::flash('formattedDate', $todayDate . $nowSeconds);
+                return view('error_page', compact("todayDate"));
             }
 
-            //「秘密の制限時間」Lundch売上表示
-            if(
-                //第二条件 ランチ 現在時刻が範囲内
-                strtotime($todayDate . ' 15:15:00') <= strtotime($todayDate . $nowSeconds) &&
-                strtotime($todayDate . ' 15:59:00') >= strtotime($todayDate . $nowSeconds)
-            ){
-                //出直してこい！
-                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 15h15.!  <div><a href="/jesser_top">Jesser top page</a></div>');
-                \Session::flash('formattedDate', $todayDate);
-                return view('error_page', compact("todayDate"));  
-            }
         }
         // -------[本番環境でのみ処理]-------- END
 
