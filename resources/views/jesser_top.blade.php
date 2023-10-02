@@ -36,7 +36,7 @@
                 </form>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Journal (open: from 22h35 )
+                Journal
                 <form method='POST' action="{{ route('finance.journal',['id' => 'finance_journal','params' => 'finance_journal']) }}">
                 @csrf
                     <div class="row">
