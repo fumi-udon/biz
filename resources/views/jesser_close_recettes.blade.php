@@ -126,11 +126,11 @@
 
 <!-- このエリア ◆通常は非表示 start-->
 <div class="col-md-12">
-	<div style="text-align: right;">
-		<p class="m-2 small">
-			<input type="text" id="password_record" name="password_record" value="" required></p>
-			<input type="submit" value="send" name="btn_password_record" id='btn_password_record' class="btn btn-primary btn-round">
-		</p>
+	<div style="text-align: left;padding-top:30px;">
+		<div class="input-group mb-1 small" style="width: 120px;">
+			<input type="password" id="password_record" name="password_record" class="form-control" value="" style="width:4em;"  maxlength="4" required >
+			<button type="submit" name="btn_password_record" id="btn_password_record" class="btn btn-light btn-round">F生誕</button>
+		</div>
 	</div>
 
 	@if(!empty($finance_records))
