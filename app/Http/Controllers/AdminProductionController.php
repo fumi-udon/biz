@@ -171,7 +171,7 @@ class AdminProductionController extends Controller
             //「秘密の制限時間」Lundch と Diner売上表示
             if(
                 //現在時刻が範囲内
-                ( strtotime($todayDate . ' 15:09:00') <= strtotime($todayDate . $nowSeconds) &&
+                ( strtotime($todayDate . ' 15:00:00') <= strtotime($todayDate . $nowSeconds) &&
                 strtotime($todayDate . ' 17:00:00') >= strtotime($todayDate . $nowSeconds) )
               ||
                 ( strtotime($todayDate . ' 22:35:00') <= strtotime($todayDate . $nowSeconds) &&
