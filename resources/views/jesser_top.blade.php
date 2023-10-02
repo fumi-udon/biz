@@ -37,17 +37,15 @@
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Journal
-                <form method='POST' action="{{ route('finance.journal',['id' => 'finance_journal','params' => 'finance_journal']) }}">
-                @csrf
-                    <div class="row">
-                        <div class="col-auto">
-                            <input type="password" class="form-control-sm" id="auth_pass_journal" name="auth_pass_journal" placeholder="Password" minlength="4" required>
-                        </div>
-                        <div class="col-auto">
-                            <input type="submit" value="click" name="finance_journal" class="btn btn-primary btn-round">
-                        </div>
+                <div class="col-8 col-md-4"> <!-- レスポンシブ対応の列幅指定 -->
+                <form method="POST" action="{{ route('finance.journal',['id' => 'finance_journal','params' => 'finance_journal']) }}" class="d-flex align-items-end">
+                    @csrf
+                    <div class="input-group">
+                        <input type="password" class="form-control form-control-sm" id="auth_pass_journal" name="auth_pass_journal" placeholder="Password" minlength="4" style="width: 30px;" required> <!-- 幅を指定 -->
+                        <button type="submit" name="finance_journal" class="btn btn-warning btn-round">click</button>
                     </div>
                 </form>
+                </div>
             </li>            
         </ul>
     </div>
