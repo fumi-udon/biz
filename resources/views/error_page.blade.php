@@ -13,8 +13,6 @@
 		</div>		
 	</div>
 	@endif
-
-	<div><a href="/">Retour</a></div>
 </main>
 
 <!--テスト　デバック-->
