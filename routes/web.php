@@ -60,8 +60,6 @@ Route::get('/admin/{action_message?}', [AdminProductionController::class, 'index
 // 財務ページ adminページのリンクより
 Route::get('/index_finance/{btn?}/{page_id?}', [AdminProductionController::class, 'index_finance'])->name('admin.index.finance');
 Route::post('/finance/{btn?}/{page_id?}', [AdminProductionController::class, 'finance'])->name('admin.finance');
-// Jesser アクセス用
-Route::post('/finance_journal', [AdminProductionController::class, 'finance_journal'])->name('finance.journal');
 
 // Ajax welcome.blade.php 管理者ページ表示前検証
 Route::post('/admin_validate',[AdminProductionController::class, 'admin_validate']);
@@ -140,6 +138,7 @@ Route::post('/jesser_close_recettes_store', [JesserController::class, 'jesser_cl
 Route::post('/jesser_close_updatemontan', [JesserController::class, 'jesser_close_updatemontan'])->name('jesser.close.updatemontan');
 Route::get('/jesser_gestion_stock', [JesserController::class, 'jesser_gestion_stock'])->name('jesser.gestion.stock');
 Route::post('/jesser_gestion_stock_store', [JesserController::class, 'jesser_gestion_stock_store'])->name('jesser.gestion.stock.store');
+Route::post('/finance_journal', [JesserController::class, 'finance_journal'])->name('finance.journal');
 Route::get('/zoom_start', [JesserController::class, 'zoom_start'])->name('zoom.start');
 
 // Khouloud 管理 

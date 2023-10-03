@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
@@ -215,6 +216,88 @@ class JesserController extends Controller
         
         return view('jesser_close_recettes', compact('montant_initial', 'close_names', 'fuseau_horaires', 'finance_records'));   
     }
+  
+    /**
+     * finance. 当日のみの 売上財務ページ表示
+     * 夜のジェイセル用
+     * 当日の夜のみ表示設定 22h30～23h30
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function finance_journal(Request $request)
+    {
+        // リクエストデータ取得 
+        $inputs = $request->all();
+        $auth_pass_journal = $inputs["auth_pass_journal"];
+        $auth_ok = AuthHanabishi::where('sub_1', 'finance')
+        ->where('password', $auth_pass_journal)
+        ->count();
+
+        $todayDate = Carbon::now()->format('Y-m-d');
+
+        if(! $auth_ok){
+            //認証エラー
+            \Session::flash('error_message', 'Error password! veuillez refaire sur la page!<div><a href="/jesser_top">Jesser top page</a></div>');
+            \Session::flash('formattedDate', $todayDate);
+            return view('error_page', compact("todayDate"));  
+        }
+
+        // -------[本番環境でのみ処理]-------- START
+        // 11時前には帰らせないぞー 
+        if (App::environment('production')) {            
+            $nowSeconds = Carbon::now()->format(' H:i:s');
+
+            //「秘密の制限時間」Lundch と Diner売上表示
+            if(
+                //現在時刻が範囲内
+                ( strtotime($todayDate . ' 15:00:00') <= strtotime($todayDate . $nowSeconds) &&
+                strtotime($todayDate . ' 17:00:00') >= strtotime($todayDate . $nowSeconds) )
+              ||
+                ( strtotime($todayDate . ' 22:35:00') <= strtotime($todayDate . $nowSeconds) &&
+                strtotime($todayDate . ' 23:59:00') >= strtotime($todayDate . $nowSeconds) )
+            ){
+                // 時刻範囲内 表示OK
+                $display_recette = true;
+                
+            }else{
+                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 15h10 pour le lunch ou après 22h35 pour le diner!  <div><a href="/jesser_top">Jesser top page</a></div>');
+                \Session::flash('formattedDate', $todayDate . $nowSeconds);
+                return view('error_page', compact("todayDate"));
+            }
+
+        }
+        // -------[本番環境でのみ処理]-------- END
+
+        // ◇Jsonコード取得 外部サーバー通信
+        $response = Http::withoutVerifying()->get('https://bistronippon.com/api/orders', [
+            'store' => 'main',
+            'date' => $todayDate,
+        ]);
+
+        $collect = collect($response->json());
+        // ランチ
+        $filteredDataLunch = collect($collect)->filter(function ($item) use ($todayDate) {
+            return !is_null($item['end_date']) &&
+                strtotime($item['end_date']) >= strtotime($todayDate . ' 00:00:01') &&
+                strtotime($item['end_date']) <= strtotime($todayDate . ' 17:00:00') ;
+        });
+        $total_lunch = $filteredDataLunch->sum('total');
+
+        // ディナー
+        $filteredDataDinner = collect($collect)->filter(function ($item)  use ($todayDate) {
+            return !is_null($item['end_date']) &&
+                strtotime($item['end_date']) >= strtotime($todayDate . '17:00:01') &&
+                strtotime($item['end_date']) <= strtotime($todayDate . '23:59:59') ;
+        });
+        $total_diner = $filteredDataDinner->sum('total');
+
+        // 一日売上合計
+        $journal_recettes = $total_lunch + $total_diner;
+
+        $alert_message = "Veuillez clôturer toutes les tables avant d'ouvrir la page";
+
+        return view('jesser_finance_journal', compact("todayDate","journal_recettes", "total_lunch", "total_diner", "auth_ok", "alert_message"));
+    }
 
     /**
      * 
@@ -319,12 +402,14 @@ class JesserController extends Controller
         $montant_initial = PlanProduction::where('id', '=', '7')->value('sun');
         $compte_in_caisse = round(($cash + $cheque + $carte), 1);
         //$recettes_and_init = round(($recettes_soir + $montant_initial + $chips), 1);
-        $recettes_and_init = round(($recettes_soir + $montant_initial), 1);
-        $resultat_no_chips = round($compte_in_caisse - $recettes_and_init , 1);
+        // 消す  $recettes_and_init = round(($recettes_soir + $montant_initial), 1);
+        $recettes_and_init = round(($recettes_soir), 1);
+        // [※注意 from 23.10.04]  仕様変更 recettes_and_initは初期金額を含んでいない売上生データ仕様に修正
+        $resultat_is_chips = round($compte_in_caisse - $recettes_and_init , 1);
         // $resultat が $chips 以上の場合
         $bravo = false;
         // 集計結果とチップを突き合わせ
-        $resultat = $resultat_no_chips - $chips;
+        $resultat = $resultat_is_chips - $chips;
         if ($resultat >= 0) {
             // メッセージを変数に格納
             $resultat_message = "Fuseau horaires: ".$fuseau_horaires_display."<br><br>Bravo " .$close_name_now. "! <br> Vous avez fait un excellent travail";
@@ -366,7 +451,7 @@ class JesserController extends Controller
             'cheque' => $cheque,
             'compte_in_caisse' => $compte_in_caisse,
             'resultat' => $resultat,
-            'resultat_no_chips' => $resultat_no_chips,                
+            'resultat_is_chips' => $resultat_is_chips,                
             'bravo' => $bravo,
             'fuseau_horaires_display' => $fuseau_horaires_display
         ]);
@@ -385,7 +470,7 @@ class JesserController extends Controller
         \Session::flash('carte', $inputs['carte']);
         \Session::flash('chips', $inputs['chips']);
         \Session::flash('resultat', $resultat);
-        \Session::flash('resultat_no_chips', $resultat_no_chips);
+        \Session::flash('resultat_is_chips', $resultat_is_chips);
         
         \Session::flash('compte_in_caisse', $compte_in_caisse);
         \Session::flash('recettes_and_init', $recettes_and_init);
@@ -406,7 +491,7 @@ class JesserController extends Controller
             'name' => $close_name_now,
             'zone' => $fuseau_horaires_display,
             'recettes_main' => $recettes_soir,
-            'recettes_sub' => $recettes_and_init, // 売上と初期金額とチップの合計
+            'recettes_sub' => $recettes_and_init, // [※注意 from 23.10.04]  仕様変更 recettes_and_initは初期金額を含んでいないレジの売上物理データ
             'montant_init' => $montant_initial,
             'montant_1' => $resultat,
             'chips' => $chips,
@@ -431,7 +516,7 @@ class JesserController extends Controller
             'recettes_and_init','compte_in_caisse',
             'resultat_message', 'resultat','recettes_soir',
             'cash','cheque','carte','chips', 'close_name_now', 'auth_flg', 
-            'close_names','fuseau_horaires', 'fuseau_horaires_display','resultat_no_chips',
+            'close_names','fuseau_horaires', 'fuseau_horaires_display','resultat_is_chips',
             'finance_records'
          ));  
     }

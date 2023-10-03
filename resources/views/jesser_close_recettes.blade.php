@@ -21,12 +21,12 @@
 	 <div class="my-1 p-1">
 		<div>
 			@if ( ! $bravo )
-				<p><b>recettes &#x1f30a; </b> {!! $recettes_soir !!}dt ( initial + {!! $montant_initial !!} ) =  {!! $recettes_and_init !!}dt </b></p>
+				<p><b>recettes &#x1f30a; </b> {!! $recettes_soir !!}dt </b></p>
 				<p>
 				<b>caisse &#x1f39e; </b> cash:{!! $cash !!} + cheque:{!! $cheque !!} + carte:{!! $carte !!}  = {!! $compte_in_caisse !!}dt
 				</p>			
 				<p>
-					<span style='color: blue;'>RESULTAT :  {!! $resultat_no_chips !!} dt</span>
+					<span style='color: blue;'>RESULTAT :  {!! $resultat_is_chips !!} dt</span>
 					<p>&#9559; Pourboires reçus: {{ Session::get('chips') }} dt</p>
 				</p>
 			@endif
@@ -63,10 +63,6 @@
 					</div>
 				</div>
 				<hr>
-				<div class="p-1">
-					<h5><u>Le montant initial :  {!! $montant_initial !!}dt</u></h5>
-				</div>
-
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="recettes_soir"><b>&#9849; Les recettes</b></label>
@@ -75,11 +71,15 @@
 				</div>
 				<hr>
 				<div class="form-group p-3">
-					<label><b>&#9859; caisse</b></label>
-					<br>
-					cash<input type="number" id="cash" name="cash" value="{{ Session::get('cash') }}" class="form-control" step="0.1" required>
+					<label><b>&#9859; La caisse nette. </b></label>
+					<p class="p-1">					
+					cash <i>(fond de caisse exclu)</i><input type="number" id="cash" name="cash" value="{{ Session::get('cash') }}" class="form-control" step="0.1" required>
 					chèque<input type="number" id="cheque" name="cheque" value="{{ Session::get('cheque') }}" class="form-control" step="0.1" required>
 					carte (tickets)<input type="number" id="carte" name="carte" value="{{ Session::get('carte') }}" class="form-control" step="0.1" required>
+					</p>
+					<p class="p-1">
+					<span style="color:gray;">fond de caisse<input type="number" id="fondcaisse" name="fondcaisse" value="{!! $montant_initial !!}" class="form-control" readonly required></span>
+					</p>
 				</div>
 
 				<!-- 認証エリア -->
@@ -142,8 +142,8 @@
 				<th>Name</th>
 				<th>AM/PM</th>
 				<th>[Resultat]</th>
-				<th>Recettes data</th>
-				<th>Recettes(+init)</th>
+				<th>Recettes (QR)</th>
+				<th>売上勘定(init除外)</th>
 				<th> _ init</th>
 				<th>Chips</th>
 				<th>Caisse Total</th>
