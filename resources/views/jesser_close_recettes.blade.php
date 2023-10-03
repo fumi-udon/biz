@@ -21,7 +21,7 @@
 	 <div class="my-1 p-1">
 		<div>
 			@if ( ! $bravo )
-				<p><b>recettes &#x1f30a; </b> {!! $recettes_soir !!}dt ( initial +50dt ) =  {!! $recettes_and_init !!}dt </b></p>
+				<p><b>recettes &#x1f30a; </b> {!! $recettes_soir !!}dt ( initial + {!! $montant_initial !!} ) =  {!! $recettes_and_init !!}dt </b></p>
 				<p>
 				<b>caisse &#x1f39e; </b> cash:{!! $cash !!} + cheque:{!! $cheque !!} + carte:{!! $carte !!}  = {!! $compte_in_caisse !!}dt
 				</p>			
