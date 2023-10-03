@@ -216,6 +216,33 @@ class JesserController extends Controller
         return view('jesser_close_recettes', compact('montant_initial', 'close_names', 'fuseau_horaires', 'finance_records'));   
     }
 
+    /**
+     * 
+     * zoom start
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function zoom_start(){
+        $todayDate = Carbon::now()->format('Y-m-d');
+        $nowSeconds = Carbon::now()->format(' H:i:s');
+        //「秘密の制限時間」リンク表示
+        if(
+            ( strtotime($todayDate . ' 02:49:00') <= strtotime($todayDate . $nowSeconds) &&
+            strtotime($todayDate . ' 02:59:00') >= strtotime($todayDate . $nowSeconds) )
+        ){
+            $zoom_ok = true;
+            \Session::flash('zoom_ok', $zoom_ok);
+            
+        }else{
+            $zoom_ok = false;
+            \Session::flash('error_message', 'En cours.... ; veuillez accéder à la page de Meeting après 22h50!  <div><a href="/jesser_top">Return</a></div>');
+            \Session::flash('formattedDate', $todayDate . $nowSeconds);
+            return view('error_page', compact("todayDate"));
+        }
+
+        
+        return view('jesser_zoom_start', compact('zoom_ok'));   
+    }
 
     /**
      * 初期金額更新

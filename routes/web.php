@@ -131,7 +131,7 @@ use App\Http\Controllers\JihenController;
 Route::get('/jihen_top', [JihenController::class, 'jihen_top'])->name('jihen.top');
 Route::post('/jihen_store', [JihenController::class, 'jihen_store'])->name('jihen.store');
 
-// ジェイセル管理 
+// ジェイセル管理  
 use App\Http\Controllers\JesserController;
 Route::get('/jesser_top', [JesserController::class, 'jesser_top'])->name('jesser.top');
 Route::get('/jesser_works', [JesserController::class, 'jesser_works'])->name('jesser.works');
@@ -140,6 +140,7 @@ Route::post('/jesser_close_recettes_store', [JesserController::class, 'jesser_cl
 Route::post('/jesser_close_updatemontan', [JesserController::class, 'jesser_close_updatemontan'])->name('jesser.close.updatemontan');
 Route::get('/jesser_gestion_stock', [JesserController::class, 'jesser_gestion_stock'])->name('jesser.gestion.stock');
 Route::post('/jesser_gestion_stock_store', [JesserController::class, 'jesser_gestion_stock_store'])->name('jesser.gestion.stock.store');
+Route::get('/zoom_start', [JesserController::class, 'zoom_start'])->name('zoom.start');
 
 // Khouloud 管理 
 use App\Http\Controllers\KhouloudController;

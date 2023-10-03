@@ -26,50 +26,8 @@
 		<form method='POST' action="{{ route('close.garantie',['id' => 'garantie','params' => 'garantie']) }}">
 		@csrf
 
-		<div class="row gx-1"><!--row 1行目 start-->
-			<div class="col-md-4">
-				<div class="p-3 border bg-light">
-					<div class="d-flex align-items-center">
-						<div class="flex-grow-1">
-							<label for="food" class="d-flex align-items-center">
-							<b style="margin-right:10px;">&#9849;la poubelle</b>
-
-							<input class="form-check-input ms-2" type="checkbox" id="poubelle" name="poubelle" value="{{ Session::get('poubelle') }}"  required>
-							</label>
-						</div>
-						<img src="/img/poubelle.png" alt="poubelle Image" class="ms-1" style="width: 80px; height: 80px;">
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="p-3 border bg-light">
-					<div class="d-flex align-items-center">
-						<div class="flex-grow-1">
-							<label for="tasses" class="d-flex align-items-center">
-							<b style="margin-right:10px;">&#9847;Les tasses</b>
-							
-							<input class="form-check-input ms-2" type="checkbox" id="tasses" name="tasses" value="{{ Session::get('tasses') }}" required>
-							</label>
-						</div>
-						<img src="/img/tasses.png" alt="tasses image" class="ms-1" style="width: 80px; height: 80px;">
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="p-3 border bg-light">
-					<div class="d-flex align-items-center">
-						<div class="flex-grow-1">
-							<label for="food" class="d-flex align-items-center">
-							<b style="margin-right:10px;">&#9849;les ingrédients</b>
-
-							<input class="form-check-input ms-2" type="checkbox" id="food" name="food" value="{{ Session::get('food') }}" data-bs-toggle="modal" data-bs-target="#foodModal" required>
-							</label>
-						</div>
-						<img src="/img/food.png" alt="food Image" class="ms-1" style="width: 80px; height: 80px;">
-					</div>
-				</div>
-			</div>
 		@if (Session::has('jesser_close') && session('jesser_close') )
+		<div class="row gx-1"><!--row 1行目 start-->
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">
 					<div class="d-flex align-items-center">
@@ -97,10 +55,7 @@
 						<img src="/img/door1.png" alt="door1 Image" class="ms-1" style="width: 80px; height: 80px;">
 					</div>
 				</div>
-			</div>		
-		</div><!--row 1行目 end-->
-
-		<div class="row gx-1"><!--row 2行目 start-->
+			</div>
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">
 					<div class="d-flex align-items-center">
@@ -113,8 +68,39 @@
 					</div>
 				</div>
 			</div>
+		</div><!--row 1行目 end-->
+		@else
+		<div class="row gx-1"><!--row 1行目 start-->
+			<div class="col-md-4">
+				<div class="p-3 border bg-light">
+					<div class="d-flex align-items-center">
+						<div class="flex-grow-1">
+							<label for="food" class="d-flex align-items-center">
+							<b style="margin-right:10px;">&#9849;la poubelle</b>
 
-		</div><!--row 2行目 end-->
+							<input class="form-check-input ms-2" type="checkbox" id="poubelle" name="poubelle" value="{{ Session::get('poubelle') }}"  required>
+							</label>
+						</div>
+						<img src="/img/poubelle.png" alt="poubelle Image" class="ms-1" style="width: 80px; height: 80px;">
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="p-3 border bg-light">
+					<div class="d-flex align-items-center">
+						<div class="flex-grow-1">
+							<label for="food" class="d-flex align-items-center">
+							<b style="margin-right:10px;">&#9849;les ingrédients</b>
+
+							<input class="form-check-input ms-2" type="checkbox" id="food" name="food" value="{{ Session::get('food') }}" data-bs-toggle="modal" data-bs-target="#foodModal" required>
+							</label>
+						</div>
+						<img src="/img/food.png" alt="food Image" class="ms-1" style="width: 80px; height: 80px;">
+					</div>
+				</div>
+			</div>
+		</div><!--row 1行目 end-->
 		@endif
 
 		<!-- 認証エリア -->
