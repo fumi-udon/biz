@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\App;
 use Carbon\Carbon;
-
+//Fumi 独自クラス
+use App\FumiLib\FumiTools;
 // MODELS
 use App\Models\AuthHanabishi;
 use App\Models\Responsable;
@@ -81,7 +82,32 @@ class CheckListController extends Controller
         $inputs = $request->all();
         // select ボックス要素作成
         $close_names = $this->create_data_selectbox("user_name");
-        return view('chk_close_step2',compact('close_names'));
+        // 日付と曜日ユーティリティ
+        $dates_aray = $this->get_carbon_datas();
+        $daysoftheweek = $dates_aray['daysoftheweek'];
+        $date_ymd = $dates_aray['date_ymd'];
+
+        return view('chk_close_step2',compact('close_names', 'daysoftheweek', 'date_ymd'));
+    }
+
+    /**
+     * 日付と曜日ユーティリティ
+     */
+    public function get_carbon_datas(){
+        // 曜日を取得 Fumi 独自クラスインスタンス化 
+        $fumi_tools =new FumiTools();
+        $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
+        $now = Carbon::now();
+        $le_date = $now->format('d');
+        $now = Carbon::now();
+        $date_ymd = $now->format('Y-m-d');
+        
+        $assocArray = [
+            'daysoftheweek' => $daysoftheweek,
+            'date_ymd' => $date_ymd,
+        ];
+
+        return $assocArray ;
     }
 
     /**

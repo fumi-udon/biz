@@ -26,7 +26,7 @@
 		<form method='POST' action="{{ route('close.garantie',['id' => 'garantie','params' => 'garantie']) }}">
 		@csrf
 
-		@if (Session::has('jesser_close') && session('jesser_close') )
+	@if (Session::has('jesser_close') && session('jesser_close') )
 		<div class="row gx-1"><!--row 1行目 start-->
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">
@@ -69,7 +69,7 @@
 				</div>
 			</div>
 		</div><!--row 1行目 end-->
-		@else
+	@else
 		<div class="row gx-1"><!--row 1行目 start-->
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">
@@ -100,8 +100,61 @@
 					</div>
 				</div>
 			</div>
+			
+			@if( $daysoftheweek == 'tue' || $daysoftheweek == 'wed' || $daysoftheweek == 'thu' )
+			<!-- ビレル 火曜水曜木曜のみ -->
+			<div class="col-md-4">
+				<div class="p-3 border bg-light">
+					<div class="d-flex align-items-center">
+						<div class="flex-grow-1">
+							<label for="porte_droite" class="d-flex align-items-center">
+							<b style="margin-right:10px;">&#9849;La porte droite</b>
+
+							<input class="form-check-input ms-2" type="checkbox" id="porte_droite" name="porte_droite" value="{{ Session::get('porte_droite') }}" required>
+							</label>
+						</div>
+						<img src="/img/door1.png" alt="door1 Image" class="ms-1" style="width: 80px; height: 80px;">
+					</div>
+				</div>
+			</div>
+			@endif
 		</div><!--row 1行目 end-->
+
+		@if( $daysoftheweek == 'tue' || $daysoftheweek == 'wed' || $daysoftheweek == 'thu' )
+		<!--row 2行目 start-->
+		<!-- ビレル 火曜水曜木曜のみ -->
+		<div class="row gx-1">
+			<div class="col-md-4">
+				<div class="p-3 border bg-light">
+					<div class="d-flex align-items-center">
+						<div class="flex-grow-1">
+							<label for="tasses" class="d-flex align-items-center">
+							<b style="margin-right:10px;">&#9847;Les tasses</b>
+							
+							<input class="form-check-input ms-2" type="checkbox" id="tasses" name="tasses" value="{{ Session::get('tasses') }}" required>
+							</label>
+						</div>
+						<img src="/img/tasses.png" alt="tasses image" class="ms-1" style="width: 80px; height: 80px;">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="p-3 border bg-light">
+					<div class="d-flex align-items-center">
+						<label for="mimo" class="d-flex align-items-center">
+						<b style="margin-right:10px;">&#9859;Chats</b>
+
+						<input class="form-check-input ms-2" type="checkbox" id="mimo" name="mimo" value="{{ Session::get('mimo') }}" data-bs-toggle="modal" data-bs-target="#mimoModal" required>
+						</label>
+						<img src="/img/chats.png" alt="mimo image" class="ms-1" style="width: 80px; height: 80px;">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--row 2行目 end-->	
 		@endif
+
+	@endif
 
 		<!-- 認証エリア -->
 		<div class="p-4 border bg-light" style="margin-top:10px;">
