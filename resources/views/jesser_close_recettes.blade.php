@@ -65,7 +65,7 @@
 				<hr>
 				<div class="col-md-6">
 					<div class="form-group">
-						<label for="recettes_soir"><b>&#9849; Les recettes</b></label>
+						<label for="recettes_soir"><b>&#9849; Les recettes dans le système</b></label>
 						<input type="number" id="recettes_soir" name="recettes_soir" value="{{ Session::get('recettes_soir') }}" class="form-control" step="0.1" required>
 					</div>
 				</div>
