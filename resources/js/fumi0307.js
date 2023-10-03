@@ -27,7 +27,7 @@ $(function(){
     // id="password_record"の値を取得
     var passwordValue = $("#password_record").val();
     
-    if (passwordValue === '831227' || passwordValue === '0117') {
+    if (passwordValue === '1227' || passwordValue === '0117') {
         // 一致する場合はアラートを表示
         $("#note_record").css('display', 'inline-block');
     }else{

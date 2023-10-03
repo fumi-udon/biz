@@ -34,4 +34,20 @@ $(function(){
     }
   });
 
+  // Zoom 開始時間チェック
+  $("#start_zoom").on("click",function(){
+      // 現在時刻を取得
+      var currentTime = new Date();
+      var hours = currentTime.getHours();
+      var minutes = currentTime.getMinutes();
+  
+      // 現在時刻が22:49より前の場合にアラートを表示
+      if (hours < 22 || (hours === 22 && minutes < 48)) {
+          alert('Revenez plus tard. La réunion débutera à 22h50.');
+      }else{
+          // linkを取得
+          $("#zoom_link_area").css('display', 'inline-block');
+      }
+  });
+
 });

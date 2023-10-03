@@ -137,10 +137,10 @@ class CheckListController extends Controller
             ]
         );
 
-        // [ジェイセル判定] キーが存在するかを確認してから削除
-        if (Session::has('jesser_close')) {
-            Session::forget('jesser_close');
-        }
+        // // [ジェイセル判定] キーが存在するかを確認してから削除
+        // if (Session::has('jesser_close')) {
+        //     Session::forget('jesser_close');
+        // }
         return view('chk_garantie', compact('close_name', 'auth_flg', 'formattedDate'));
     }
 
