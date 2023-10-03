@@ -5,8 +5,9 @@
 <!-- FUMI start -->
 <main class="container">
 @if (Session::has('jesser_close') && session('jesser_close') )
-	<p>Hi! Jesser</p>	
+	<p>Hi! Jesser</p>
 @endif
+
 	<div class="d-flex align-items-center p-3 my-3 text-white bg-fumi-1 rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">
@@ -101,7 +102,7 @@
 				</div>
 			</div>
 			
-			@if( $daysoftheweek == 'tue' || $daysoftheweek == 'wed' || $daysoftheweek == 'thu' )
+			@if (Session::has('bilel_days') && session('bilel_days') )
 			<!-- ビレル 火曜水曜木曜のみ -->
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">
@@ -120,7 +121,7 @@
 			@endif
 		</div><!--row 1行目 end-->
 
-		@if( $daysoftheweek == 'tue' || $daysoftheweek == 'wed' || $daysoftheweek == 'thu' )
+		@if (Session::has('bilel_days') && session('bilel_days') )
 		<!--row 2行目 start-->
 		<!-- ビレル 火曜水曜木曜のみ -->
 		<div class="row gx-1">

@@ -5,8 +5,9 @@
 <!-- FUMI start -->
 <main class="container">
 	@if (Session::has('jesser_close') && session('jesser_close') )
-		<p>Hi! Jesser</p>	
+		<p class="p-1 bg-light">Hi! Jesser</p>	
 	@endif
+
 	<div class="d-flex align-items-center p-3 my-3 text-white bg-pink rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">

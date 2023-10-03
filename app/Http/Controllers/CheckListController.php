@@ -25,8 +25,13 @@ class CheckListController extends Controller
     public function close_top($id= null, $params= null){
         // Jesserページから来た場合
         $jesser_close = ($id !== null && $id === 'jesser_close');
+        
+        // ビレル責任者の日を取得 
+        $bilel_days = $this->get_flg_bilel_responsable();
+
         // テンポラリセッションに値を設定
         Session::put('jesser_close', $jesser_close);
+        Session::put('bilel_days', $bilel_days);
 
         // 履歴表示
         $records = Responsable::where('type', 'close')
@@ -41,6 +46,23 @@ class CheckListController extends Controller
         })
         ->toArray();
         return view('chk_close_top', compact('records', 'jesser_close'));
+    }
+
+    /**
+     * ビレル責任者の日決定ユーティリティ
+     * flgを返却
+     */
+    public function get_flg_bilel_responsable(){
+        // 曜日を取得 Fumi 独自クラスインスタンス化 
+        $fumi_tools =new FumiTools();
+        $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
+        $bilel_days = false;
+
+        // ◇ビレル責任者の条件 2023 [火曜・水曜・木曜]
+        if($daysoftheweek == 'tue' || $daysoftheweek == 'wed' || $daysoftheweek == 'thu'){
+            $bilel_days = true;
+        }
+        return $bilel_days;
     }
 
     /**
@@ -74,7 +96,7 @@ class CheckListController extends Controller
 
     /**
      * step2
-     *
+     *$daysoftheweek == 'tue' || $daysoftheweek == 'wed' || $daysoftheweek == 'thu'
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function close_step2(Request $request)    {
@@ -82,14 +104,13 @@ class CheckListController extends Controller
         $inputs = $request->all();
         // select ボックス要素作成
         $close_names = $this->create_data_selectbox("user_name");
-        // 日付と曜日ユーティリティ
-        $dates_aray = $this->get_carbon_datas();
-        $daysoftheweek = $dates_aray['daysoftheweek'];
-        $date_ymd = $dates_aray['date_ymd'];
 
-        return view('chk_close_step2',compact('close_names', 'daysoftheweek', 'date_ymd'));
+        // ビレル責任者の日を取得 
+        $bilel_days = $this->get_flg_bilel_responsable();
+
+        return view('chk_close_step2',compact('close_names', 'bilel_days'));
     }
-
+    
     /**
      * 日付と曜日ユーティリティ
      */

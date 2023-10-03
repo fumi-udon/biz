@@ -25,6 +25,7 @@
 	</div>
 	@php
 		session()->forget('jesser_close');
+		session()->forget('bilel_days');
 	@endphp
 @else
 	<div><a href="/">Retour au top page</a></div>
