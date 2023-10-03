@@ -14,7 +14,7 @@
 <div class="my-3 p-3 bg-body rounded">
 @if (Session::has('zoom_ok') && session('zoom_ok') )
 	<div class="col-12 col-sm-8"> <!-- レスポンシブ対応の列幅指定 -->
-		<p>Rejoindre une réunion :</p>
+		<p>code : 2017 </p>
         <p id="zoom_link_area" style="width: 100%; padding:10px;">
             <a class="" id="zoom_link" href="https://us05web.zoom.us/j/84605269051?pwd=vaeJ8JwYmzOUR2vk2T0R5VBG88BIoT.1"> https://us05web.zoom.us/j/84605269051?pwd=vaeJ8JwYmzOUR2vk2T0R5VBG88BIoT.1 </a>
         <p>
