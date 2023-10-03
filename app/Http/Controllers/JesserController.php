@@ -228,7 +228,7 @@ class JesserController extends Controller
         //「秘密の制限時間」リンク表示
         if(
             ( strtotime($todayDate . ' 02:49:00') <= strtotime($todayDate . $nowSeconds) &&
-            strtotime($todayDate . ' 02:59:00') >= strtotime($todayDate . $nowSeconds) )
+            strtotime($todayDate . ' 03:59:00') >= strtotime($todayDate . $nowSeconds) )
         ){
             $zoom_ok = true;
             \Session::flash('zoom_ok', $zoom_ok);
