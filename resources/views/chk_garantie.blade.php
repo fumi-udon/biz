@@ -15,6 +15,7 @@
 	<div><p>RESPONSABLE: {!! $close_name !!}</p><p>Heure de check: {!! $formattedDate !!}</p></div>
 
 @if (Session::has('jesser_close') && session('jesser_close') )
+	<div><p></p></div>
 	<div class="row p-2">
 		<div class="col-12 col-sm-6"> <!-- レスポンシブ対応の列幅指定 -->
 			<a class="btn btn-dark btn-sm" id="start_zoom" role="button" href="javascript:void(0)"> Get meeting link </a>
@@ -23,9 +24,9 @@
 			<p>
 		</div>
 	</div>
-	<!-- @php
+	@php
 		session()->forget('jesser_close');
-	@endphp -->
+	@endphp
 @else
 	<div><a href="/">Retour au top page</a></div>
 @endif
