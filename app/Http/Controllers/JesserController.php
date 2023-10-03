@@ -227,8 +227,8 @@ class JesserController extends Controller
         $nowSeconds = Carbon::now()->format(' H:i:s');
         //「秘密の制限時間」リンク表示
         if(
-            ( strtotime($todayDate . ' 02:49:00') <= strtotime($todayDate . $nowSeconds) &&
-            strtotime($todayDate . ' 03:59:00') >= strtotime($todayDate . $nowSeconds) )
+            ( strtotime($todayDate . ' 22:48:00') <= strtotime($todayDate . $nowSeconds) &&
+            strtotime($todayDate . ' 23:59:00') >= strtotime($todayDate . $nowSeconds) )
         ){
             $zoom_ok = true;
             \Session::flash('zoom_ok', $zoom_ok);
