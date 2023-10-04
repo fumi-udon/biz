@@ -253,14 +253,14 @@ class JesserController extends Controller
                 ( strtotime($todayDate . ' 15:00:00') <= strtotime($todayDate . $nowSeconds) &&
                 strtotime($todayDate . ' 17:00:00') >= strtotime($todayDate . $nowSeconds) )
               ||
-                ( strtotime($todayDate . ' 22:35:00') <= strtotime($todayDate . $nowSeconds) &&
+                ( strtotime($todayDate . ' 22:30:00') <= strtotime($todayDate . $nowSeconds) &&
                 strtotime($todayDate . ' 23:59:00') >= strtotime($todayDate . $nowSeconds) )
             ){
                 // 時刻範囲内 表示OK
                 $display_recette = true;
                 
             }else{
-                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 15h10 pour le lunch ou après 22h35 pour le diner!  <div><a href="/jesser_top">Jesser top page</a></div>');
+                \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 15h00 pour le lunch ou après 22h30 pour le diner!  <div><a href="/jesser_top">Jesser top page</a></div>');
                 \Session::flash('formattedDate', $todayDate . $nowSeconds);
                 return view('error_page', compact("todayDate"));
             }
