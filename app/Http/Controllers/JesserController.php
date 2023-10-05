@@ -461,7 +461,7 @@ class JesserController extends Controller
             'type' => 10, // 10代: finance
             'color' => 'blue', // blue: finance
         ];
-        $subject = $log_text.$fuseau_horaires_display;
+        $subject = $log_text . $resultat."dt";
         // コレクションを作成し、変数を設定します
         $body = new Collection([
             'close_name_now' => $close_name_now,
