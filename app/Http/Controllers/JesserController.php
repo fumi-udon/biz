@@ -258,7 +258,7 @@ class JesserController extends Controller
             ){
                 // 時刻範囲内 表示OK
                 $display_recette = true;
-                
+
             }else{
                 \Session::flash('error_message', 'Les recettes sont en cours de calcul ; veuillez accéder à la page après 15h00 pour le lunch ou après 22h30 pour le diner!  <div><a href="/jesser_top">Jesser top page</a></div>');
                 \Session::flash('formattedDate', $todayDate . $nowSeconds);
@@ -410,12 +410,35 @@ class JesserController extends Controller
         $bravo = false;
         // 集計結果とチップを突き合わせ
         $resultat = $resultat_is_chips - $chips;
-        if ($resultat >= 0) {
-            // メッセージを変数に格納
+
+        // 売上の大きさに応じて誤差許容範囲設定
+        if ($recettes_soir <= 1000) {
+            // 1000以下
+            $plage_errur_accepte = 2;
+        }elseif ($recettes_soir >= 1000 && $recettes_soir <= 1500) {
+            // 1000～1500
+            $plage_errur_accepte = 4;
+        } elseif ($recettes_soir > 1500 && $recettes_soir <= 2000) {
+            // 1500～2000
+            $plage_errur_accepte = 6;
+        }elseif ($recettes_soir > 2000 ) {
+            // 2000以上
+            $plage_errur_accepte = 8;
+        }
+
+        // 不足金のエラー
+
+        // プラスのエラー
+        if ($resultat >= 0 && $resultat <= $plage_errur_accepte) {
+            // パーフェクトブラボー（集計結果が一致以上のプラスかつ、プラス誤差許容範囲以下）
             $resultat_message = "Fuseau horaires: ".$fuseau_horaires_display."<br><br>Bravo " .$close_name_now. "! <br> Vous avez fait un excellent travail";
             $bravo = true;
+        }elseif($resultat >= $plage_errur_accepte){
+            // プラス多すぎのエラー
+            $resultat_message = "<span style='color: red;'><b>[Erreur] La caisse a un excès de ".$resultat."dt </b></span><br>"
+                        ."<ul>Check:<li>&#9841; recompter des pourboire noté sur la fiche</li><li>&#9841; recompter à nouveau la caisse. </li></ul>";
         } else {
-            // 金額エラー
+            // 不足金のエラー
             $resultat_message = "<span style='color: red;'><b>Manque de pourboire  : ".$resultat."dt </b></span><br>"
                         ."<ul>Check:<li>&#9841; recompter le chips</li><li>&#9841; des reçus de la carte sont échappées </li>
                         <li>&#9841; chèque se cache en bas de la caisse </li></ul>";
@@ -425,12 +448,12 @@ class JesserController extends Controller
         if($bravo){
             $to = ['fumi.0000000@gmail.com'];
             $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
-            $log_text = "[BN: finance success★] ";
+            $log_text = "★Success finance :" .$fuseau_horaires_display;
         }else{
             // error
             $to = ['fumi.0000000@gmail.com','admin@bistronippon.tn'];
             $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
-            $log_text = "[BN: finance panic] ";
+            $log_text = "パニパに万景峰号 :" .$fuseau_horaires_display;
         }
 
         $datas = [

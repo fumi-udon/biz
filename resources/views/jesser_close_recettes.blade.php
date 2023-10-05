@@ -21,13 +21,13 @@
 	 <div class="my-1 p-1">
 		<div>
 			@if ( ! $bravo )
-				<p><b>recettes &#x1f30a; </b> {!! $recettes_soir !!}dt </b></p>
+				<p><b>Recettes enregistrées &#x1f30a; </b> {!! $recettes_soir !!}dt </b></p>
 				<p>
-				<b>caisse &#x1f39e; </b> cash:{!! $cash !!} + cheque:{!! $cheque !!} + carte:{!! $carte !!}  = {!! $compte_in_caisse !!}dt
+				<b>Caisse &#x1f39e; </b> cash:{!! $cash !!} + cheque:{!! $cheque !!} + carte:{!! $carte !!}  = {!! $compte_in_caisse !!}dt
 				</p>			
 				<p>
-					<span style='color: blue;'>RESULTAT :  {!! $resultat_is_chips !!} dt</span>
-					<p>&#9559; Pourboires reçus: {{ Session::get('chips') }} dt</p>
+					<span style='color: blue;'>RESULTAT (pourboires) :  {!! $resultat_is_chips !!} dt</span>
+					<p>&#9559; Pourboire noté sur la fiche: {{ Session::get('chips') }} dt</p>
 				</p>
 			@endif
 		</div>
