@@ -448,12 +448,12 @@ class JesserController extends Controller
         if($bravo){
             $to = ['fumi.0000000@gmail.com'];
             $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
-            $log_text = "★Success finance :" .$fuseau_horaires_display;
+            $log_text = "★Success finance :" ;
         }else{
             // error
             $to = ['fumi.0000000@gmail.com','admin@bistronippon.tn'];
             $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
-            $log_text = "パニパに万景峰号 :" .$fuseau_horaires_display;
+            $log_text = "パニパに万景峰号 :" ;
         }
 
         $datas = [
