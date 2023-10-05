@@ -453,7 +453,7 @@ class JesserController extends Controller
             // error
             $to = ['fumi.0000000@gmail.com','admin@bistronippon.tn'];
             $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
-            $log_text = "パニパに万景峰号 :" ;
+            $log_text = "パニパニ万景峰号 :" ;
         }
 
         $datas = [
