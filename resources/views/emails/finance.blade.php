@@ -17,27 +17,12 @@
         {{ $body['fuseau_horaires_display'] }} 担当：{{ $body['close_name_now'] }}
     </p>
     <hr>
-    <p style="padding: 5px">入力 chips: {{ $body['chips'] }}</p>
+    <p style="padding: 5px">チップ（紙）: {{ $body['chips'] }} <br>レジ初期金額: {{ $body['montant_initial'] }}</p>
+    
     <hr>
-    <p>売上データ( +init)</p>
-    <table style="border: 1px solid #000;">
-        <tbody>
-            <tr>
-                <td>recettes {{ $body['fuseau_horaires_display'] }}</td>
-                <td>{{ $body['recettes_soir'] }}</td>
-            </tr>
-            <tr>
-                <td>initial</td>
-                <td>{{ $body['montant_initial'] }}</td>
-            </tr>
-            <tr>
-                <td><b>合計</b></td>
-                <td><b>{{ $body['recettes_and_init'] }}</b></td>
-            </tr>
-        </tbody>
-    </table>
+    <p>売上(システム) : {{ $body['recettes_and_init'] }}</p>
 
-    <p style="padding-top: 5px">レジ</p>
+    <p style="padding-top: 5px">レジ勘定</p>
     <table style="border: 1px solid #000;">
         <tbody>
         <tr>
