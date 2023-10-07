@@ -451,7 +451,7 @@ class JesserController extends Controller
             $log_text = "★Success finance :" ;
         }else{
             // error
-            $to = ['fumi.0000000@gmail.com','admin@bistronippon.tn'];
+            $to = ['fmkz.ysn@gmail.com','admin@bistronippon.tn'];
             $cc = ['satoe1227@outlook.com']; // カーボンコピーの場合
             $log_text = "パニパニ万景峰号 :" ;
         }
