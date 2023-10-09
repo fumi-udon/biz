@@ -23,6 +23,8 @@ use App\Models\ConditionType;
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
+use App\Models\StockCuisineMain;
+
 use Carbon\Carbon;
 
 class TestDevController extends Controller
@@ -572,8 +574,16 @@ class TestDevController extends Controller
         // [牛乳] 入力データが2以下の場合は4pac購入依頼
         // bladeテンプレートで巻き取る
 
+        // りんご買うかどうか？ ホルートの朝の入力値を見る
+        $stock_cuisine_main = StockCuisineMain::select('apple')
+        ->where('shop', '=', 'bn') // 最初の条件
+        ->where('page_id', '=', 'khouloud_commence_input') // 条件
+        ->where('fuseaux', '=', 'am')   // 条件
+        ->orderBy('created_at', 'desc') // 'created_at' カラムを降順にソート
+        ->first();        
+
         // 表示ステータス 通常指示表示
-        return view('courses_matin',compact('stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
+        return view('courses_matin',compact('stock_cuisine_main', 'stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
     }
 
     /**
