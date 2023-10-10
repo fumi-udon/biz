@@ -60,7 +60,7 @@
 			@endif
 			<hr>
 			<!-- アンドレア -->
-			<p><h5>FIFI</h5></p>
+			<p><h5>Andoréa</h5></p>
 			<!-- 追加情報 -->
 			<p>
 				@if($daysoftheweek == 'fri')
@@ -74,6 +74,8 @@
 			@endif
 			<p>
 				&#127833; RIZ:
+			@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')	
+				<!-- 「週末プラン」金曜と土曜 -->				
 				@if($aicha_riz == 0 || $aicha_riz == 1)
 					14 portions
 				@elseif($aicha_riz == 2)
@@ -89,6 +91,25 @@
 				@elseif($aicha_riz == 7)
 						non
 				@endif
+			@else
+				<!-- 「平日プラン」-->
+				@if($aicha_riz == 0 || $aicha_riz == 1)
+					14 portions
+				@elseif($aicha_riz == 2)
+					10 portions
+				@elseif($aicha_riz == 3)
+					7 portions
+				@elseif($aicha_riz == 4)
+					5 portions
+				@elseif($aicha_riz == 5)
+					3 portions
+				@elseif($aicha_riz == 6)
+					3 portions
+				@elseif($aicha_riz == 7)
+						non
+				@endif
+			@endif
+				
 			</p>
 			@if($daysoftheweek == 'mon' || $daysoftheweek == 'wed'  || $daysoftheweek == 'thu' || $daysoftheweek == 'sat')	
 			<p>					
