@@ -33,7 +33,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<label for="note_content" class="col-form-label">内容 _ 例: @php echo (htmlspecialchars('<br>', ENT_QUOTES)) @endphp &#129371; </label>
+				<label for="note_content" class="col-form-label">内容 _ 例: @php echo (htmlspecialchars('<br>', ENT_QUOTES)) @endphp &#x1f320; </label>
 				<div class="">
 					<textarea style="width: 98%;height:100px;" class="Form-Item-Textarea" name="note8h" id="note8h" value=""required>{{ session('note8h') }}</textarea>
 				</div>
