@@ -26,6 +26,53 @@
 	  <div class="container px-1">
 		<form method='POST' action="{{ route('close.garantie',['id' => 'garantie','params' => 'garantie']) }}">
 		@csrf
+		
+	<!-- [共通]  row 0行目 start-->
+	<div class="row gx-1">
+		<div class="col-md-3">
+			<div class="p-3 border bg-light">
+				<div class="d-flex align-items-center">
+					<div class="flex-grow-1">
+						<label for="poubelle" class="d-flex align-items-center">
+						<b style="margin-right:10px;">&#9849;la poubelle</b>
+
+						<input class="form-check-input ms-2" type="checkbox" id="poubelle" name="poubelle" value="{{ Session::get('poubelle') }}"  required>
+						</label>
+					</div>
+					<img src="/img/poubelle.png" alt="poubelle Image" class="ms-1" style="width: 80px; height: 80px;">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="p-3 border bg-light">
+				<div class="d-flex align-items-center">
+					<div class="flex-grow-1">
+						<label for="food" class="d-flex align-items-center">
+						<b style="margin-right:10px;">&#9849;les ingrédients</b>
+
+						<input class="form-check-input ms-2" type="checkbox" id="food" name="food" value="{{ Session::get('food') }}" data-bs-toggle="modal" data-bs-target="#foodModal" required>
+						</label>
+					</div>
+					<img src="/img/food.png" alt="food Image" class="ms-1" style="width: 80px; height: 80px;">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="p-3 border bg-light">
+				<div class="d-flex align-items-center">
+					<div class="flex-grow-1">
+						<label for="tasses" class="d-flex align-items-center">
+						<b style="margin-right:10px;">&#9847;Jeter l'eau de la marmite</b>
+						
+						<input class="form-check-input ms-2" type="checkbox" id="marmite" name="marmite" value="{{ Session::get('marmite') }}" data-bs-toggle="modal" data-bs-target="#marmiteModal" required>
+						</label>
+					</div>
+					<img src="/img/marmite.png" alt="marmite image" class="ms-1" style="width: 80px; height: 80px;">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- [共通]  row 0行目 start-->
 
 	@if (Session::has('jesser_close') && session('jesser_close') )
 		<div class="row gx-1"><!--row 1行目 start-->
@@ -70,61 +117,11 @@
 				</div>
 			</div>
 		</div><!--row 1行目 end-->
-	@else
-		<div class="row gx-1"><!--row 1行目 start-->
-			<div class="col-md-4">
-				<div class="p-3 border bg-light">
-					<div class="d-flex align-items-center">
-						<div class="flex-grow-1">
-							<label for="food" class="d-flex align-items-center">
-							<b style="margin-right:10px;">&#9849;la poubelle</b>
+	@endif
 
-							<input class="form-check-input ms-2" type="checkbox" id="poubelle" name="poubelle" value="{{ Session::get('poubelle') }}"  required>
-							</label>
-						</div>
-						<img src="/img/poubelle.png" alt="poubelle Image" class="ms-1" style="width: 80px; height: 80px;">
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4">
-				<div class="p-3 border bg-light">
-					<div class="d-flex align-items-center">
-						<div class="flex-grow-1">
-							<label for="food" class="d-flex align-items-center">
-							<b style="margin-right:10px;">&#9849;les ingrédients</b>
-
-							<input class="form-check-input ms-2" type="checkbox" id="food" name="food" value="{{ Session::get('food') }}" data-bs-toggle="modal" data-bs-target="#foodModal" required>
-							</label>
-						</div>
-						<img src="/img/food.png" alt="food Image" class="ms-1" style="width: 80px; height: 80px;">
-					</div>
-				</div>
-			</div>
-			
-			@if (Session::has('bilel_days') && session('bilel_days') )
-			<!-- ビレル 火曜水曜木曜のみ -->
-			<div class="col-md-4">
-				<div class="p-3 border bg-light">
-					<div class="d-flex align-items-center">
-						<div class="flex-grow-1">
-							<label for="porte_droite" class="d-flex align-items-center">
-							<b style="margin-right:10px;">&#9849;La porte droite</b>
-
-							<input class="form-check-input ms-2" type="checkbox" id="porte_droite" name="porte_droite" value="{{ Session::get('porte_droite') }}" required>
-							</label>
-						</div>
-						<img src="/img/door1.png" alt="door1 Image" class="ms-1" style="width: 80px; height: 80px;">
-					</div>
-				</div>
-			</div>
-			@endif
-		</div><!--row 1行目 end-->
-
-		@if (Session::has('bilel_days') && session('bilel_days') )
-		<!--row 2行目 start-->
+	@if (Session::has('bilel_days') && session('bilel_days') )
 		<!-- ビレル 火曜水曜木曜のみ -->
-		<div class="row gx-1">
+		<div class="row gx-1"><!--row 1行目 start-->
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">
 					<div class="d-flex align-items-center">
@@ -142,6 +139,20 @@
 			<div class="col-md-4">
 				<div class="p-3 border bg-light">
 					<div class="d-flex align-items-center">
+						<div class="flex-grow-1">
+							<label for="porte_droite" class="d-flex align-items-center">
+							<b style="margin-right:10px;">&#9849;La porte droite</b>
+
+							<input class="form-check-input ms-2" type="checkbox" id="porte_droite" name="porte_droite" value="{{ Session::get('porte_droite') }}" required>
+							</label>
+						</div>
+						<img src="/img/door1.png" alt="door1 Image" class="ms-1" style="width: 80px; height: 80px;">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="p-3 border bg-light">
+					<div class="d-flex align-items-center">
 						<label for="mimo" class="d-flex align-items-center">
 						<b style="margin-right:10px;">&#9859;Chats</b>
 
@@ -151,10 +162,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<!--row 2行目 end-->	
-		@endif
-
+		</div><!--row 1行目 end-->
 	@endif
 
 		<!-- 認証エリア -->
@@ -185,15 +193,18 @@
 
 <!-- FUMI end -->
 <!-- Modal  start-->
-<div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
+<div class="modal fade" id="marmiteModal" tabindex="-1" aria-labelledby="marmiteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="foodModalLabel">Attention</h5>
+        <h5 class="modal-title" id="marmiteModalLabel">Attention</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-	  <span style="color: red;">Le riz / udon / légumes ....</span>
+		<span style="color: red;">Le foyer des insectes</span>
+		<div class="modal-body">
+			<img src="/img/insects.png" alt="insects image" class="ms-1" style="width: 180px; height: 150px;">
+		</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Je garantie</button>

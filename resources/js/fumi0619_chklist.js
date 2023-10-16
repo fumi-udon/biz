@@ -22,15 +22,15 @@ $(function(){
     }
   });
 
-  // foodModal
+  // 鍋Modal
   // チェックボックスの要素を取得します
-  var food = $('#food');
+  var marmite = $('#marmite');
   // チェックボックスの状態が変更されたときの処理を定義します
-  food.on('change', function() {
-    if (food.prop('checked')) {
-      food.attr('data-bs-target', '#foodModal');   
+  marmite.on('change', function() {
+    if (marmite.prop('checked')) {
+      marmite.attr('data-bs-target', '#marmiteModal');   
     } else {
-      $('#foodModal').hide();
+      $('#marmiteModal').hide();
     }
   });
 
