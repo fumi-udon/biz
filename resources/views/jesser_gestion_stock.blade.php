@@ -163,6 +163,30 @@
 				<td>paquet</td>
 			</tr>
 			<tr>
+				<td>pochette en papier</td>
+				<!-- 対応テーブルカラム名：article1 -->
+				<td>
+					<select class="form-select" id="pochette_en_papier" name="pochette_en_papier" required>
+						@foreach ($pochette_en_papier as $item)
+							<option value="{{ $item['id'] }}" @if( Session::get('pochette_en_papier_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td>pièces</td>
+			</tr>
+			<tr>
+				<td>sac en papier L</td>
+				<!-- 対応テーブルカラム名：article2 -->
+				<td>
+					<select class="form-select" id="sac_en_papier_L" name="sac_en_papier_L" required>
+						@foreach ($sac_en_papier_L as $item)
+							<option value="{{ $item['id'] }}" @if( Session::get('sac_en_papier_L_now')  == $item['id'] ) selected @endif> {{ $item['name'] }} </option>
+						@endforeach
+					</select>
+				</td>
+				<td>pièces</td>
+			</tr>
+			<tr>
 				<td>sac transparant</td>
 				<!-- <td><input type="number" id="sac_transparant" name="sac_transparant" class="form-control" value="{{ Session::get('sac_transparant') }}" required></td> -->
 				<td>
@@ -377,6 +401,10 @@
 						<th>pot 30cc</th>
 					@elseif ($column === 'bol_carton_rond')
 						<th>bol carton rond</th>
+					@elseif ($column === 'article1')
+					<th>pochette en papier</th>
+					@elseif ($column === 'article2')
+					<th>sac en papier L</th>
 						
 				<!-- 肉系 -->
 					@elseif ($column === 'tahina_pate_du_sesame')
@@ -502,7 +530,18 @@
 								$matchingName = $sac_transparant->where('id', $id)->first()['name'] ?? '';
 							@endphp
 							{{ $matchingName }}
-
+						@elseif($column === 'article1')<!-- pochette_en_papier -->
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $pochette_en_papier->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
+						@elseif($column === 'article2')<!-- sac_en_papier_L -->
+							@php
+								$id = $accessoire->$column;
+								$matchingName = $sac_en_papier_L->where('id', $id)->first()['name'] ?? '';
+							@endphp
+							{{ $matchingName }}
 						@else
 							<!-- プルダウン以外 -->
 							{{ $accessoire->$column }}

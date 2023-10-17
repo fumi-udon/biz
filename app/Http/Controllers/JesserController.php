@@ -123,7 +123,7 @@ class JesserController extends Controller
             'stock_asia_1' => $second_tue,
             'stock_asia_2' => $fourth_tue,
             // オンバラージュ
-            'stock_emballage_1' => $third_thu,                      
+            'stock_emballage_1' => $third_thu,                                     
             // 肉
             'stock_boeuf_1' => $second_wed,
             'stock_boeuf_2' => $fourth_wed,
@@ -597,6 +597,9 @@ class JesserController extends Controller
         $plastique_froide_500ml = $this->get_select_values('50_plus');
         $plastique_froide_1000ml = $this->get_select_values('50_plus');
         $bol_carton_rond = $this->get_select_values('50_plus');
+        $pochette_en_papier = $this->get_select_values('50_plus');
+        $sac_en_papier_L = $this->get_select_values('50_plus');
+
         // 100 pieces
         $aluminium_401 = $this->get_select_values('100_plus');
         $aluminium_701 = $this->get_select_values('100_plus');
@@ -620,6 +623,7 @@ class JesserController extends Controller
         //$sauce_toubanjyun = $this->get_select_values('asia_1');
   
 
+        // ※順番重要:テーブル表示の順番と一致
         $columns = [
             'created_at',
             'essuie_jmb',
@@ -633,6 +637,8 @@ class JesserController extends Controller
             'aluminium_401',
             'pot_de_sauce_30cc',
             'bol_carton_rond',
+            'article1', //'pochette_en_papier'
+            'article2', //'sac_en_papier_L'  
             'sac_transparant',
             'sac_petit',
             'sac_grand',
@@ -641,8 +647,7 @@ class JesserController extends Controller
             'tahina_pate_du_sesame',
             'viande_hachee_poulet_congele',
             'viande_hachee_boeuf_congele',
-            'tantan_boeuf',            
-            // asia _ select box
+            'tantan_boeuf',                 
              "pate_miso_20kg", 
             "mirin_20kg", "algue_wakame", 
             "shichimi",             
@@ -668,6 +673,8 @@ class JesserController extends Controller
             'aluminium_401',
             'pot_de_sauce_30cc',
             'bol_carton_rond',
+            'pochette_en_papier',
+            'sac_en_papier_L',
             'sac_transparant',
             "pate_miso_20kg", 
             "mirin_20kg", "algue_wakame", 
@@ -696,6 +703,8 @@ class JesserController extends Controller
             'aluminium_401',
             'pot_de_sauce_30cc',
             'bol_carton_rond',
+            'pochette_en_papier',
+            'sac_en_papier_L',
             'sac_transparant',
             'sac_petit',
             'sac_grand',
@@ -715,13 +724,15 @@ class JesserController extends Controller
             "sauce_tomyum", "sauce_toubanjyun",
             "gari_gingimbre", "algue_nori", "poudre_dashi",   
         ]);
-        // 他のカラムのデータを設定
+        // 他のカラムのデータを設定  
         $inputs['flg'] = 1;
        
         // now データ設定
         $this->set_session_datas(true ,$inputs);
 
         // フォームデータをStockモデルを使用してインサート
+        $inputs['article1'] = $inputs['pochette_en_papier'];
+        $inputs['article2'] = $inputs['sac_en_papier_L'];
          $resultat= StockAccessoire::create($inputs);
         // store 
         \Session::flash("flash_message", true);
@@ -750,6 +761,8 @@ class JesserController extends Controller
             'aluminium_401',
             'pot_de_sauce_30cc',
             'bol_carton_rond',
+            'pochette_en_papier',
+            'sac_en_papier_L',
             'sac_petit',
             'sac_grand',
             'sac_poubelle',
@@ -815,6 +828,7 @@ class JesserController extends Controller
         $plastique_froide_500ml = $this->get_select_values('50_plus');
         $plastique_froide_1000ml = $this->get_select_values('50_plus');
         $bol_carton_rond = $this->get_select_values('50_plus');
+        
         // 100 pieces
         $aluminium_401 = $this->get_select_values('100_plus');
         $aluminium_701 = $this->get_select_values('100_plus');
