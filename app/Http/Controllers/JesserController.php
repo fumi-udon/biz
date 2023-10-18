@@ -731,8 +731,8 @@ class JesserController extends Controller
         $this->set_session_datas(true ,$inputs);
 
         // フォームデータをStockモデルを使用してインサート
-        $inputs['article1'] = $inputs['pochette_en_papier'];
-        $inputs['article2'] = $inputs['sac_en_papier_L'];
+        $inputs['article1'] = $inputs['pochette_en_papier'] ?? null;
+        $inputs['article2'] = $inputs['sac_en_papier_L'] ?? null;
          $resultat= StockAccessoire::create($inputs);
         // store 
         \Session::flash("flash_message", true);
