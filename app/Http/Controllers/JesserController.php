@@ -828,6 +828,8 @@ class JesserController extends Controller
         $plastique_froide_500ml = $this->get_select_values('50_plus');
         $plastique_froide_1000ml = $this->get_select_values('50_plus');
         $bol_carton_rond = $this->get_select_values('50_plus');
+        $pochette_en_papier = $this->get_select_values('50_plus');
+        $sac_en_papier_L = $this->get_select_values('50_plus');
         
         // 100 pieces
         $aluminium_401 = $this->get_select_values('100_plus');
@@ -846,6 +848,7 @@ class JesserController extends Controller
 
         $pulldowns = [$papier_toilettes, $papier_clients, $sac_petit, $sac_grand, $sac_poubelle, $tantan, 
                             $plastique_chaud_750ml, $plastique_froide_500ml, $plastique_froide_1000ml, $bol_carton_rond, 
+                            $pochette_en_papier, $sac_en_papier_L,
                             $aluminium_401, $aluminium_701,$aluminium_901, $pot_de_sauce_30cc, $sac_transparant,
                             // asia食材
                             $pate_miso_20kg,
@@ -856,7 +859,7 @@ class JesserController extends Controller
 
         // テーブルのカラム名 を設定
         $columun_names = ["papier_toilettes", "papier_serviette", "sac_petit", "sac_grand", "sac_poubelle", "tantan_boeuf", 
-                        "plastique_chaud_750ml", "plastique_froide_500ml", "plastique_froide_1000ml", "bol_carton_rond", 
+                        "plastique_chaud_750ml", "plastique_froide_500ml", "plastique_froide_1000ml", "bol_carton_rond", "pochette_en_papier", "sac_en_papier_L",
                         "aluminium_401","aluminium_701","aluminium_901", "pot_de_sauce_30cc", "sac_transparant",
                         // asia食材
                         "pate_miso_20kg", 
