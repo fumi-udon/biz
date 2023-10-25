@@ -138,6 +138,9 @@ Route::post('/jesser_close_recettes_store', [JesserController::class, 'jesser_cl
 Route::post('/jesser_close_updatemontan', [JesserController::class, 'jesser_close_updatemontan'])->name('jesser.close.updatemontan');
 Route::get('/jesser_gestion_stock', [JesserController::class, 'jesser_gestion_stock'])->name('jesser.gestion.stock');
 Route::post('/jesser_gestion_stock_store', [JesserController::class, 'jesser_gestion_stock_store'])->name('jesser.gestion.stock.store');
+Route::get('/jesser_close_recettes_filter', [JesserController::class, 'jesser_close_recettes_filter'])->name('jesser.close.recettes.filter');
+Route::post('/jesser_close_recettes_filter_serch', [JesserController::class, 'jesser_close_recettes_filter_serch'])->name('jesser.close.recettes.filter.serch');
+
 Route::post('/finance_journal', [JesserController::class, 'finance_journal'])->name('finance.journal');
 Route::get('/zoom_start', [JesserController::class, 'zoom_start'])->name('zoom.start');
 

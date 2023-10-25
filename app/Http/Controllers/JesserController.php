@@ -200,6 +200,8 @@ class JesserController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function jesser_close_recettes(){
+        // タイムゾーンを設定（例: アフリカのTunis）
+        Carbon::setTestNow(Carbon::now()->tz('Africa/Tunis'));
         // プルダウン 
         $close_names = $this->get_select_values('close_names');
         $fuseau_horaires = $this->get_select_values('fuseau_horaires');
@@ -216,7 +218,90 @@ class JesserController extends Controller
         
         return view('jesser_close_recettes', compact('montant_initial', 'close_names', 'fuseau_horaires', 'finance_records'));   
     }
-  
+    /**
+     * finance. [GET]ページ表示のみ
+     */
+    public function jesser_close_recettes_filter()
+    {
+        return view('jesser_close_recettes_filter');
+    }
+    
+    /**
+     * finance. 日付範囲と時間帯指定していで各日1行のレコードを取得してコレクションで返す
+     */
+    public function jesser_close_recettes_filter_serch(Request $request)
+    {
+        // リクエストデータ取得 
+        $inputs = $request->all();
+        $startDate = Carbon::parse($inputs["startDate"]);
+        $endDate = Carbon::parse($inputs["endDate"]);
+        \Session::flash('startDate', $startDate);
+        \Session::flash('endDate', $endDate);
+
+        // 各日最新のAM行を1行のみ取得する
+        // flg 11:AM , 12:PM
+        $ampm = ["am", "pm"];
+        $ampm_collection = collect([]);
+
+        foreach ($ampm as $fuseau) {
+            $finance_records = Finance::whereIn('flg', [11, 12, 13])
+            ->where('zone', $fuseau)
+            ->whereRaw('DATE(registre_datetime) = (SELECT MAX(DATE(registre_datetime)) FROM finances AS f2 WHERE DATE(f2.registre_datetime) = DATE(finances.registre_datetime) AND f2.zone = finances.zone AND f2.flg IN (11, 12, 13))')
+            ->orderBy('registre_datetime', 'desc')
+            ->get();
+            
+            $filtered_records = $finance_records->filter(function ($record) use ($startDate, $endDate) {
+                $record_date = Carbon::parse($record->registre_datetime);
+                return $record_date >= $startDate && $record_date <= $endDate;
+            });
+
+            $new_collection = collect([]);
+            $dates = [];
+
+            $filtered_records->each(function ($record) use (&$new_collection, &$dates) {
+                $date = Carbon::parse($record->registre_datetime)->toDateString();
+                if (!in_array($date, $dates)) {
+                    $new_collection->push($record);
+                    $dates[] = $date;
+                }
+            });
+            $ampm_collection->push($new_collection);
+        }
+
+        $am_records = null;
+        $pm_records = null;
+        $ampm_collection->each(function ($item) use (&$am_records, &$pm_records) {
+            $firstObject = $item->first();
+            if ($firstObject->zone === 'am') {
+                $am_records = $item;
+            } elseif ($firstObject->zone === 'pm') {
+                $pm_records = $item;
+            }
+        });
+
+        // 二つのコレクションをマージ
+        $mergedCollection = $am_records->merge($pm_records);
+
+        // registre_datetime カラムでソート
+        $ampm_merge_collection = $mergedCollection->sortBy('registre_datetime');
+
+        // 各カラムの合計を求める
+        $total_cash = $ampm_merge_collection->filter(function ($record) {
+            return is_numeric($record->cash);
+        })->sum('cash');
+        $total_chip = $ampm_merge_collection->filter(function ($record) {
+            return is_numeric($record->chips);
+        })->sum('chips');
+        $total_cheque = $ampm_merge_collection->filter(function ($record) {
+            return is_numeric($record->cheque);
+        })->sum('cheque');
+        $total_card = $ampm_merge_collection->filter(function ($record) {
+            return is_numeric($record->card);
+        })->sum('card');
+
+        return view('jesser_close_recettes_filter', compact('ampm_merge_collection', 'total_cash', 'total_chip', 'total_cheque', 'total_card'));
+    }
+
     /**
      * finance. 当日のみの 売上財務ページ表示
      * 夜のジェイセル用

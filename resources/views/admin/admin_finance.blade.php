@@ -10,7 +10,6 @@
 			<small>finance data</small>
 		</div>
 	</div>
-
 	<!--container 売上データ表示-->
 	<div class="my-3 p-3 bg-body rounded shadow-sm">
 	<div class=" text-muted pt-3 pb-3">
@@ -64,6 +63,9 @@
 			<ul class="list-group">
 			<li class="list-group-item">
 				<a href="/admin">Admin pageへ戻る</a>
+			</li>
+			<li class="list-group-item">
+				<a href="/jesser_close_recettes_filter">ジェイセル レジ集計詳細</a>
 			</li>
 			</ul>
 			</div>
