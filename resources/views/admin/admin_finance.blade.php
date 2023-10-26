@@ -64,9 +64,6 @@
 			<li class="list-group-item">
 				<a href="/admin">Admin pageへ戻る</a>
 			</li>
-			<li class="list-group-item">
-				<a href="/jesser_close_recettes_filter">ジェイセル レジ集計詳細</a>
-			</li>
 			</ul>
 			</div>
 		</div><!--row end-->

@@ -4,7 +4,15 @@
 @section('content')
 
 <main class="container">
-
+	<div class="row gx-3 p-3">
+		<div class="col-md-4 center-block">
+			<ul class="list-group">
+			<li class="list-group-item">
+				<a href="/jesser_close_recettes_filter">ジェイセル レジ集計詳細</a>
+			</li>
+			</ul>
+		</div>
+	</div><!--row end-->
 @if($action_message)
 <!-- アクションメッセージ表示 -->
 <div class="alert alert-success" role="alert">

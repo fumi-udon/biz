@@ -13,6 +13,8 @@ use Illuminate\Support\Collection;
 
 //Fumi 独自クラス
 use App\FumiLib\FumiTools;
+// 例外クラス
+use App\Exceptions\MyCustomException;
 
 use \DateTime; // 追加: PHPのグローバルな名前空間にあるDateTimeクラスを使用することを明示
 use DateTimeZone;
@@ -254,6 +256,12 @@ class JesserController extends Controller
                 $record_date = Carbon::parse($record->registre_datetime);
                 return $record_date >= $startDate && $record_date <= $endDate;
             });
+
+            // 検索結果無し
+            if ($filtered_records->isEmpty()) {
+                // 値が無い場合は例外をスローする
+                throw new MyCustomException();
+            }
 
             $new_collection = collect([]);
             $dates = [];
