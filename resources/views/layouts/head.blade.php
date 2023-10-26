@@ -25,7 +25,7 @@
             </li>
             @if(session('auth_flg'))
             <li class="nav-item">
-              <a class="nav-link" href="/index_finance">財務</a>
+              <a class="nav-link" href="/admin_top_menu">管理者メニューページ</a>
             </li>
             @endif
           </ul>

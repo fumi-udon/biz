@@ -70,6 +70,23 @@ class AdminProductionController extends Controller
         $stock_ingredients = $this->prendre_stock();
         return view('admin/admin_production', compact('plan_production','plan_production_id_eight','plan_production_id_five' ,'plan_production_idtwo','action_message', 'stock_ingredients'));
     }
+
+    
+    /**
+     * Index. 管理者 メニューページ表示 
+     * 
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function admin_top_menu()
+    {
+        if ( ! (Session::has('auth_flg') && Session::get('auth_flg') == true) ) {
+            //管理者認証エラー
+            $action_message = "[管理トップ]認証エラーがありました。";
+            return view('welcome', compact('action_message'));
+        }
+
+        return view('admin/admin_top_menu');
+    }
     /**
      * finance. 売上財務インデックスページ表示
      * 

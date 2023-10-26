@@ -55,7 +55,8 @@ Route::post('/add_note8h', [TaskOrderController::class, 'add_note8h'])->name('ad
 use App\Http\Controllers\AdminProductionController;
 // debug nav サンプルテスト
 Route::get('/index_simple/{action_message?}', [AdminProductionController::class, 'index_simple'])->name('index.simple');
-
+// 管理者 メニューページ
+Route::get('/admin_top_menu/', [AdminProductionController::class, 'admin_top_menu'])->name('admin.top.menu');
 Route::get('/admin/{action_message?}', [AdminProductionController::class, 'index'])->name('admin.index');
 // 財務ページ adminページのリンクより
 Route::get('/index_finance/{btn?}/{page_id?}', [AdminProductionController::class, 'index_finance'])->name('admin.index.finance');
