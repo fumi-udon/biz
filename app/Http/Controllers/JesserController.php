@@ -235,8 +235,8 @@ class JesserController extends Controller
         $inputs = $request->all();
         $startDate = Carbon::parse($inputs["startDate"]);
         $endDate = Carbon::parse($inputs["endDate"]);
-        \Session::flash('startDate', $startDate);
-        \Session::flash('endDate', $endDate);
+        \Session::flash('startDate', $inputs["startDate"]);
+        \Session::flash('endDate', $inputs["endDate"]);
 
         // 各日最新のAM行を1行のみ取得する
         // flg 11:AM , 12:PM
