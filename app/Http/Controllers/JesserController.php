@@ -124,8 +124,9 @@ class JesserController extends Controller
             // asia食材
             'stock_asia_1' => $second_tue,
             'stock_asia_2' => $fourth_tue,
-            // オンバラージュ
-            'stock_emballage_1' => $third_thu,                                     
+            // オンバラージュ // $obj_first_tue
+            'stock_emballage_1' => $obj_first_tue,
+            'stock_emballage_2' => $third_thu,                              
             // 肉
             'stock_boeuf_1' => $second_wed,
             'stock_boeuf_2' => $fourth_wed,
