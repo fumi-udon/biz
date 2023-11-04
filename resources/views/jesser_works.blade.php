@@ -65,6 +65,7 @@
 				@if( $effect_dates['stock_asia_1'] == $date_ymd 
 						|| $effect_dates['stock_asia_2']  == $date_ymd 
 						|| $effect_dates['stock_emballage_1']  == $date_ymd 
+						|| $effect_dates['stock_emballage_2']  == $date_ymd 
 						|| $effect_dates['stock_boeuf_1'] == $date_ymd 
 						|| $effect_dates['stock_boeuf_2'] == $date_ymd 
 					)
