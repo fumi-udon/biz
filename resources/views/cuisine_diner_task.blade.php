@@ -35,11 +35,11 @@
 			<p> &#129367; Salade 1 petit bol (total)</p>
 			<p> &#129382; Placer les choux en bas le comptoir</p>
 
-			@if($req_omlettes < 1)
+			<!-- @if($req_omlettes < 1)
 			<p>
 				&#127744; omlettes pour mazé: préparer 1 p
 			</p>
-			@endif
+			@endif -->
 
 			@if($req_fms < 5)
 			<p>
