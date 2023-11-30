@@ -9,12 +9,6 @@
         <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="/emporter_index">注文データ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/conso">食材消費履歴</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/close_top">CLOSE Check</a>
             </li>
             <li class="nav-item">

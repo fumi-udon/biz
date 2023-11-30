@@ -16,6 +16,12 @@
 				<li class="list-group-item">
 					<a href="/jesser_close_recettes_filter">ジェイセル レジ集計詳細</a>
 				</li>
+				<li class="list-group-item">
+					<a href="/emporter_index">注文データ</a>
+				</li>
+				<li class="list-group-item">
+					<a href="/conso">食材消費履歴</a>
+				</li>
 			</ul>
 		</div>
 	</div><!--row end  -->
