@@ -25,99 +25,110 @@
 	@elseif ( isset($stock_ingredient) )
 		<div>
 			<p><h5>Aicha</h5></p>
-			<!-- 追加情報 -->
-			<p>
-				@if($daysoftheweek == 'wed')
-						&#11091; Friteuse et étagère de friteuse et sous la friteuse (responsable: aïcha et fifi (matin ou après 15h))
+			@if(!empty($sato_record_aicha_ov))
+				<!-- Aichaエリアのみ上書き表示 60　-->
+				<p>{!! $sato_record_aicha_ov->override_tx_1	 !!} </p>
+			@else
+				<p>
+					@if($daysoftheweek == 'wed')
+							&#11091; Friteuse et étagère de friteuse et sous la friteuse (responsable: aïcha et andoréa (matin ou après 15h))
+					@endif
+				</p>				
+				<p>
+					<!-- 追加情報 -->
+					@if(!empty($sato_record_aicha))
+							&#11093; {!! $sato_record_aicha->override_tx_1 !!}
+					@endif
+				</p>
+				
+				<!-- plan_productionテーブル id=6のデータ表示 -->
+				<p>&#127837; Udon: {{ $plan_production[$daysoftheweek] }} </p>
+				
+				@if($aicha_bouillons <= 5)
+				<p>
+					<!-- 5L以下の場合のみブイヨン作る -->
+					&#129379; Bouillons:
+					<!-- 週末 金/土 -->
+					@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')
+						{{ 8 - $aicha_bouillons }} L
+					@else
+					<!-- 平日 -->
+						{{ 7 - $aicha_bouillons }} L
+					@endif
 				@endif
-			</p>
-			<p>
-				@if(!empty($sato_record_aicha))
-						&#11093; {!! $sato_record_aicha->override_tx_1 !!}
+				</p>
+				@if($daysoftheweek == 'tue' || $daysoftheweek == 'fri')	
+				<p>					
+					{!! $text_kitchen !!} 
+				</p>
 				@endif
-			</p>
-			
-			<!-- plan_productionテーブル id=6のデータ表示 -->
-			<p>&#127837; Udon: {{ $plan_production[$daysoftheweek] }} </p>
-			
-			@if($aicha_bouillons <= 5)
-			<p>
-				<!-- 5L以下の場合のみブイヨン作る -->
-				&#129379; Bouillons:
-				<!-- 週末 金/土 -->
-				@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')
-					{{ 8 - $aicha_bouillons }} L
-				@else
-				<!-- 平日 -->
-					{{ 7 - $aicha_bouillons }} L
-				@endif
-			@endif
-			</p>
-			@if($daysoftheweek == 'tue' || $daysoftheweek == 'fri')	
-			<p>					
-				{!! $text_kitchen !!} 
-			</p>
 			@endif
 			<hr>
 			<!-- アンドレア -->
 			<p><h5>Andoréa</h5></p>
-			<!-- 追加情報 -->
-			<p>
-				@if($daysoftheweek == 'fri')
-						&#11093; Plan de nettoyage : réfrigérateur Wirpool (intérieur et extérieur)
-				@endif
-			</p>
-			@if(!empty($sato_record_andrea))
-			<p>
-				&#11094; {!! $sato_record_andrea->override_tx_1 !!}				
-			</p>
-			@endif
-			<p>
-				&#127833; RIZ:
-			@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')	
-				<!-- 「週末プラン」金曜と土曜 -->				
-				@if($aicha_riz == 0 || $aicha_riz == 1)
-					14 portions
-				@elseif($aicha_riz == 2)
-					12 portions
-				@elseif($aicha_riz == 3)
-					9 portions
-				@elseif($aicha_riz == 4)
-					8 portions
-				@elseif($aicha_riz == 5)
-					5 portions
-				@elseif($aicha_riz == 6)
-					4 portions
-				@elseif($aicha_riz == 7)
-						non
-				@endif
+			@if(!empty($sato_record_andrea_ov))
+				<!-- Andoreaエリアのみ上書き表示 61　-->
+				<p>{!! $sato_record_andrea_ov->override_tx_1 !!} </p>
 			@else
-				<!-- 「平日プラン」-->
-				@if($aicha_riz == 0 || $aicha_riz == 1)
-					14 portions
-				@elseif($aicha_riz == 2)
-					10 portions
-				@elseif($aicha_riz == 3)
-					7 portions
-				@elseif($aicha_riz == 4)
-					5 portions
-				@elseif($aicha_riz == 5)
-					3 portions
-				@elseif($aicha_riz == 6)
-					3 portions
-				@elseif($aicha_riz == 7)
-						non
+				<p>
+					@if($daysoftheweek == 'fri')
+							&#11093; Plan de nettoyage : réfrigérateur Wirpool (intérieur et extérieur)
+					@endif
+				</p>
+				<!-- 追加情報 -->	
+				@if(!empty($sato_record_andrea))
+				<p>
+					&#11094; {!! $sato_record_andrea->override_tx_1 !!}				
+				</p>
+				@endif
+				<p>
+					&#127833; RIZ:
+				@if($daysoftheweek == 'fri' || $daysoftheweek == 'sat')	
+					<!-- 「週末プラン」金曜と土曜 -->				
+					@if($aicha_riz == 0 || $aicha_riz == 1)
+						14 portions
+					@elseif($aicha_riz == 2)
+						12 portions
+					@elseif($aicha_riz == 3)
+						9 portions
+					@elseif($aicha_riz == 4)
+						8 portions
+					@elseif($aicha_riz == 5)
+						5 portions
+					@elseif($aicha_riz == 6)
+						4 portions
+					@elseif($aicha_riz == 7)
+							non
+					@endif
+				@else
+					<!-- 「平日プラン」-->
+					@if($aicha_riz == 0 || $aicha_riz == 1)
+						14 portions
+					@elseif($aicha_riz == 2)
+						10 portions
+					@elseif($aicha_riz == 3)
+						7 portions
+					@elseif($aicha_riz == 4)
+						5 portions
+					@elseif($aicha_riz == 5)
+						3 portions
+					@elseif($aicha_riz == 6)
+						3 portions
+					@elseif($aicha_riz == 7)
+							non
+					@endif
+				@endif
+					
+				</p>
+				@if($daysoftheweek == 'mon' || $daysoftheweek == 'wed'  || $daysoftheweek == 'thu' || $daysoftheweek == 'sat')	
+				<p>					
+					{!! $text_kitchen !!}
+				</p>
 				@endif
 			@endif
-				
-			</p>
-			@if($daysoftheweek == 'mon' || $daysoftheweek == 'wed'  || $daysoftheweek == 'thu' || $daysoftheweek == 'sat')	
-			<p>					
-				{!! $text_kitchen !!}
-			</p>
-			@endif
+
 		</div>
-		<p class="my-3 p-3">
+		<p class="my-1 p-1">
 			{{ $text_etc }}
 		</p>
 	@else

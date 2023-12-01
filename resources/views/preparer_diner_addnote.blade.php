@@ -8,7 +8,7 @@
 <div class="col-md-12">
 	@if(Request::is('addnote_diner'))
 	<hr>
-	<p class="p-3"><b>登録しました。Sato指示 flg=6(上書き) or 7(追加)</b><br>表示日：{{ session('note_date') }}<br>{{ session('mode_insert_now') }}<br>{{ session('note8h') }}</p>
+	<p class="p-3"><b>登録しました。Sato指示 flg=6/60/61(上書き) or 7/8(追加)</b><br>表示日：{{ session('note_date') }}<br>{{ session('mode_insert_now') }}<br>{{ session('note8h') }}</p>
 	@endif
 
 	<!-- sato独自指示 エリア end -->
@@ -24,7 +24,7 @@
 			</div>
 			<div class="row">
 				<div class="form-group">
-					<label for="mode_inserts_list">上書きか追加 (6 / 7) 
+					<label for="mode_inserts_list">上書きか追加 (6/ 60/ 61 / 7 / 8) 
 					<select class="form-select" id="mode_inserts_list" name="mode_inserts_list" required>
 						@foreach ($mode_inserts as $mode_insert)
 							<option value="{{ $mode_insert['id'] }}" @if( Session::get('mode_insert_now')  == $mode_insert['id'] ) selected @endif> {{ $mode_insert['name'] }} </option>

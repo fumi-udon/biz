@@ -125,6 +125,17 @@ class TestDevController extends Controller
         ->latest('updated_at')
         ->first();
 
+        // 上書き アイシャ部分のみ
+        $sato_record_aicha_ov = SatoInstruction::where('flg_int', 60)
+            ->where('aply_date', $date_today)
+            ->latest('updated_at')
+            ->first();
+        // 上書き アンドレア部分のみ
+        $sato_record_andrea_ov = SatoInstruction::where('flg_int', 61)
+        ->where('aply_date', $date_today)
+        ->latest('updated_at')
+        ->first();
+
         // udonの切る数を取得
         // PlanProduction テーブルUDON設定値を取得 15時アイシャ指示 Mix用 [ID] 
         $plan_production = PlanProduction::where('id',6)->first();
@@ -142,7 +153,9 @@ class TestDevController extends Controller
             'sato_text_mode',
             'sato_record_aicha',
             'sato_record_andrea',
-            'plan_production'
+            'plan_production',
+            'sato_record_aicha_ov',
+            'sato_record_andrea_ov'
         ));
     }
 
@@ -799,7 +812,9 @@ class TestDevController extends Controller
             // select ボックス要素作成
             $mode_inserts = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '6', 'name' => '上書き更新'],
+                ['id' => '6', 'name' => '全部上書き'],
+                ['id' => '60', 'name' => '上書き_TO_Aicha'],
+                ['id' => '61', 'name' => '上書き_TO_アンドレア'],
                 ['id' => '7', 'name' => '追加_TO_Aicha'],
                 ['id' => '8', 'name' => '追加_TO_アンドレア'],
             ]);
