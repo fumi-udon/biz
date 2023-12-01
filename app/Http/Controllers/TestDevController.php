@@ -466,7 +466,7 @@ class TestDevController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function courses_matin()    {
-
+        date_default_timezone_set('Africa/Tunis');
         // Fumi 独自クラスインスタンス化
         $fumi_tools =new FumiTools();
         $daysoftheweek = $fumi_tools->fumi_get_youbi_for_table(date('w'));
@@ -580,10 +580,15 @@ class TestDevController extends Controller
         ->where('page_id', '=', 'khouloud_commence_input') // 条件
         ->where('fuseaux', '=', 'am')   // 条件
         ->orderBy('created_at', 'desc') // 'created_at' カラムを降順にソート
-        ->first();        
+        ->first();
+        // ◇りんごを買う条件 2023 [月曜～木曜]
+        $apple_days = true;
+        if($daysoftheweek = 'fri' || $daysoftheweek = 'sat'){
+            $apple_days = false;
+        }
 
         // 表示ステータス 通常指示表示
-        return view('courses_matin',compact('stock_cuisine_main', 'stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
+        return view('courses_matin',compact('apple_days', 'stock_cuisine_main', 'stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
     }
 
     /**

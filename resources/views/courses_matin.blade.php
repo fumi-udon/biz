@@ -28,8 +28,8 @@
 				<p>&#129371; Lait 2 paquets</p> 
 			@endif
 
-			@if ($stock_cuisine_main['apple'] < 3)
-				<p>&#x1f34e; Pomme 4 pièces</p>
+			@if ($apple_days && $stock_cuisine_main['apple'] < 3)
+					<p>&#x1f34e; Pomme 3 pièces</p>
 			@endif
 			</div>
 		@else
