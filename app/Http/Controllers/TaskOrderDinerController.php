@@ -124,7 +124,8 @@ class TaskOrderDinerController extends TaskOrderController
        // dd($inputs);
         // リクエストデータ取得
         $req_oeufs = intval($inputs['oeufs']);
-        $req_omlettes = intval($inputs['omlettes']);
+        // $req_omlettes = intval($inputs['omlettes']);　夏：まぜそば用
+        $req_omlettes = 2; //冬：まぜそば無いとき        
         $req_fms = intval($inputs['fms']);
         $req_laitues = intval($inputs['laitues']);
         $req_okonomiyakis = intval($inputs['okonomiyakis']);

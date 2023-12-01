@@ -19,7 +19,7 @@
 		<form action="cuisine_diner_task" method="post">
 		@csrf
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<div class="form-group">
 						<label for="oeufs">oeuf</label>
 						<select class="form-select" id="oeufs" name="oeufs" required>
@@ -29,7 +29,8 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-md-6">
+				<!-- 夏：まぜそば用 -->
+				<!-- <div class="col-md-6">
 					<div class="form-group">
 						<label for="omlettes">omlette émincée</label>
 						<select class="form-select" id="omlettes" name="omlettes" required>
@@ -38,7 +39,7 @@
 						@endforeach
 						</select>
 					</div>
-				</div>
+				</div> -->
 			</div><!-- row end -->
 			<hr>
 			<div class="row">
