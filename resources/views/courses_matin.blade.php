@@ -27,7 +27,8 @@
 			@elseif ($bilel_lait === 1)
 				<p>&#129371; Lait 2 paquets</p> 
 			@endif
-
+			
+{{ $apple_days }}
 			@if ($apple_days && $stock_cuisine_main['apple'] < 3)
 					<p>&#x1f34e; Pomme 3 pièces</p>
 			@endif
