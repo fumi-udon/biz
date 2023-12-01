@@ -31,6 +31,7 @@
 			@if ($apple_days && $stock_cuisine_main['apple'] < 3)
 					<p>&#x1f34e; Pomme 3 pièces</p>
 			@elseif (! $apple_days)
+				りんご買うなー
 			@endif
 			</div>
 		@else
