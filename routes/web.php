@@ -56,11 +56,17 @@ use App\Http\Controllers\AdminProductionController;
 // debug nav サンプルテスト
 Route::get('/index_simple/{action_message?}', [AdminProductionController::class, 'index_simple'])->name('index.simple');
 // 管理者 メニューページ
-Route::get('/admin_top_menu/', [AdminProductionController::class, 'admin_top_menu'])->name('admin.top.menu');
+Route::get('/admin_top_menu', [AdminProductionController::class, 'admin_top_menu'])->name('admin.top.menu');
 Route::get('/admin/{action_message?}', [AdminProductionController::class, 'index'])->name('admin.index');
 // 財務ページ adminページのリンクより
 Route::get('/index_finance/{btn?}/{page_id?}', [AdminProductionController::class, 'index_finance'])->name('admin.index.finance');
 Route::post('/finance/{btn?}/{page_id?}', [AdminProductionController::class, 'finance'])->name('admin.finance');
+
+// staff メニューページ 
+use App\Http\Controllers\StaffInfoController;
+Route::get('/staff_menu_top', [StaffInfoController::class, 'staff_menu_top'])->name('staff.menu.top');
+//contact_urgent
+Route::get('/contact_urgent', [StaffInfoController::class, 'contact_urgent'])->name('staff.contact.urgent');
 
 // Ajax welcome.blade.php 管理者ページ表示前検証
 Route::post('/admin_validate',[AdminProductionController::class, 'admin_validate']);

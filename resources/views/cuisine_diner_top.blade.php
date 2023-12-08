@@ -32,7 +32,7 @@
 				<!-- 一時帰国：ほうれん草 用 -->
 				<div class="col-md-6">
 					<div class="form-group">
-						<label for="epinard" class="form-label">Epinard(grammes):</label>
+						<label for="epinard" class="form-label">épinard(grammes):</label>
 						<input type="number" class="form-control" id="epinard" name="epinard" required>
 					</div>
 				</div>
