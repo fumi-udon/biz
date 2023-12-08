@@ -19,7 +19,7 @@
 		<form action="cuisine_diner_task" method="post">
 		@csrf
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<div class="form-group">
 						<label for="oeufs">oeuf</label>
 						<select class="form-select" id="oeufs" name="oeufs" required>
@@ -27,6 +27,13 @@
 							<option value="{{ $oeuf['id'] }}" @if( Session::get('oeuf_now')  == $oeuf['id'] ) selected @endif> {{ $oeuf['name'] }} </option>
 						@endforeach
 						</select>
+					</div>
+				</div>
+				<!-- 一時帰国：ほうれん草 用 -->
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="epinard" class="form-label">Epinard(grammes):</label>
+						<input type="number" class="form-control" id="epinard" name="epinard" required>
 					</div>
 				</div>
 				<!-- 夏：まぜそば用 -->
@@ -108,6 +115,31 @@ $actionMessage = 'ディナー17h30 シャハルディンプレパレ用';
 	</div>
 		<!-- 登録データ -->
 		<div class="my-3 p-3 bg-body rounded shadow-sm" id="note_record" style="display:none; width: 100%;">
+
+		@if ( isset($stock_mains) )
+		<div class="my-3">
+			<p>stock_mainsテーブル</p>
+			<div class="table-responsive">	
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Date</th>
+							<th scope="col">Epinard</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach ($stock_mains as $stock_main)
+						<tr>
+							<td>{{ $stock_main->created_at }}</td>
+							<td>{{ $stock_main->epinard }} g</td>
+						</tr>
+					@endforeach
+					</tbody>
+				</table>
+			</div>
+		</div>
+		@endif
+
 		@if ( isset($stock_ingredients) )
 		<div class="my-3">
 			<p>登録データStockIngredientテーブル</p>

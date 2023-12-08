@@ -19,6 +19,7 @@ use DateTimeZone;
 use App\Models\SatoInstruction;
 use App\Models\PlanProduction;
 use App\Models\StockIngredient;
+use App\Models\StockCuisineMain;
 use Carbon\Carbon;
 
 class TaskOrderDinerController extends TaskOrderController
@@ -62,9 +63,18 @@ class TaskOrderDinerController extends TaskOrderController
         // 画面表示用にプルダウンのnameを格納した連想配列を作成
         $stock_ingredients_display = $this->get_stock_display_flg5();
 
+        // StockMainsテーブルデータ表示
+        // ほうれん草
+        $stock_mains = StockCuisineMain::where('flg', 17)
+        ->where('page_id', '=', 'cuisine_diner_task')
+        ->orderBy('created_at', 'desc')
+        ->take(3)
+        ->get();
+    
         \Session::flash('stock_ingredients', $stock_ingredients);
+        \Session::flash('stock_mains', $stock_mains);
         
-        return view('cuisine_diner_top', compact('stock_ingredients_display', 'stock_ingredients','today','oeufs','omlettes','fms','laitues','okonomiyakis','sato_instruction','yes_sato'));
+        return view('cuisine_diner_top', compact('stock_mains','stock_ingredients_display', 'stock_ingredients','today','oeufs','omlettes','fms','laitues','okonomiyakis','sato_instruction','yes_sato'));
     }
 
     /**
@@ -124,6 +134,8 @@ class TaskOrderDinerController extends TaskOrderController
        // dd($inputs);
         // リクエストデータ取得
         $req_oeufs = intval($inputs['oeufs']);
+        //  epinard
+        $req_epinard = intval($inputs['epinard']);
         // $req_omlettes = intval($inputs['omlettes']);　夏：まぜそば用
         $req_omlettes = 2; //冬：まぜそば無いとき        
         $req_fms = intval($inputs['fms']);
@@ -151,6 +163,17 @@ class TaskOrderDinerController extends TaskOrderController
             ]
         );
 
+        // ほうれん草登録用
+        // StockMainsテーブルに登録
+        $dao_datas = [];
+        $dao_datas['flg'] = 17; // 17時のフラグ
+        $dao_datas['shop'] = 'bn';
+        $dao_datas['page_id'] = 'cuisine_diner_task';
+        $dao_datas['fuseaux'] = 'pm';
+        $dao_datas['staff'] = 'chaharddine';
+        $dao_datas['epinard'] = intval($inputs['epinard']);
+        StockCuisineMain::create($dao_datas);
+
         /**
          * サト指示 [追加] flg = 10 
          * 追加
@@ -173,6 +196,7 @@ class TaskOrderDinerController extends TaskOrderController
             'req_fms',
             'req_laitues',
             'req_okonomiyakis',
+            'req_epinard'
         ));
     } 
 
