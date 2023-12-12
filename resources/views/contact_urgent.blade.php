@@ -2,7 +2,7 @@
 <!-- パンくずリスト -->
 @extends('layouts.head')
 @section('content')
-<main class="container">
+<main class="container" style="padding-bottom:30px;">
 	<div class="mt-5">
 		<h3 style="padding-bottom:25px;">Contact d'urgence</h3>
 
@@ -23,6 +23,10 @@
 				<li class="list-group-item">Atef (comptable) - 21 419 240</li>
 				<li class="list-group-item">Mme. foulla （大家） - 93 240 176</li>
 			</ul>
+			<hr>
+			<ul class="list-group">
+				<li class="list-group-item">Radouan (QR système) - 55 152 121</li>
+			</ul>
 		</div>
 		<h5>Service clé </h5>
 			<ul class="list-group">
@@ -32,6 +36,7 @@
 		</div>
 	</div>
 </main>
+
 @endsection
 
 @extends('layouts.footer')
