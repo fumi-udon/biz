@@ -24,11 +24,10 @@
 	</div><!--row end  -->
 
 	<div class="row gx-3 p-3"><!--row start-->
-		<div><h5>staff page	</h5></div>
 		<div class="col-md-4 center-block">
 			<ul class="list-group">
 				<li class="list-group-item">
-					<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSVgQv9pqQcIwSavzFLFgugv1CbiTk4eCvosm6GffEEoF0d3wxkA29X7GvUdeECuoqOT3Sf_R4ROZmH/pubhtml?gid=242477425&single=true"  target="_blank">Time table</a>				
+					<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSVgQv9pqQcIwSavzFLFgugv1CbiTk4eCvosm6GffEEoF0d3wxkA29X7GvUdeECuoqOT3Sf_R4ROZmH/pubhtml?gid=242477425&single=true"  target="_blank">planning des horaires</a>				
 				</li>
 			</ul>
 		</div>
