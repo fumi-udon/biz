@@ -347,7 +347,7 @@ class JesserController extends Controller
                 ( strtotime($todayDate . ' 15:00:00') <= strtotime($todayDate . $nowSeconds) &&
                 strtotime($todayDate . ' 17:00:00') >= strtotime($todayDate . $nowSeconds) )
               ||
-                ( strtotime($todayDate . ' 22:30:00') <= strtotime($todayDate . $nowSeconds) &&
+                ( strtotime($todayDate . ' 22:25:00') <= strtotime($todayDate . $nowSeconds) &&
                 strtotime($todayDate . ' 23:59:00') >= strtotime($todayDate . $nowSeconds) )
             ){
                 // 時刻範囲内 表示OK

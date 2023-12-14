@@ -151,7 +151,7 @@ Route::post('/jesser_close_recettes_filter_serch', [JesserController::class, 'je
 Route::post('/finance_journal', [JesserController::class, 'finance_journal'])->name('finance.journal');
 Route::get('/zoom_start', [JesserController::class, 'zoom_start'])->name('zoom.start');
 
-// Khouloud 管理 
+// Khouloud 管理
 use App\Http\Controllers\KhouloudController;
 Route::get('/khouloud_top', [KhouloudController::class, 'khouloud_top']);
 Route::get('/khouloud_commence_input', [KhouloudController::class, 'khouloud_commence_input'])->name('khouloud.commence.input');
