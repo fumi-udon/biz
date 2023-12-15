@@ -29,6 +29,9 @@
 				<li class="list-group-item">
 					<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSVgQv9pqQcIwSavzFLFgugv1CbiTk4eCvosm6GffEEoF0d3wxkA29X7GvUdeECuoqOT3Sf_R4ROZmH/pubhtml?gid=242477425&single=true"  target="_blank">planning des horaires</a>				
 				</li>
+				<li class="list-group-item">
+					<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSVgQv9pqQcIwSavzFLFgugv1CbiTk4eCvosm6GffEEoF0d3wxkA29X7GvUdeECuoqOT3Sf_R4ROZmH/pubhtml?gid=1692662114&single=true"  target="_blank">changement de menu</a>				
+				</li>
 			</ul>
 		</div>
 	</div><!--row end  -->
