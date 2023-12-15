@@ -594,11 +594,17 @@ class TestDevController extends Controller
         ->where('fuseaux', '=', 'am')   // 条件
         ->orderBy('created_at', 'desc') // 'created_at' カラムを降順にソート
         ->first();
+
         // ◇りんごを買う条件 2023 [月曜～木曜]
         $apple_days = true;
         if($daysoftheweek = 'fri' || $daysoftheweek = 'sat'){
             $apple_days = false;
         }
+
+        // TODO 年始にこのコードを消すこと Start
+        // Aichaちゃん この時期絶対リンゴ買わないでねー
+        $apple_days = false;
+        // TODO 年始に消すと End
 
         // 表示ステータス 通常指示表示
         return view('courses_matin',compact('apple_days', 'stock_cuisine_main', 'stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
