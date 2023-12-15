@@ -34,7 +34,7 @@
 				@endif
 				<!-- 火曜： プラン -->
 				@if($daysoftheweek == 'tue')
-					<p> &#x1f5c3; Ménage de salle client: l'étagère et le comptoir et des points sals</p>
+					<p> &#x1f5c3; Ménage de salle client: l'étagère et le comptoir et des points sales</p>
 					<p> &#x1f5c3; Achats: demandez un list à Sato</p>
 				@endif
 				<!-- 水曜 プラン -->
