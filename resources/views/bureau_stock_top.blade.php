@@ -26,7 +26,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article1s"><b>&#128017;sac du riz</b>
+					<label for="article1s"><b>&#128017;Boîte de ramen vide</b>
 					<select class="form-select" id="article1s" name="article1s" required>
 						@foreach ($article1s as $article1)
 							<option value="{{ $article1['id'] }}" @if( Session::get('article1_now')  == $article1['id'] ) selected @endif> {{ $article1['name'] }} </option>
@@ -40,7 +40,7 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article2s"><b>&#128017;carton de sauce de soja</b>
+					<label for="article2s"><b>&#128017;Boîte de ramen pleine</b>
 					<select class="form-select" id="article2s" name="article2s" required>
 						@foreach ($article2s as $article2)
 							<option value="{{ $article2['id'] }}" @if( Session::get('article2_now')  == $article2['id'] ) selected @endif> {{ $article2['name'] }} </option>
@@ -54,10 +54,10 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article3s"><b>&#128017;poudre du mais </b>
-					<select class="form-select" id="article3s" name="article3s" required>
-						@foreach ($article3s as $article3)
-							<option value="{{ $article3['id'] }}" @if( Session::get('article3_now')  == $article3['id'] ) selected @endif> {{ $article3['name'] }} </option>
+					<label for="article4s"><b>&#128017;Bols de udon</b> <br> compter le aprés descendre 
+					<select class="form-select" id="article4s" name="article4s" required>
+						@foreach ($article4s as $article4)
+							<option value="{{ $article4['id'] }}" @if( Session::get('article4_now')  == $article4['id'] ) selected @endif> {{ $article4['name'] }} </option>
 						@endforeach
 					</select>
 					</label>
@@ -74,24 +74,10 @@
 			<div class="col-md-4">
 			<div class="p-3 border bg-light">
 				<div class="form-group">
-					<label for="article4s"><b>&#128017;Bols de udon</b> <br> compter le aprés descendre 
-					<select class="form-select" id="article4s" name="article4s" required>
-						@foreach ($article4s as $article4)
-							<option value="{{ $article4['id'] }}" @if( Session::get('article4_now')  == $article4['id'] ) selected @endif> {{ $article4['name'] }} </option>
-						@endforeach
-					</select>
-					</label>
-				</div>
-			</div>
-			</div>
-
-			<div class="col-md-4">
-			<div class="p-3 border bg-light">
-				<div class="form-group">
-					<label for="article5s"><b>&#128017;gyoza </b> 
-					<select class="form-select" id="article5s" name="article5s" required>
-						@foreach ($article5s as $article5)
-							<option value="{{ $article5['id'] }}" @if( Session::get('article5_now')  == $article5['id'] ) selected @endif> {{ $article5['name'] }} </option>
+					<label for="article3s"><b>&#128017;poudre du mais </b>
+					<select class="form-select" id="article3s" name="article3s" required>
+						@foreach ($article3s as $article3)
+							<option value="{{ $article3['id'] }}" @if( Session::get('article3_now')  == $article3['id'] ) selected @endif> {{ $article3['name'] }} </option>
 						@endforeach
 					</select>
 					</label>
@@ -127,11 +113,10 @@
 					<thead>
 						<tr>
 						<th scope="col">date</th>
-						<th scope="col">riz</th>
-						<th scope="col">saja</th>
+						<th scope="col">ramen空箱</th>
+						<th scope="col">ramen満タン</th>
 						<th scope="col">maïs</th>
 						<th scope="col">udon</th>
-						<th scope="col">gyoza</th>
 						</tr>
 					</thead>
 					<tbody>

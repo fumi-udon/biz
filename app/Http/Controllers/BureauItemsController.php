@@ -49,19 +49,18 @@ class BureauItemsController extends Controller
         $stock_ingredients = FumiTools::get_stockIngredient_by_keys('4', '14');
 
         // プルダウン集 select ボックス要素作成
-        $article1s = $this->get_select_values('article1s'); // sac de riz
-        $article2s = $this->get_select_values('article2s'); // carton de sauce de soja
+        $article1s = $this->get_select_values('article1s'); // sac de riz / boite de ramen vide
+        $article2s = $this->get_select_values('article2s'); // carton de sauce de soja / boite de ramen remplir 
         $article3s = $this->get_select_values('article3s'); // poudre du mais
         $article4s = $this->get_select_values('article4s'); // udon bols
-        $article5s = $this->get_select_values('article5s'); // gyoza
-        $pulldowns = [$article1s, $article2s, $article3s, $article4s, $article5s];
+        $pulldowns = [$article1s, $article2s, $article3s, $article4s];
         
         // stock_ingredientテーブルのカラム名
-        $columun_names = ["article1_rest", "article2_rest", "article3_rest", "article4_rest", "article5_rest"];        
+        $columun_names = ["article1_rest", "article2_rest", "article3_rest", "article4_rest"];        
         $stock_ingredients_display = FumiTools::get_display_datas($stock_ingredients, $pulldowns, $columun_names);
         // 表示用にプルダウンのnameを格納した連想配列を作成 end
 
-        return view('bureau_stock_top', compact('today','article1s','article2s','article3s','article4s','article5s','stock_ingredients','stock_ingredients_display'));
+        return view('bureau_stock_top', compact('today','article1s','article2s','article3s','article4s','stock_ingredients','stock_ingredients_display'));
     }
 
     /**
@@ -77,7 +76,6 @@ class BureauItemsController extends Controller
         $req_article2s = intval($inputs['article2s']);
         $req_article3s = intval($inputs['article3s']);
         $req_article4s = intval($inputs['article4s']);
-        $req_article5s = intval($inputs['article5s']);
 
         // StockIngredient テーブル
         //  事務所在庫データ
@@ -94,7 +92,7 @@ class BureauItemsController extends Controller
                 'article2_rest' => $req_article2s,
                 'article3_rest' => $req_article3s,
                 'article4_rest' => $req_article4s,
-                'article5_rest' => $req_article5s,
+                'article5_rest' => 0, // Gyoza削除 error回避：ダミーデータ挿入
                 'registre_date' => date('Y-m-d'),
                 'registre_datetime' => now(),
                 // error回避：ダミーデータ挿入
@@ -112,8 +110,7 @@ class BureauItemsController extends Controller
             'article1_now' => $req_article1s,
             'article2_now' => $req_article2s,
             'article3_now' => $req_article3s,
-            'article4_now' => $req_article4s,
-            'article5_now' => $req_article5s
+            'article4_now' => $req_article4s
             ]);
     }
 
@@ -126,25 +123,35 @@ class BureauItemsController extends Controller
     public function get_select_values($s_id){
         //1
         if($s_id == 'article1s'){
-            // select ボックス要素作成
+            // select ボックス要素作成 boite de ramen vide
             $article1s = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'moins que 3 sacs'],
-                ['id' => '1', 'name' => 'entre 4 ～ 6 sacs'],
-                ['id' => '2', 'name' => 'entre 7 ～ 10 sacs'],
-                ['id' => '3', 'name' => 'plus que 10 sacs'],
+                ['id' => '0', 'name' => '1 boite vide'],
+                ['id' => '1', 'name' => '2 boite vide'],
+                ['id' => '2', 'name' => '3 boite vide'],
+                ['id' => '3', 'name' => '4 boite vide'],
+                ['id' => '4', 'name' => '5 boite vide'],
+                ['id' => '5', 'name' => '6 boite vide'],
+                ['id' => '6', 'name' => '7 boite vide'],
+                ['id' => '8', 'name' => '8 boite vide'],
             ]);
             return $article1s;
         }
         //2
         if($s_id == 'article2s'){
-            // select ボックス要素作成
+            // select ボックス要素作成 boite de ramen remplir
             $article2s = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => 'moins que 2 cartons'],
-                ['id' => '1', 'name' => 'entre 3 ～ 5 cartons'],
-                ['id' => '2', 'name' => 'entre 6 ～ 8 cartons'],
-                ['id' => '3', 'name' => 'plus que 9 cartons'],
+                ['id' => '0', 'name' => '1 boite pleine'],
+                ['id' => '1', 'name' => '2 boite pleine'],
+                ['id' => '2', 'name' => '3 boite pleine'],
+                ['id' => '3', 'name' => '4 boite pleine'],
+                ['id' => '4', 'name' => '5 boite pleine'],
+                ['id' => '5', 'name' => '6 boite pleine'],
+                ['id' => '6', 'name' => '7 boite pleine'],
+                ['id' => '8', 'name' => '8 boite pleine'],
+                ['id' => '9', 'name' => '8 boite pleine'],
+                ['id' => '10', 'name' => '8 boite pleine'],
             ]);
             return $article2s;
         }
@@ -172,6 +179,12 @@ class BureauItemsController extends Controller
                 ['id' => '4', 'name' => '2 bols et demi'],
                 ['id' => '5', 'name' => '3 bols'],
                 ['id' => '6', 'name' => '3 bols et demi'],
+                ['id' => '7', 'name' => '4 bols'],
+                ['id' => '8', 'name' => '4 bols et demi'],
+                ['id' => '9', 'name' => '5 bols'],
+                ['id' => '10', 'name' => '5 bols et demi'],
+                ['id' => '11', 'name' => '6 bols'],
+                ['id' => '12', 'name' => '6 bols et demi'],
             ]);
             return $article4s;
         }
