@@ -518,7 +518,7 @@ class TestDevController extends Controller
         // ビレル入力データ取得 flg = 2
         // 14時間以内の最新レコード取得 (月曜日の場合は日曜日を考慮)
         $hour_minus = 14;
-        if($daysoftheweek = 'mon'){$hour_minus = $hour_minus + 30;}
+        if($daysoftheweek == 'mon'){$hour_minus = $hour_minus + 30;}
         $stock_record = StockIngredient::where('flg1', 2)
             ->where('registre_datetime', '>=', Carbon::now()->subHours($hour_minus))
             ->orderBy('registre_datetime', 'desc')
@@ -596,11 +596,10 @@ class TestDevController extends Controller
         ->first();
 
         // ◇りんごを買う条件 2023 [月曜～木曜]
-        $apple_days = true;
-        if($daysoftheweek = 'fri' || $daysoftheweek = 'sat'){
+        $apple_days = true;        
+        if($daysoftheweek == 'fri' || $daysoftheweek == 'sat'){
             $apple_days = false;
         }
-
         // 表示ステータス 通常指示表示
         return view('courses_matin',compact('apple_days', 'stock_cuisine_main', 'stock_record','courses_poulet','bilel_lait', 'stock_ingredients', 'stock_ingredients_display'))->with(['表示ステータス: ' => 0]);
     }
