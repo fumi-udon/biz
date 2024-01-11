@@ -133,7 +133,8 @@ class BureauItemsController extends Controller
                 ['id' => '4', 'name' => '5 boite vide'],
                 ['id' => '5', 'name' => '6 boite vide'],
                 ['id' => '6', 'name' => '7 boite vide'],
-                ['id' => '8', 'name' => '8 boite vide'],
+                ['id' => '7', 'name' => '8 boite vide'],
+                ['id' => '8', 'name' => '9 boite vide'],
             ]);
             return $article1s;
         }
@@ -149,9 +150,9 @@ class BureauItemsController extends Controller
                 ['id' => '4', 'name' => '5 boite pleine'],
                 ['id' => '5', 'name' => '6 boite pleine'],
                 ['id' => '6', 'name' => '7 boite pleine'],
-                ['id' => '8', 'name' => '8 boite pleine'],
-                ['id' => '9', 'name' => '8 boite pleine'],
-                ['id' => '10', 'name' => '8 boite pleine'],
+                ['id' => '7', 'name' => '8 boite pleine'],
+                ['id' => '8', 'name' => '9 boite pleine'],
+                ['id' => '9', 'name' => '10 boite pleine'],
             ]);
             return $article2s;
         }
