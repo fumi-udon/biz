@@ -22,6 +22,9 @@
 				<li class="list-group-item">
 					<a href="/conso">食材消費履歴</a>
 				</li>
+				<li class="list-group-item">
+					<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSoeAbT528tCT8EvtCCGhnTjB8nLcokQIbaD8T_n2QIp3sCi-yyzu8-onDWgZZqrF1wha58BVJdYkJm/pubhtml?gid=0&single=true">価格表</a>
+				</li>
 			</ul>
 		</div>
 	</div><!--row end  -->
