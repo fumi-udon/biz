@@ -7,7 +7,7 @@
 	<div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
 	<img class="me-3" src="{{ asset('img/bootstrap-logo-white.svg') }}" alt="" width="48" height="38">
 	<div class="lh-1">
-		<h1 class="h6 mb-0 text-white lh-1">Bonsoir BILEL! pour la fermeture </h1>
+		<h1 class="h6 mb-0 text-white lh-1">Bonsoir ! les stocks à la fermeture </h1>
 		<small>check stock data</small>
 	</div>
 	</div>
@@ -136,11 +136,11 @@
 		</div><!--row end -->
 		<!-- sato独自指示 エリア end -->
 
-		<!-- Bilel登録データ -->
+		<!-- 登録データ -->
 		@if ( isset($stock_ingredients) )
 		<div class="my-3">
 			<div class="">
-			<B>Bilel登録データ StockIngredientテーブル / flg 2 </B><br>
+			<B>閉店時 登録データ StockIngredientテーブル / flg 2 </B><br>
 
 			<div class="table-responsive">	
 			<table class="table">
@@ -168,7 +168,7 @@
 			</div>
 		</div>
 		@endif
-		<!-- Bilel登録データ end-->
+		<!-- 登録データ end-->
 	</div>
 <!-- Note 入力エリア end-->
 <!-- [ADD]FUMI Javascripts  -->

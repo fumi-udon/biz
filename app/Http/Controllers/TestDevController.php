@@ -290,7 +290,7 @@ class TestDevController extends Controller
     /**
      * Gestion page.
      * stock_close_input
-     * ビレルが閉店時に入力
+     * 閉店時に入力
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function stock_close_input()
@@ -458,7 +458,7 @@ class TestDevController extends Controller
         );
 
         // session 格納
-        \Session::flash('flash_message', 'MERCI Bilel! <br>Les données sont envoyées correctement'.'<br><br>Je voudrais refaire _ <a href="/stock_close_input"> oui </a>'
+        \Session::flash('flash_message', 'MERCI ! <br>Les données sont envoyées correctement'.'<br><br>Je voudrais refaire _ <a href="/stock_close_input"> oui </a>'
         );
 
         // リダイレクト
@@ -489,7 +489,7 @@ class TestDevController extends Controller
         // 表示用にプルダウンのnameを格納した連想配列を作成 end
 
         /**
-         * Bilel入力データ表示
+         * 入力データ表示
          */
          // 2週間以内のデータ取得
          $stock_ingredients = StockIngredient::where('flg1', 2)

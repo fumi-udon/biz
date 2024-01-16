@@ -37,7 +37,7 @@
 		@else
 			@if (!Request::is('addnote_courses'))
 			<div class="alert alert-danger" role="alert">
-				Les données ne sont pas prêtes Rappellez Bilel pour se remseigner <br> TEL: 55 240 581
+				Les données ne sont pas prêtes Rappellez Sato pour se remseigner <br> TEL: 51 365 070 / 51 99 21 84
 			</div>
 			@endif
 		@endif
@@ -82,7 +82,7 @@
 		<!-- Bilel登録データ -->
 		@if ( isset($stock_ingredients) )
 		<div class="my-3">
-			<B>Bilel登録データ StockIngredientテーブル / flg 2 </B><br>
+			<B>登録データ StockIngredientテーブル / flg 2 </B><br>
 			<div class="table-responsive">	
 				<table class="table">
 					<thead>

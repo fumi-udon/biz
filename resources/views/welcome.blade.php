@@ -107,7 +107,7 @@
         </a>
           <p class="pb-3 mb-0 small lh-sm border-bottom">
             <strong class="d-block text-gray-dark">ingrédients à la fermeture</strong>
-            Bilel 22h30 
+            à 22h30 
           </p>
         </div>
 
