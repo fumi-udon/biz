@@ -59,7 +59,7 @@
 				&#128720; Si c'est peu : namuru, pudding, etc...
 			</p>
 			<p>
-			&#x1f302; <span style="color:#111">Contact d'urgence: Bilel 55 240 581 </span>
+			&#x1f302; <span style="color:#111">Contact d'urgence: Sato 51 365 070 / Fumi 519 921 84</span>
 			</p>
 		</div>
 	</div>

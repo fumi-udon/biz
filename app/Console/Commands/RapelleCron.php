@@ -34,7 +34,7 @@ class RapelleCron extends Command
      *
      * @var string
      */
-    protected $description = 'FUMI _ Cron: Bilelにリマインド ';
+    protected $description = 'FUMI _ Cron: 担当者にリマインド ';
 
     /**
      * Create a new command instance.
@@ -76,12 +76,12 @@ class RapelleCron extends Command
 
         if($forget){
             // // Mail 送信 OK 済
-            // $subject ='BistroNippon: Bilel forget alart';
+            // $subject ='BistroNippon: staff forget alart';
             // $body = '閉店時の在庫チェック忘れ。ingrédients à la fermeture';
             // Mail::to('fuminippon@outlook.com')
             //     ->cc(['satoe1227@gmail.com'])
             //     ->send(new SendinBlueDemoEmail($subject, $body));       
-            logger()->info('[FUMI] -RapelleCron- Bilel登録忘れ ');
+            logger()->info('[FUMI] -RapelleCron- 登録忘れ ');
         }
 
         return 0;

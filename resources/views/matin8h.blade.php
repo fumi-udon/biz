@@ -42,7 +42,7 @@
     		&#x1f408; <span style="color:red">NOTE: {!! $note_today !!} </span>
 		@endif
 		<br>
-		&#x1f302; <span style="color:#111">Contact d'urgence: Bilel 55 240 581 </span>
+		&#x1f302; <span style="color:#111">Contact d'urgence: Sato 51 365 070 / Restaurant 24 986 077 </span>
 		</p>
 	</div>
 	@endif
