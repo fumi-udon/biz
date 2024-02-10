@@ -126,18 +126,19 @@ class BureauItemsController extends Controller
             // select ボックス要素作成 boite de ramen vide
             $article1s = collect([
                 ['id' => '', 'name' => ''],
-                ['id' => '0', 'name' => '1 boite vide'],
-                ['id' => '1', 'name' => '2 boite vide'],
-                ['id' => '2', 'name' => '3 boite vide'],
-                ['id' => '3', 'name' => '4 boite vide'],
-                ['id' => '4', 'name' => '5 boite vide'],
-                ['id' => '5', 'name' => '6 boite vide'],
-                ['id' => '6', 'name' => '7 boite vide'],
-                ['id' => '7', 'name' => '8 boite vide'],
-                ['id' => '8', 'name' => '9 boite vide'],
-                ['id' => '9', 'name' => '10 boite vide'],
-                ['id' => '10', 'name' => '11 boite vide'],
-                ['id' => '11', 'name' => '12 boite vide'],
+                ['id' => '0', 'name' => '0 boite vide'],
+                ['id' => '1', 'name' => '1 boite vide'],
+                ['id' => '2', 'name' => '2 boite vide'],
+                ['id' => '3', 'name' => '3 boite vide'],
+                ['id' => '4', 'name' => '4 boite vide'],
+                ['id' => '5', 'name' => '5 boite vide'],
+                ['id' => '6', 'name' => '6 boite vide'],
+                ['id' => '7', 'name' => '7 boite vide'],
+                ['id' => '8', 'name' => '8 boite vide'],
+                ['id' => '9', 'name' => '9 boite vide'],
+                ['id' => '10', 'name' => '10 boite vide'],
+                ['id' => '11', 'name' => '11 boite vide'],
+                ['id' => '12', 'name' => '12 boite vide'],
             ]);
             return $article1s;
         }
