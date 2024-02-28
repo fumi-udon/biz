@@ -24,16 +24,13 @@
 	</div><!--row end  -->
 
 	<div class="row gx-3 p-3"><!--row start-->
-		<!-- <div class="col-md-4 center-block">
+		<div class="col-md-4 center-block">
 			<ul class="list-group">
-				<li class="list-group-item">
-					<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSVgQv9pqQcIwSavzFLFgugv1CbiTk4eCvosm6GffEEoF0d3wxkA29X7GvUdeECuoqOT3Sf_R4ROZmH/pubhtml?gid=242477425&single=true"  target="_blank">planning des horaires</a>				
-				</li>
-				<li class="list-group-item">
-					<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSVgQv9pqQcIwSavzFLFgugv1CbiTk4eCvosm6GffEEoF0d3wxkA29X7GvUdeECuoqOT3Sf_R4ROZmH/pubhtml?gid=1692662114&single=true"  target="_blank">changement de menu</a>				
+			<li class="list-group-item">
+					<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS6lt16gnKW-JH1ED3Vm6fqPWhRyjTxwhqDnQN2yu0EW4BlsX0H1lcvWrOPx-jVFFvYpu-9cfwtBIjb/pubhtml?gid=1289910994&single=true"  target="_blank">RAMADAN 2024</a>				
 				</li>
 			</ul>
-		</div> -->
+		</div>
 	</div><!--row end  -->
 </main>
 @endsection
